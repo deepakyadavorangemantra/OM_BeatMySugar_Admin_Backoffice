@@ -256,7 +256,6 @@ class EduChapter extends Component {
                     form.append('file', chapter_data.ImageData);
                     form.append('foldername' , 'Accreditations')
                     form.append('filename' , chapter_data.title.trim().replace(/\s/g,'-')+'-'+ chapter_data.id)
-                    debugger
                     fetch(this.state.ImageApiUrl, {
                     method: 'POST',
                     body: form
@@ -272,7 +271,7 @@ class EduChapter extends Component {
                   PostApiCall.postRequest({
 
                     id : chapter_data.id,
-                    logo : 'https://images.beatmysugar.com/images/Accreditations/'+res.data.Message.split(',')[2].split('=')[1].trim(),
+                    bgimage : 'https://images.beatmysugar.com/images/Accreditations/'+res.data.Message.split(',')[2].split('=')[1].trim(),
                     updatedby : details[0].fld_staffid,
                     updatedon : moment().format('lll')
                     
