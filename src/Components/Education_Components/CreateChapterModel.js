@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-responsive-modal';
 import Notiflix from "notiflix";
+import { Flag } from 'react-feather';
 
 const ImgUpload =({
     onChange,
@@ -16,15 +17,29 @@ const ImgUpload =({
     </label>
     
 const CreateChapterModel =(props)=>{
-
-    const [ Title , SetTitle] = useState('');
-    const [ Duratation , SetDuratation ] = useState('');
+    const [ chapterid, SetChapterid ] = useState('');
+    const [ orderno, SetOrderno ] = useState(0);
+    const [ Title , SetTitle ] = useState('');
+    const [ Duration , SetDuration ] = useState('');
     const [ Description, SetDescription ] = useState('');
-    const [ isActive, SetIsActive] = useState('Yes');
+    const [ isActive, SetIsActive ] = useState('Yes');
     const [ AccreData, SetAccreData ] =useState([]);
     const [ ImageData, SetImageData ] = useState([]);
     const [ file, SetFile ] = useState('');
     const [ imagePreviewUrl, setImagePreviewUrl] = useState('https://www.adcproductdesign.com/wp-content/uploads/2018/02/Realize-Icon-Blue.png');
+
+    useEffect( ()=>{
+        if(props.chapterEditData !== ''){
+            SetChapterid( props.chapterEditData ? props.chapterEditData.fld_chapterid : '');
+            SetTitle(props.chapterEditData ? props.chapterEditData.fld_title : '');
+            SetDuration(props.chapterEditData ? props.chapterEditData.fld_duration : '');
+            SetDescription(props.chapterEditData ? props.chapterEditData.fld_description : '');
+            SetIsActive(props.chapterEditData ? props.chapterEditData.fld_status === 'Active'? 'Yes':'No' : '');
+            SetOrderno(props.chapterEditData ? props.chapterEditData.fld_orderno : 0);
+            setImagePreviewUrl(props.chapterEditData ? props.chapterEditData.fld_bgimage : 'https://www.adcproductdesign.com/wp-content/uploads/2018/02/Realize-Icon-Blue.png');
+            SetImageData(props.chapterEditData ? props.chapterEditData.fld_bgimage : []);
+        }
+     },[])
 
     function photoUpload (e){
         e.preventDefault();
@@ -42,20 +57,43 @@ const CreateChapterModel =(props)=>{
       }
       }
 
-      
+      function isValidate(){
+        let flag= true;
+        if(JSON.stringify(ImageData) == '[]'){
+            flag = false;
+            Notiflix.Notify.Failure('Please upload thumbnail image.');
+        }
+        if(Title == ''){
+            flag = false;
+            Notiflix.Notify.Failure('Please enter chapter title.')
+        }
+        if(Duration == ''){
+            flag = false;
+            Notiflix.Notify.Failure('Please enter time duration of chapter.')
+        }
+        if(Description == ''){
+            flag = false;
+            Notiflix.Notify.Failure('Please enter chapter description.')
+        }
+        return flag;
+      }
 
       function saveChapter(){
-        if(JSON.stringify(ImageData) != '[]'){
-        if(Title!=''){
-        
-        }
-        else{
-          Notiflix.Notify.Failure('Please enter chapter title.')
-       }
-      }
-      else{
-        Notiflix.Notify.Failure('Please upload thumbnail image.')
-     }
+          if(isValidate()){
+            let data ={}
+            data.ImageData = ImageData;
+            data.title = Title;
+            data.description = Description;
+            data.duration = Duration;
+            data.orderno = orderno;
+            data.status = isActive == 'Yes' ? 'Active' : 'Inactive';
+            if(chapterid !=''){
+                data.id = chapterid;
+                props.updateChapterData(data);
+            }else{
+                props.saveChapterData(data);
+            }
+          }
       }
 
     return(
@@ -92,6 +130,18 @@ const CreateChapterModel =(props)=>{
                                     <input type="text" className="form-control" 
                                     value={Title}
                                     onChange={(e)=>{ SetTitle(e.target.value) }}/>
+                                </div>
+                                <div className="form-group mb-3">
+                                    <label for="validationCustom01">Duration<span className="mandatory">*</span></label>
+                                    <input type="time" className="form-control" 
+                                    value={Duration}
+                                    onChange={(e)=>{ SetDuration(e.target.value) }}/>
+                                </div>
+                                <div className="form-group mb-3">
+                                    <label for="validationCustom01">Description<span className="mandatory">*</span></label>
+                                    <input type="text" className="form-control" 
+                                    value={Description}
+                                    onChange={(e)=>{ SetDescription(e.target.value) }}/>
                                 </div>
                             </div>
                         
