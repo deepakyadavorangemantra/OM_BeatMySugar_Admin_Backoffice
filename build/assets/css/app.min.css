@@ -66,9 +66,34 @@ body {
 	height: 100%;
 	padding-bottom: 30px
 }
-
+#sidebar-menu {
+    overflow-y: auto !important;
+    height: 100vh;
+}
+/* width */
+#sidebar-menu::-webkit-scrollbar {
+	width: 3px;
+  }
+  
+  /* Track */
+  #sidebar-menu ::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  #sidebar-menu::-webkit-scrollbar-thumb {
+	background: #9ea5ab; 
+  }
+  
+  /* Handle on hover */
+  #sidebar-menu::-webkit-scrollbar-thumb:hover {
+	background: #9ea5ab; 
+  }
 #sidebar-menu {
 	padding-bottom: 30px
+}
+div#sidebar-menu {
+    overflow-y: auto !important;
 }
 
 #sidebar-menu>ul>li.mm-active>a {
