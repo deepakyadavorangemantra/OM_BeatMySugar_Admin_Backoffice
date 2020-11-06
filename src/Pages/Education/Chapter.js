@@ -68,73 +68,6 @@ class EduChapter extends Component {
         
   }
 
-  // onPost = () =>{
-  //   Notiflix.Loading.Dots('Please wait...');
-  //   var login=localStorage.getItem('LoginDetail');
-  // var details=JSON.parse(login)
-
-  //   PostApiCall.postRequest ({
-  //     logo : '',
-  //     name : this.props.Chapter.Name,
-  //     status : this.state.isActive == 'Yes' ? 'Active' : 'Inactive',
-  //       updatedby : details[0].fld_staffid,
-  //       updatedon : moment().format('lll')
-  //   },"AddAccreditationMaster").then((resultAccr) =>
-  //   resultAccr.json().then(obj => {
-  //       if(resultAccr.status == 200 || resultAccr.status == 201){
-
-  //       const form = new FormData();
-                  
-  //       form.append('file', this.state.ImageData);
-  //       form.append('foldername' , 'Accreditations')
-  //       form.append('filename' , this.props.Chapter.Name.trim().replace(/\s/g,'-')+'-'+(JSON.parse(JSON.stringify(obj.data[0]))).AccreditationId)
-        
-  //       fetch(this.state.ImageApiUrl, {
-  //       method: 'POST',
-  //       body: form
-  //       }).then((image) => {
-        
-  //       image.json().then(data => ({
-  //       data: data,
-  //       status: image.status
-  //       })
-  //       ).then(res => {
-
-
-  //           PostApiCall.postRequest({
-
-  //               id : (JSON.parse(JSON.stringify(obj.data[0]))).AccreditationId,
-  //               logo : 'https://images.beatmysugar.com/images/Accreditations/'+res.data.Message.split(',')[2].split('=')[1].trim(),
-  //               updatedby : details[0].fld_staffid,
-  //               updatedon : moment().format('lll')
-                
-            
-  //         },"UpdateAccreditationMasterLogo").then((results1) => 
-    
-  //           results1.json().then(obj1 => {  
-  //           if(results1.status == 200 || results1.status==201){
-
-              
-  //             this.props.dispatch(setclearNameAccred())
-  //             Notiflix.Loading.Remove();
-  //             Notiflix.Notify.Success('Accredition successfully added.')
-  //             window.location.reload()
-    
-  //           }
-  //           }))
-
-
-  //       })
-  //   })
-      
-  //       }else
-  //         {
-  //           Notiflix.Loading.Remove();
-  //           Notiflix.Notify.Failure('Accredition already present.')
-  //         }
-  //   })
-  //   )
-  // }
 
   saveChapterData = ( chapter_data) =>{
     console.log(chapter_data);
@@ -248,14 +181,13 @@ class EduChapter extends Component {
             },"UpdateChapterMaster").then((resultBrand) =>
             resultBrand.json().then(obj => {
                 if(resultBrand.status == 200 || resultBrand.status == 201){
-                  
-                  if(JSON.stringify(chapter_data.ImageData) != '[]')
+                  if(JSON.stringify(chapter_data.ImageData) != '[]' && chapter_data.isImageChange === true)
                   {
                     const form = new FormData();
                 
                     form.append('file', chapter_data.ImageData);
                     form.append('foldername' , 'Accreditations')
-                    form.append('filename' , chapter_data.title.trim().replace(/\s/g,'-')+'-'+ chapter_data.id)
+                    form.append('filename' , chapter_data.title.trim().replace(/\s/g,'-')+'-'+ chapter_data.id + Math.floor(1000 + Math.random() * 9000))
                     fetch(this.state.ImageApiUrl, {
                     method: 'POST',
                     body: form
@@ -440,85 +372,7 @@ class EduChapter extends Component {
                 updateChapterData ={this.updateChapterData}
                 />:''}
       
-              {/* <Modal className="modal-content"  
-                  open={this.state.openedit}
-                  
-                  onClose={()=>{
-                    this.setState({openedit : false})
-                    this.props.dispatch(setclearNameAccred())
-                  }}
-                  center>
-
-                  <div className="modal-content modelcontent3">
-                    <div className="modal-header">
-                      <h4 className="modal-title">Update Accreditation</h4>
-                    </div>
-                    <div className="modal-body">
-                          <div className="row">
-                          <div className="col-md-4">
-                          <div className="form-group mb-3">
-                              <label for="validationCustom01">Logo<span className="mandatory">*</span></label>
-                            <div className="div1">
-                              <ImgUpload onChange={this.photoUpload} src={this.state.imagePreviewUrl}/>
-                            
-                      </div>
-                          </div>
-                      </div>
-                      <div className="col-md-8">
-                          <div className="row">
-                          <div className="col-md-12" style={{marginTop: '28px'}}>
-                            <div className="form-group mb-3">
-                              <label for="validationCustom01">Name<span className="mandatory">*</span></label>
-                              <input type="text" className="form-control" 
-                              value={this.props.Chapter.Name}
-                              onChange={this.onChangeName.bind(this)}/>
-                            </div>
-                          </div>
-                          
-                          <div className="col-md-6">
-                          <div className="form-group mb-3">
-                              <label for="validationCustom01">Status<span className="mandatory">*</span></label><br/>
-                              <label className="radio-inline">
-                              <input type="radio" name="optradio" checked = {this.state.isActive == 'Yes' ? true : false} onChange= {()=>{
-                                this.setState({
-                                  isActive : 'Yes'
-                                })
-                              }} /> Active
-                            </label>
-                            <label className="radio-inline" style={{marginLeft:'10px'}}>
-                              <input type="radio" name="optradio" checked = {this.state.isActive == 'No' ? true : false} onChange= {()=>{
-                                this.setState({
-                                  isActive : 'No'
-                                })
-                              }} /> Inactive
-                            </label> 
-                              </div>
-                          </div>
-                          </div>
-                      </div>
-                          </div>
-                    </div>
-                    <div className="modal-footer">
-                    <button className="btn btn-primary" type="submit" style={{float:'right'}}  onClick={()=>{
-                      this.setState({
-                          openedit : false,
-                          imagePreviewUrl: 'https://www.adcproductdesign.com/wp-content/uploads/2018/02/Realize-Icon-Blue.png',
-                          isActive : 'Yes'
-                      })
-                      this.props.dispatch(setclearNameAccred())
-                  }}>Close</button>
-                  
-                    <button className="btn btn-primary" type="submit" style={{float:'right'}}
-                    onClick={this.UpdateChapters.bind(this)}>Update</button>
-                      <span>
-
-                      </span>
-                    </div>
-              
-              </div>
-            </Modal>
-                 */}
-              
+             
                 <div className="container-fluid">
                     <div className="row page-title">
                         <div className="col-md-12">
