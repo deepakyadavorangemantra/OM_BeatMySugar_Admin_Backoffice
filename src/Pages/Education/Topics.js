@@ -238,7 +238,7 @@ class EduTopics extends Component {
                             
                                 <tbody>
                                 {this.state.TopicsList.length == 0 ? 
-                                 <tr><td colSpan={5} style={{textAlign:'center'}}>No Article Sub Category Available</td></tr> : 
+                                 <tr><td colSpan={5} style={{textAlign:'center'}}>No Topics Available this chapter</td></tr> : 
                                  ''} 
                                 {this.state.TopicsList.map((data,index)=>(
                                            
