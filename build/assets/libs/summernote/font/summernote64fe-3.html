@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<!-- Mirrored from shreyu.coderthemes.com/assets/libs/summernote/font/summernote.ttf?1d9aeaaff0a8939558a45be6cd52cd4c by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 23 Dec 2019 08:08:43 GMT -->
+<head>
+        <meta charset="utf-8" />
+        <title>Shreyu - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta https-equiv="X-UA-Compatible" content="IE=edge" />
+        
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.html">
+
+        <!-- plugins -->
+        <link href="assets/libs/flatpickr/flatpickr.min.html" rel="stylesheet" type="text/css" />
+
+        <!-- App css -->
+        <link href="assets/css/bootstrap.min.html" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.min.html" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app.min.html" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body>
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <div className="navbar navbar-expand flex-column flex-md-row navbar-custom">
+                <div className="container-fluid">
+                    <!-- LOGO -->
+                    <a href="index.html" className="navbar-brand mr-0 mr-md-2 logo">
+                        <span className="logo-lg">
+                            <img src="assets/images/logo.html" alt="" height="24" />
+                            <span className="d-inline h5 ml-1 text-logo">Shreyu</span>
+                        </span>
+                        <span className="logo-sm">
+                            <img src="assets/images/logo.html" alt="" height="24">
+                        </span>
+                    </a>
+
+                    <ul className="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0">
+                        <li className="">
+                            <button className="button-menu-mobile open-left disable-btn">
+                                <i data-feather="menu" className="menu-icon"></i>
+                                <i data-feather="x" className="close-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+
+                    <ul className="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
+                        <li className="d-none d-sm-block">
+                            <div className="app-search">
+                                <form>
+                                    <div className="input-group">
+                                        <input type="text" className="form-control" placeholder="Search...">
+                                        <span data-feather="search"></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li className="dropdown d-none d-lg-block" data-toggle="tooltip" data-placement="left" title="Change language">
+                            <a className="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="false" aria-expanded="false">
+                                <i data-feather="globe"></i>
+                            </a>
+                            <div className="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                    <img src="assets/images/flags/germany.html" alt="user-image" className="mr-2" height="12"> <span
+                                        className="align-middle">German</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                    <img src="assets/images/flags/italy.html" alt="user-image" className="mr-2" height="12"> <span
+                                        className="align-middle">Italian</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                    <img src="assets/images/flags/spain.html" alt="user-image" className="mr-2" height="12"> <span
+                                        className="align-middle">Spanish</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                    <img src="assets/images/flags/russia.html" alt="user-image" className="mr-2" height="12"> <span
+                                        className="align-middle">Russian</span>
+                                </a>
+                            </div>
+                        </li>
+
+
+                        <li className="dropdown notification-list" data-toggle="tooltip" data-placement="left"
+                            title="8 new unread notifications">
+                            <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                aria-expanded="false">
+                                <i data-feather="bell"></i>
+                                <span className="noti-icon-badge"></span>
+                            </a>
+                            <div className="dropdown-menu dropdown-menu-right dropdown-lg">
+
+                                <!-- item-->
+                                <div className="dropdown-item noti-title border-bottom">
+                                    <h5 className="m-0 font-size-16">
+                                        <span className="float-right">
+                                            <a href="#" className="text-dark">
+                                                <small>Clear All</small>
+                                            </a>
+                                        </span>Notification
+                                    </h5>
+                                </div>
+
+                                <div className="slimscroll noti-scroll">
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" className="dropdown-item notify-item border-bottom">
+                                        <div className="notify-icon bg-primary"><i className="uil uil-user-plus"></i></div>
+                                        <p className="notify-details">New user registered.<small className="text-muted">5 hours ago</small>
+                                        </p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" className="dropdown-item notify-item border-bottom">
+                                        <div className="notify-icon">
+                                            <img src="assets/images/users/avatar-1.html" className="img-fluid rounded-circle" alt="" />
+                                        </div>
+                                        <p className="notify-details">Karen Robinson</p>
+                                        <p className="text-muted mb-0 user-msg">
+                                            <small>Wow ! this admin looks good and awesome design</small>
+                                        </p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" className="dropdown-item notify-item border-bottom">
+                                        <div className="notify-icon">
+                                            <img src="assets/images/users/avatar-2.html" className="img-fluid rounded-circle" alt="" />
+                                        </div>
+                                        <p className="notify-details">Cristina Pride</p>
+                                        <p className="text-muted mb-0 user-msg">
+                                            <small>Hi, How are you? What about our next meeting</small>
+                                        </p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" className="dropdown-item notify-item border-bottom active">
+                                        <div className="notify-icon bg-success"><i className="uil uil-comment-message"></i> </div>
+                                        <p className="notify-details">Jaclyn Brunswick commented on Dashboard<small className="text-muted">1
+                                                min
+                                                ago</small></p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" className="dropdown-item notify-item border-bottom">
+                                        <div className="notify-icon bg-danger"><i className="uil uil-comment-message"></i></div>
+                                        <p className="notify-details">Caleb Flakelar commented on Admin<small className="text-muted">4 days
+                                                ago</small></p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                        <div className="notify-icon bg-primary">
+                                            <i className="uil uil-heart"></i>
+                                        </div>
+                                        <p className="notify-details">Carlos Crouch liked
+                                            <b>Admin</b>
+                                            <small className="text-muted">13 days ago</small>
+                                        </p>
+                                    </a>
+                                </div>
+
+                                <!-- All-->
+                                <a href="javascript:void(0);"
+                                    className="dropdown-item text-center text-primary notify-item notify-all border-top">
+                                    View all
+                                    <i className="fi-arrow-right"></i>
+                                </a>
+
+                            </div>
+                        </li>
+
+                        <li className="dropdown notification-list" data-toggle="tooltip" data-placement="left" title="Settings">
+                            <a href="javascript:void(0);" className="nav-link right-bar-toggle">
+                                <i data-feather="settings"></i>
+                            </a>
+                        </li>
+
+                        <li className="dropdown notification-list align-self-center profile-dropdown">
+                            <a className="nav-link dropdown-toggle nav-user mr-0" data-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="false" aria-expanded="false">
+                                <div className="media user-profile ">
+                                    <img src="assets/images/users/avatar-7.html" alt="user-image" className="rounded-circle align-self-center" />
+                                    <div className="media-body text-left">
+                                        <h6 className="pro-user-name ml-2 my-0">
+                                            <span>Shreyu N</span>
+                                            <span className="pro-user-desc text-muted d-block mt-1">Administrator </span>
+                                        </h6>
+                                    </div>
+                                    <span data-feather="chevron-down" className="ml-2 align-self-center"></span>
+                                </div>
+                            </a>
+                            <div className="dropdown-menu profile-dropdown-items dropdown-menu-right">
+                                <a href="pages-profile.html" className="dropdown-item notify-item">
+                                    <i data-feather="user" className="icon-dual icon-xs mr-2"></i>
+                                    <span>My Account</span>
+                                </a>
+
+                                <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                    <i data-feather="settings" className="icon-dual icon-xs mr-2"></i>
+                                    <span>Settings</span>
+                                </a>
+
+                                <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                    <i data-feather="help-circle" className="icon-dual icon-xs mr-2"></i>
+                                    <span>Support</span>
+                                </a>
+
+                                <a href="pages-lock-screen.html" className="dropdown-item notify-item">
+                                    <i data-feather="lock" className="icon-dual icon-xs mr-2"></i>
+                                    <span>Lock Screen</span>
+                                </a>
+
+                                <div className="dropdown-divider"></div>
+
+                                <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                    <i data-feather="log-out" className="icon-dual icon-xs mr-2"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div className="left-side-menu">
+                <div className="media user-profile mt-2 mb-2">
+                    <img src="assets/images/users/avatar-7.html" className="avatar-sm rounded-circle mr-2" alt="Shreyu" />
+                    <img src="assets/images/users/avatar-7.html" className="avatar-xs rounded-circle mr-2" alt="Shreyu" />
+
+                    <div className="media-body">
+                        <h6 className="pro-user-name mt-0 mb-0">Nik Patel</h6>
+                        <span className="pro-user-desc">Administrator</span>
+                    </div>
+                    <div className="dropdown align-self-center profile-dropdown-menu">
+                        <a className="dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                            aria-expanded="false">
+                            <span data-feather="chevron-down"></span>
+                        </a>
+                        <div className="dropdown-menu profile-dropdown">
+                            <a href="pages-profile.html" className="dropdown-item notify-item">
+                                <i data-feather="user" className="icon-dual icon-xs mr-2"></i>
+                                <span>My Account</span>
+                            </a>
+
+                            <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                <i data-feather="settings" className="icon-dual icon-xs mr-2"></i>
+                                <span>Settings</span>
+                            </a>
+
+                            <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                <i data-feather="help-circle" className="icon-dual icon-xs mr-2"></i>
+                                <span>Support</span>
+                            </a>
+
+                            <a href="pages-lock-screen.html" className="dropdown-item notify-item">
+                                <i data-feather="lock" className="icon-dual icon-xs mr-2"></i>
+                                <span>Lock Screen</span>
+                            </a>
+
+                            <div className="dropdown-divider"></div>
+
+                            <a href="javascript:void(0);" className="dropdown-item notify-item">
+                                <i data-feather="log-out" className="icon-dual icon-xs mr-2"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div className="sidebar-content">
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu" className="slimscroll-menu">
+                        <ul className="metismenu" id="menu-bar">
+                            <li className="menu-title">Navigation</li>
+
+                            <li>
+                                <a href="index.html">
+                                    <i data-feather="home"></i>
+                                    <span className="badge badge-success float-right">1</span>
+                                    <span> Dashboard </span>
+                                </a>
+                            </li>
+                            <li className="menu-title">Apps</li>
+                            <li>
+                                <a href="apps-calendar.html">
+                                    <i data-feather="calendar"></i>
+                                    <span> Calendar </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i data-feather="inbox"></i>
+                                    <span> Email </span>
+                                    <span className="menu-arrow"></span>
+                                </a>
+
+                                <ul className="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="email-inbox.html">Inbox</a>
+                                    </li>
+                                    <li>
+                                        <a href="email-read.html">Read</a>
+                                    </li>
+                                    <li>
+                                        <a href="email-compose.html">Compose</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i data-feather="briefcase"></i>
+                                    <span> Projects </span>
+                                    <span className="menu-arrow"></span>
+                                </a>
+    
+                                <ul className="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="project-list.html">List</a>
+                                    </li>
+                                    <li>
+                                        <a href="project-detail.html">Detail</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i data-feather="bookmark"></i>
+                                    <span> Tasks </span>
+                                    <span className="menu-arrow"></span>
+                                </a>
+    
+                                <ul className="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="task-list.html">List</a>
+                                    </li>
+                                    <li>
+                                        <a href="task-board.html">Kanban Board</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="menu-title">Custom</li>
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i data-feather="file-text"></i>
+                                    <span> Pages </span>
+                                    <span className="menu-arrow"></span>
+                                </a>
+                                <ul className="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="pages-starter.html">Starter</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-profile.html">Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-activity.html">Activity</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-invoice.html">Invoice</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-pricing.html">Pricing</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-maintenance.html">Maintenance</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-login.html">Login</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-register.html">Register</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-recoverpw.html">Recover Password</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-confirm-mail.html">Confirm</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-404.html">Error 404</a>
+                                    </li>
+                                    <li>
+                                        <a href="pages-500.html">Error 500</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i data-feather="layout"></i>
+                                    <span> Layouts </span>
+                                    <span className="menu-arrow"></span>
+                                </a>
+                                <ul className="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="layouts-horizontal.html">Horizontal Nav</a>
+                                    </li>
+                                    <li>
+                                        <a href="layouts-rtl.html">RTL</a>
+                                    </li>
+                                    <li>
+                                        <a href="layouts-dark.html">Dark</a>
+                                    </li>
+                                    <li>
+                                        <a href="layouts-scrollable.html">Scrollable</a>
+                                    </li>
+                                    <li>
+                                        <a href="layouts-boxed.html">Boxed</a>
+                                    </li>
+                                    <li>
+                                        <a href="layouts-preloader.html">With Pre-loader</a>
+                                    </li>
+                                    <li>
+                                        <a href="layouts-dark-sidebar.html">Dark Side Nav</a>
+                                    </li>
+                                    <li>
+                                        <a href="layouts-condensed.html">Condensed Nav</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li className="menu-title">Components</li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i data-feather="package"></i>
+                                    <span> UI Elements </span>
+                                    <span className="menu-arrow"></span>
+                                </a>
+                                <ul className="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="components-bootstrap.html">Bootstrap UI</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript: void(0);" aria-expanded="false">Icons
+                                            <span className="menu-arrow"></span>
+                                        </a>
+                                        <ul className="nav-third-level" aria-expanded="false">
+                                            <li>
+                                                <a href="icons-feather.html">Feather Icons</a>
+                                            </li>
+                                            <li>
+                                                <a href="icons-unicons.html">Unicons Icons</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="widgets.html">Widgets</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" aria-expanded="false">
+                                    <i data-feather="file-text"></i>
+                                    <span> Forms </span>
+                                    <span className="menu-arrow"></span>
+                                </a>
+                                <ul className="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="forms-basic.html">Basic Elements</a>
+                                    </li>
+                                    <li>
+                                        <a href="forms-advanced.html">Advanced</a>
+                                    </li>
+                                    <li>
+                                        <a href="forms-validation.html">Validation</a>
+                                    </li>
+                                    <li>
+                                        <a href="forms-wizard.html">Wizard</a>
+                                    </li>
+                                    <li>
+                                        <a href="forms-editor.html">Editor</a>
+                                    </li>
+                                    <li>
+                                        <a href="forms-file-uploads.html">File Uploads</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="charts-apex.html" aria-expanded="false">
+                                    <i data-feather="pie-chart"></i>
+                                    <span> Charts </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" aria-expanded="false">
+                                    <i data-feather="grid"></i>
+                                    <span> Tables </span>
+                                    <span className="menu-arrow"></span>
+                                </a>
+                                <ul className="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="tables-basic.html">Basic</a>
+                                    </li>
+                                    <li>
+                                        <a href="tables-datatables.html">Advanced</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div className="clearfix"></div>
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div className="content-page">
+                <div className="content">
+                    <div className="container-fluid">
+                        <div className="row page-title align-items-center">
+                            <div className="col-sm-4 col-xl-6">
+                                <h4 className="mb-1 mt-0">Dashboard</h4>
+                            </div>
+                            <div className="col-sm-8 col-xl-6">
+                                <form className="form-inline float-sm-right mt-3 mt-sm-0">
+                                    <div className="form-group mb-sm-0 mr-2">
+                                        <input type="text" className="form-control" id="dash-daterange" style="min-width: 190px;" />
+                                    </div>
+                                    <div className="btn-group">
+                                        <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i className='uil uil-file-alt mr-1'></i>Download
+                                            <i className="icon"><span data-feather="chevron-down"></span></i></button>
+                                        <div className="dropdown-menu dropdown-menu-right">
+                                            <a href="#" className="dropdown-item notify-item">
+                                                <i data-feather="mail" className="icon-dual icon-xs mr-2"></i>
+                                                <span>Email</span>
+                                            </a>
+                                            <a href="#" className="dropdown-item notify-item">
+                                                <i data-feather="printer" className="icon-dual icon-xs mr-2"></i>
+                                                <span>Print</span>
+                                            </a>
+                                            <div className="dropdown-divider"></div>
+                                            <a href="#" className="dropdown-item notify-item">
+                                                <i data-feather="file" className="icon-dual icon-xs mr-2"></i>
+                                                <span>Re-Generate</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- content -->
+                        <div className="row">
+                            <div className="col-md-6 col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <div className="media p-3">
+                                            <div className="media-body">
+                                                <span className="text-muted text-uppercase font-size-12 font-weight-bold">Today
+                                                    Revenue</span>
+                                                <h2 className="mb-0">$2189</h2>
+                                            </div>
+                                            <div className="align-self-center">
+                                                <div id="today-revenue-chart" className="apex-charts"></div>
+                                                <span className="text-success font-weight-bold font-size-13"><i
+                                                        className='uil uil-arrow-up'></i> 10.21%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <div className="media p-3">
+                                            <div className="media-body">
+                                                <span className="text-muted text-uppercase font-size-12 font-weight-bold">Product
+                                                    Sold</span>
+                                                <h2 className="mb-0">1065</h2>
+                                            </div>
+                                            <div className="align-self-center">
+                                                <div id="today-product-sold-chart" className="apex-charts"></div>
+                                                <span className="text-danger font-weight-bold font-size-13"><i
+                                                        className='uil uil-arrow-down'></i> 5.05%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <div className="media p-3">
+                                            <div className="media-body">
+                                                <span className="text-muted text-uppercase font-size-12 font-weight-bold">New
+                                                    Customers</span>
+                                                <h2 className="mb-0">11</h2>
+                                            </div>
+                                            <div className="align-self-center">
+                                                <div id="today-new-customer-chart" className="apex-charts"></div>
+                                                <span className="text-success font-weight-bold font-size-13"><i
+                                                        className='uil uil-arrow-up'></i> 25.16%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <div className="media p-3">
+                                            <div className="media-body">
+                                                <span className="text-muted text-uppercase font-size-12 font-weight-bold">New
+                                                    Visitors</span>
+                                                <h2 className="mb-0">750</h2>
+                                            </div>
+                                            <div className="align-self-center">
+                                                <div id="today-new-visitors-chart" className="apex-charts"></div>
+                                                <span className="text-danger font-weight-bold font-size-13"><i
+                                                        className='uil uil-arrow-down'></i> 5.05%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- stats + charts -->
+                        <div className="row">
+                            <div className="col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <h5 className="card-title header-title border-bottom p-3 mb-0">Overview</h5>
+                                        <!-- stat 1 -->
+                                        <div className="media px-3 py-4 border-bottom">
+                                            <div className="media-body">
+                                                <h4 className="mt-0 mb-1 font-size-22 font-weight-normal">121,000</h4>
+                                                <span className="text-muted">Total Visitors</span>
+                                            </div>
+                                            <i data-feather="users" className="align-self-center icon-dual icon-lg"></i>
+                                        </div>
+
+                                        <!-- stat 2 -->
+                                        <div className="media px-3 py-4 border-bottom">
+                                            <div className="media-body">
+                                                <h4 className="mt-0 mb-1 font-size-22 font-weight-normal">21,000</h4>
+                                                <span className="text-muted">Total Product Views</span>
+                                            </div>
+                                            <i data-feather="image" className="align-self-center icon-dual icon-lg"></i>
+                                        </div>
+
+                                        <!-- stat 3 -->
+                                        <div className="media px-3 py-4">
+                                            <div className="media-body">
+                                                <h4 className="mt-0 mb-1 font-size-22 font-weight-normal">$21.5</h4>
+                                                <span className="text-muted">Revenue Per Visitor</span>
+                                            </div>
+                                            <i data-feather="shopping-bag" className="align-self-center icon-dual icon-lg"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-xl-6">
+                                <div className="card">
+                                    <div className="card-body pb-0">
+                                        <ul className="nav card-nav float-right">
+                                            <li className="nav-item">
+                                                <a className="nav-link text-muted" href="#">Today</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link text-muted" href="#">7d</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link active" href="#">15d</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link text-muted" href="#">1m</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link text-muted" href="#">1y</a>
+                                            </li>
+                                        </ul>
+                                        <h5 className="card-title mb-0 header-title">Revenue</h5>
+
+                                        <div id="revenue-chart" className="apex-charts mt-3"  dir="ltr"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-xl-3">
+                                <div className="card">
+                                    <div className="card-body pb-0">
+                                        <h5 className="card-title header-title">Targets</h5>
+                                        <div id="targets-chart" className="apex-charts mt-3" dir="ltr"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row -->
+                
+                        <!-- products -->
+                        <div className="row">
+                            <div className="col-xl-5">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title mt-0 mb-0 header-title">Sales By Category</h5>
+                                        <div id="sales-by-category-chart" className="apex-charts mb-0 mt-4" dir="ltr"></div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                            <div className="col-xl-7">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <a href="#" className="btn btn-primary btn-sm float-right">
+                                            <i className='uil uil-export ml-1'></i> Export
+                                        </a>
+                                        <h5 className="card-title mt-0 mb-0 header-title">Recent Orders</h5>
+
+                                        <div className="table-responsive mt-4">
+                                            <table className="table table-hover table-nowrap mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Product</th>
+                                                        <th scope="col">Customer</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>#98754</td>
+                                                        <td>ASOS Ridley High</td>
+                                                        <td>Otto B</td>
+                                                        <td>$79.49</td>
+                                                        <td><span className="badge badge-soft-warning py-1">Pending</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#98753</td>
+                                                        <td>Marco Lightweight Shirt</td>
+                                                        <td>Mark P</td>
+                                                        <td>$125.49</td>
+                                                        <td><span className="badge badge-soft-success py-1">Delivered</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#98752</td>
+                                                        <td>Half Sleeve Shirt</td>
+                                                        <td>Dave B</td>
+                                                        <td>$35.49</td>
+                                                        <td><span className="badge badge-soft-danger py-1">Declined</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#98751</td>
+                                                        <td>Lightweight Jacket</td>
+                                                        <td>Shreyu N</td>
+                                                        <td>$49.49</td>
+                                                        <td><span className="badge badge-soft-success py-1">Delivered</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#98750</td>
+                                                        <td>Marco Shoes</td>
+                                                        <td>Rik N</td>
+                                                        <td>$69.49</td>
+                                                        <td><span className="badge badge-soft-danger py-1">Declined</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- end table-responsive-->
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row -->
+
+                        <!-- widgets -->
+                        <div className="row">
+                            <div className="col-xl-4">
+                                <div className="card">
+                                    <div className="card-body pt-2">
+                                        <h5 className="mb-4 header-title">Top Performers</h5>
+                                        <div className="media border-top pt-3">
+                                            <img src="assets/images/users/avatar-7.html" className="avatar rounded mr-3"
+                                                alt="shreyu">
+                                            <div className="media-body">
+                                                <h6 className="mt-1 mb-0 font-size-15">Shreyu N</h6>
+                                                <h6 className="text-muted font-weight-normal mt-1 mb-3">Senior Sales Guy</h6>
+                                            </div>
+                                            <div className="dropdown align-self-center float-right">
+                                                <a href="#" className="dropdown-toggle arrow-none text-muted" data-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i className="uil uil-ellipsis-v"></i>
+                                                </a>
+                                                <div className="dropdown-menu dropdown-menu-right">
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-edit-alt mr-2"></i>Edit</a>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-exit mr-2"></i>Remove from Team</a>
+                                                    <div className="dropdown-divider"></div>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item text-danger"><i
+                                                            className="uil uil-trash mr-2"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="media mt-1 border-top pt-3">
+                                            <img src="assets/images/users/avatar-9.html" className="avatar rounded mr-3"
+                                                alt="shreyu">
+                                            <div className="media-body">
+                                                <h6 className="mt-1 mb-0 font-size-15">Greeva Y</h6>
+                                                <h6 className="text-muted font-weight-normal mt-1 mb-3">Social Media Campaign</h6>
+                                            </div>
+                                            <div className="dropdown align-self-center float-right">
+                                                <a href="#" className="dropdown-toggle arrow-none text-muted" data-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i className="uil uil-ellipsis-v"></i>
+                                                </a>
+                                                <div className="dropdown-menu dropdown-menu-right">
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-edit-alt mr-2"></i>Edit</a>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-exit mr-2"></i>Remove from Team</a>
+                                                    <div className="dropdown-divider"></div>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item text-danger"><i
+                                                            className="uil uil-trash mr-2"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="media mt-1 border-top pt-3">
+                                            <img src="assets/images/users/avatar-4.html" className="avatar rounded mr-3"
+                                                alt="shreyu">
+                                            <div className="media-body">
+                                                <h6 className="mt-1 mb-0 font-size-15">Nik G</h6>
+                                                <h6 className="text-muted font-weight-normal mt-1 mb-3">Inventory Manager</h6>
+                                            </div>
+                                            <div className="dropdown align-self-center float-right">
+                                                <a href="#" className="dropdown-toggle arrow-none text-muted" data-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i className="uil uil-ellipsis-v"></i>
+                                                </a>
+                                                <div className="dropdown-menu dropdown-menu-right">
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-edit-alt mr-2"></i>Edit</a>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-exit mr-2"></i>Remove from Team</a>
+                                                    <div className="dropdown-divider"></div>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item text-danger"><i
+                                                            className="uil uil-trash mr-2"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="media mt-1 border-top pt-3">
+                                            <img src="assets/images/users/avatar-1.html" className="avatar rounded mr-3"
+                                                alt="shreyu">
+                                            <div className="media-body">
+                                                <h6 className="mt-1 mb-0 font-size-15">Hardik G</h6>
+                                                <h6 className="text-muted font-weight-normal mt-1 mb-3">Sales Person</h6>
+                                            </div>
+                                            <div className="dropdown align-self-center float-right">
+                                                <a href="#" className="dropdown-toggle arrow-none text-muted" data-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i className="uil uil-ellipsis-v"></i>
+                                                </a>
+                                                <div className="dropdown-menu dropdown-menu-right">
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-edit-alt mr-2"></i>Edit</a>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-exit mr-2"></i>Remove from Team</a>
+                                                    <div className="dropdown-divider"></div>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item text-danger"><i
+                                                            className="uil uil-trash mr-2"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="media mt-1 border-top pt-3">
+                                            <img src="assets/images/users/avatar-5.html" className="avatar rounded mr-3"
+                                                alt="shreyu">
+                                            <div className="media-body">
+                                                <h6 className="mt-1 mb-0 font-size-15">Stive K</h6>
+                                                <h6 className="text-muted font-weight-normal mt-1 mb-1">Sales Person</h6>
+                                            </div>
+                                            <div className="dropdown align-self-center float-right">
+                                                <a href="#" className="dropdown-toggle arrow-none text-muted" data-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i className="uil uil-ellipsis-v"></i>
+                                                </a>
+                                                <div className="dropdown-menu dropdown-menu-right">
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-edit-alt mr-2"></i>Edit</a>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item"><i
+                                                            className="uil uil-exit mr-2"></i>Remove from Team</a>
+                                                    <div className="dropdown-divider"></div>
+                                                    <!-- item-->
+                                                    <a href="javascript:void(0);" className="dropdown-item text-danger"><i
+                                                            className="uil uil-trash mr-2"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-xl-4">
+                                <div className="card">
+                                    <div className="card-body pt-2 pb-3">
+                                        <a href="task-list.html" className="btn btn-primary btn-sm mt-2 float-right">
+                                            View All
+                                        </a>
+                                        <h5 className="mb-4 header-title">Tasks</h5>
+                                        <div className="slimscroll" style="max-height: 390px;">
+                                            <div className="row">
+                                                <div className="col">
+                                                    <div className="custom-control custom-checkbox">
+                                                        <input type="checkbox" className="custom-control-input" id="task1">
+                                                        <label className="custom-control-label" for="task1">
+                                                            Draft the new contract document for
+                                                            sales team
+                                                        </label>
+                                                        <p className="font-size-13 text-muted">Due on 24 Aug, 2019</p>
+                                                    </div> <!-- end checkbox -->
+                                                </div>
+                                            </div>
+    
+                                            <div className="row mt-2">
+                                                <div className="col">
+                                                    <div className="custom-control custom-checkbox">
+                                                        <input type="checkbox" className="custom-control-input" id="task2">
+                                                        <label className="custom-control-label" for="task2">
+                                                            iOS App home page
+                                                        </label>
+                                                        <p className="font-size-13 text-muted">Due on 23 Aug, 2019</p>
+                                                    </div> <!-- end checkbox -->
+                                                </div>
+                                            </div>
+    
+                                            <div className="row mt-2">
+                                                <div className="col">
+                                                    <div className="custom-control custom-checkbox">
+                                                        <input type="checkbox" className="custom-control-input" id="task3">
+                                                        <label className="custom-control-label" for="task3">
+                                                            Write a release note for Shreyu
+                                                        </label>
+                                                        <p className="font-size-13 text-muted">Due on 22 Aug, 2019</p>
+                                                    </div> <!-- end checkbox -->
+                                                </div>
+                                            </div>
+                                            <div className="row mt-2">
+                                                <div className="col">
+                                                    <div className="custom-control custom-checkbox">
+                                                        <input type="checkbox" className="custom-control-input" id="task4">
+                                                        <label className="custom-control-label" for="task4">
+                                                            Invite Greeva to a project shreyu admin
+                                                        </label>
+                                                        <p className="font-size-13 text-muted">Due on 21 Aug, 2019</p>
+                                                    </div> <!-- end checkbox -->
+                                                </div>
+                                            </div>
+    
+                                            <div className="row mt-2">
+                                                <div className="col">
+                                                    <div className="custom-control custom-checkbox">
+                                                        <input type="checkbox" className="custom-control-input" id="task5">
+                                                        <label className="custom-control-label" for="task5">
+                                                            Enable analytics tracking for main website
+                                                        </label>
+                                                        <p className="font-size-13 text-muted">Due on 20 Aug, 2019</p>
+                                                    </div> <!-- end checkbox -->
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col">
+                                                    <div className="custom-control custom-checkbox">
+                                                        <input type="checkbox" className="custom-control-input" id="task6">
+                                                        <label className="custom-control-label" for="task6">
+                                                            Invite user to a project
+                                                        </label>
+                                                        <p className="font-size-13 text-muted">Due on 18 Aug, 2019</p>
+                                                    </div> <!-- end checkbox -->
+                                                </div>
+                                            </div>
+    
+                                            <div className="row mt-2">
+                                                <div className="col">
+                                                    <div className="custom-control custom-checkbox">
+                                                        <input type="checkbox" className="custom-control-input" id="task7">
+                                                        <label className="custom-control-label" for="task7">
+                                                            Write a release note
+                                                        </label>
+                                                        <p className="font-size-13 text-muted">Due on 14 Aug, 2019</p>
+                                                    </div> <!-- end checkbox -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-xl-4">
+                                <div className="card">
+                                    <div className="card-body pt-2">
+                                        <div className="dropdown mt-2 float-right">
+                                            <a href="#" className="dropdown-toggle arrow-none text-muted" data-toggle="dropdown"
+                                                aria-expanded="false">
+                                                <i className="uil uil-ellipsis-v"></i>
+                                            </a>
+                                            <div className="dropdown-menu dropdown-menu-right">
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" className="dropdown-item"><i
+                                                        className="uil uil-refresh mr-2"></i>Refresh</a>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" className="dropdown-item"><i
+                                                        className="uil uil-user-plus mr-2"></i>Add Member</a>
+                                                <div className="dropdown-divider"></div>
+                                                <!-- item-->
+                                                <a href="javascript:void(0);" className="dropdown-item text-danger"><i
+                                                        className="uil uil-exit mr-2"></i>Exit</a>
+                                            </div>
+                                        </div>
+                                        <h5 className="mb-4 header-title">Recent Conversation</h5>
+                                        <div className="chat-conversation">
+                                            <ul className="conversation-list slimscroll" style="max-height: 328px;">
+                                                <li className="clearfix">
+                                                    <div className="chat-avatar">
+                                                        <img src="assets/images/users/avatar-9.html" alt="Female">
+                                                        <i>10:00</i>
+                                                    </div>
+                                                    <div className="conversation-text">
+                                                        <div className="ctext-wrap">
+                                                            <i>Greeva</i>
+                                                            <p>
+                                                                Hello!
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="clearfix odd">
+                                                    <div className="chat-avatar">
+                                                        <img src="assets/images/users/avatar-7.html" alt="Male">
+                                                        <i>10:01</i>
+                                                    </div>
+                                                    <div className="conversation-text">
+                                                        <div className="ctext-wrap">
+                                                            <i>Shreyu</i>
+                                                            <p>
+                                                                Hi, How are you? What about our next meeting?
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="clearfix">
+                                                    <div className="chat-avatar">
+                                                        <img src="assets/images/users/avatar-9.html" alt="female">
+                                                        <i>10:01</i>
+                                                    </div>
+                                                    <div className="conversation-text">
+                                                        <div className="ctext-wrap">
+                                                            <i>Greeva</i>
+                                                            <p>
+                                                                Yeah everything is fine
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="clearfix odd">
+                                                    <div className="chat-avatar">
+                                                        <img src="assets/images/users/avatar-7.html" alt="male">
+                                                        <i>10:02</i>
+                                                    </div>
+                                                    <div className="conversation-text">
+                                                        <div className="ctext-wrap">
+                                                            <i>Shreyu</i>
+                                                            <p>
+                                                                Awesome! let me know if we can talk in 20 min
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <form className="needs-validation" novalidate name="chat-form" id="chat-form">
+                                                <div className="row">
+                                                    <div className="col">
+                                                        <input type="text" className="form-control chat-input"
+                                                            placeholder="Enter your text" required>
+                                                        <div className="invalid-feedback">
+                                                            Please enter your messsage
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-auto">
+                                                        <button type="submit"
+                                                            className="btn btn-danger chat-send btn-block waves-effect waves-light">Send</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div> <!-- end .chat-conversation-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+
+                    </div>
+                </div> <!-- content -->
+
+                
+
+                <!-- Footer Start -->
+                <footer className="footer">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-12">
+                                2019 &copy; Shreyu. All Rights Reserved. Crafted with <i className='uil uil-heart text-danger font-size-12'></i> by <a href="https://coderthemes.com/" target="_blank">Coderthemes</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- Right Sidebar -->
+        <div className="right-bar">
+            <div className="rightbar-title">
+                <a href="javascript:void(0);" className="right-bar-toggle float-right">
+                    <i data-feather="x-circle"></i>
+                </a>
+                <h5 className="m-0">Customization</h5>
+            </div>
+    
+            <div className="slimscroll-menu">
+    
+                <h5 className="font-size-16 pl-3 mt-4">Choose Variation</h5>
+                <div className="p-3">
+                    <h6>Default</h6>
+                    <a href="index.html"><img src="assets/images/layouts/vertical.html" alt="vertical" className="img-thumbnail demo-img" /></a>
+                </div>
+                <div className="px-3 py-1">
+                    <h6>Top Nav</h6>
+                    <a href="layouts-horizontal.html"><img src="assets/images/layouts/horizontal.html" alt="horizontal" className="img-thumbnail demo-img" /></a>
+                </div>
+                <div className="px-3 py-1">
+                    <h6>Dark Side Nav</h6>
+                    <a href="layouts-dark-sidebar.html"><img src="assets/images/layouts/vertical-dark-sidebar.html" alt="dark sidenav" className="img-thumbnail demo-img" /></a>
+                </div>
+                <div className="px-3 py-1">
+                    <h6>Condensed Side Nav</h6>
+                    <a href="layouts-dark-sidebar.html"><img src="assets/images/layouts/vertical-condensed.html" alt="condensed" className="img-thumbnail demo-img" /></a>
+                </div>
+                <div className="px-3 py-1">
+                    <h6>Fixed Width (Boxed)</h6>
+                    <a href="layouts-boxed.html"><img src="assets/images/layouts/boxed.html" alt="boxed"
+                            className="img-thumbnail demo-img" /></a>
+                </div>
+            </div> <!-- end slimscroll-menu-->
+        </div>
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div className="rightbar-overlay"></div>
+
+        <!-- Vendor js -->
+        <script src="assets/js/vendor.min.html"></script>
+
+        <!-- optional plugins -->
+        <script src="assets/libs/moment/moment.min.html"></script>
+        <script src="assets/libs/apexcharts/apexcharts.min.html"></script>
+        <script src="assets/libs/flatpickr/flatpickr.min-2.html"></script>
+
+        <!-- page js -->
+        <script src="assets/js/pages/dashboard.init.html"></script>
+
+        <!-- App js -->
+        <script src="assets/js/app.min.html"></script>
+
+
+    </body>
+
+<!-- Mirrored from shreyu.coderthemes.com/assets/libs/summernote/font/summernote.ttf?1d9aeaaff0a8939558a45be6cd52cd4c by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 23 Dec 2019 08:08:43 GMT -->
+</html>
