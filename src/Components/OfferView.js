@@ -122,6 +122,7 @@ class  OfferView extends Component {
                                                           
                                                           },"UpdateOffer").then((results) => 
                                                           
+                                                            // const objs = JSON.parse(result._bodyText)
                                                             results.json().then(obj => {
   
                                                           
@@ -200,6 +201,7 @@ class  OfferView extends Component {
     }
 
   
+    //   if(event.target.value.length <= 160){
    
     photoUpload = e =>{
         e.preventDefault();
@@ -215,6 +217,9 @@ class  OfferView extends Component {
         }
         reader.readAsDataURL(file);
      }
+    //   else {
+    //         Notiflix.Notify.Failure("File too large, upload file less than 100 kb.");
+    //       }
       }
 
        
@@ -515,6 +520,7 @@ class  OfferView extends Component {
                                                                         }
                                                                          
                                                                        }}
+                                                                    // onClick={this.nextlabel2.bind(this)}
                                                                        >Next</button>
                                                                         </div>
                                                                     </div>
@@ -629,6 +635,7 @@ class  OfferView extends Component {
                                                                          
                                                                         
                                                                        }}
+                                                                    // onClick={this.nextlabel2.bind(this)}
                                                                        >Next</button>
                                                                         </div>
                                                                     </div>
@@ -703,6 +710,7 @@ class  OfferView extends Component {
                                                                         }
                                                                         
                                                                        }}
+                                                                    // onClick={this.nextlabel2.bind(this)}
                                                                        >Next</button>
                                                                         </div>
                                                                     </div>

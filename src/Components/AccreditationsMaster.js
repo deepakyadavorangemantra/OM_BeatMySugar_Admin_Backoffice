@@ -46,6 +46,7 @@ class AccreditationsMaster extends Component {
             AccreData : obj.data
           })
            Notiflix.Loading.Remove()
+            // console.log(obj.data)
         }))
 
 
@@ -535,6 +536,7 @@ var details=JSON.parse(login)
                                         
                                             },"DeleteAccreditationMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -552,6 +554,7 @@ var details=JSON.parse(login)
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

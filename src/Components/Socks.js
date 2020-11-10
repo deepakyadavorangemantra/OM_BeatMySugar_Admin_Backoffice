@@ -156,6 +156,7 @@ class Socks extends Component {
                             TypeData : objtype.data,
                             
                           })
+                        //   Notiflix.Loading.Remove()
                         }))
 
                         GetApiCall.getRequest("GetCountry").then(resultdes =>
@@ -163,6 +164,7 @@ class Socks extends Component {
                   
                                   this.setState({
                                     CountryOrigindata : obj.data ,
+                                    // CountryOfOrigin : FoodData.fld_countryoforigin == null || FoodData.fld_countryoforigin == '' ? 'India' : FoodData.fld_countryoforigin
                                    
                                   })
 
@@ -180,10 +182,12 @@ class Socks extends Component {
                         
                           },"GetUserSubMenuAccessRights").then((resultssub) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             resultssub.json().then(objsub => {  
                             if(resultssub.status == 200 || resultssub.status==201){
                 
                            var filteredRights = objsub.data;
+                                // console.log(filteredRights)
                         
                                 var con = 0
                                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -361,6 +365,7 @@ class Socks extends Component {
                     },"AddSocksItemMaster").then((results) => 
                         
                     
+                   //    const objs = JSON.parse(result._bodyText)
                       results.json().then(obj => {
                 
                     
@@ -592,6 +597,7 @@ class Socks extends Component {
                                                                             <label for="sw-arrows-first-name" >Country of Origin <span className="mandatory">*</span></label>
                                                                             
                                                                             <select class="form-control custom-select"
+                                                                            //  disabled={!this.state.IsVisible}
                                                                             value={this.state.CountryOfOrigin}
                                                                             onChange={(text)=>{
 
@@ -626,6 +632,13 @@ class Socks extends Component {
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                         onClick={this.nextlabel.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -680,6 +693,13 @@ class Socks extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                     onClick={this.nextlabel2.bind(this)}  >Next</button>
                                                                         </div>
                                                                     </div>
@@ -787,6 +807,13 @@ class Socks extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                             onClick={this.SaveSocks.bind(this)} >Save Socks Item</button>
                                                                         </div>
                                                                     </div>

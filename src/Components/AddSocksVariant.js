@@ -235,10 +235,12 @@ class SocksVariant extends Component {
                         
                           },"GetUserSubMenuAccessRights").then((resultssub) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             resultssub.json().then(objsub => {  
                             if(resultssub.status == 200 || resultssub.status==201){
                 
                            var filteredRights = objsub.data;
+                                // console.log(filteredRights)
                         
                                 var con = 0
                                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -332,6 +334,9 @@ class SocksVariant extends Component {
 
  
 
+    // onChangePack(packagingsize){
+    //     this.props.setsockspackagingsize(packagingsize.target.value)
+    // }
     onChangeWeight(packageweight){
         if((this.state.DecimalRegex.test(packageweight.target.value))){
         this.props.setsockspackagingweight(packageweight.target.value)
@@ -550,12 +555,19 @@ class SocksVariant extends Component {
         if((this.props.setsocksdiscount(discountprice.target.value))){
             this.props.setsocksdiscountprice(discountprice.target.value)
 
+            // if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
             this.props.setsocksdiscount(parseFloat(((this.props.sockscredential.Price-discountprice.target.value)/this.props.sockscredential.Price)*100).toFixed(2))
+            // }else
+            // {
+            // this.props.setsocksdiscount(parseFloat(((this.state.VendorSellingPrice-discountprice.target.value)/this.state.VendorSellingPrice)*100).toFixed(2))
+
+            // }
 
             var cusbasepr = parseFloat(discountprice.target.value/(1+(this.state.MasterData.fld_gstpercent/100))).toFixed(2)
 
             var invoiceamt = parseFloat(cusbasepr*(this.state.MasterData.fld_gstpercent/100)).toFixed(2)
 
+            // console.log(parseFloat(cusbasepr*(this.state.MasterData.TcsPercent/100)).toFixed(2))
             this.setState({
                 CustomerBasePrice : cusbasepr,
                 InvoiceGstAmount : invoiceamt,
@@ -711,6 +723,7 @@ class SocksVariant extends Component {
         var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+  // console.log(this.state.imagedata != '')
   if(this.state.ImageCoverData != ''){
 
     const form = new FormData();
@@ -730,6 +743,7 @@ class SocksVariant extends Component {
     })
     ).then(res => {
    
+      // console.log(obj.data[0])
 
       PostApiCall.postRequest({
 
@@ -741,6 +755,7 @@ class SocksVariant extends Component {
  
      },"AddSocksVariantImage").then((results1) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results1.json().then(obj1 => {
  
      
@@ -756,6 +771,7 @@ class SocksVariant extends Component {
 
 }else
 {
+  // console.log('in no cover')
   this.OnAddProductImages(obj)
 }
     }
@@ -772,12 +788,14 @@ class SocksVariant extends Component {
       
         for(var i =0 ; i <this.state.Photos.length;i++){
       
+          // console.log(this.state.Photos)
         
       
           if(this.state.Photos[i].value != ''){
       
             const form1 = new FormData();
       
+            // console.log(this.state.Photos[i].data)
          
         form1.append('file', this.state.Photos[i].data);
         form1.append('foldername' , 'Socks')
@@ -794,6 +812,7 @@ class SocksVariant extends Component {
         status: image1.status
         })
         ).then(res1 => {
+        // console.log(res.data)
       
       
           PostApiCall.postRequest({
@@ -806,6 +825,7 @@ class SocksVariant extends Component {
       
          },"AddSocksVariantImage").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
       
          
@@ -853,6 +873,7 @@ class SocksVariant extends Component {
   var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+//   for(var j =0 ; j<this.state.VendorPricing.length;j++){
 
     PostApiCall.postRequest({
 
@@ -870,19 +891,25 @@ class SocksVariant extends Component {
 
    },"AddSocksVariantVendorPricing").then((results3) => 
    
+     // const objs = JSON.parse(result._bodyText)
      results3.json().then(obj3 => {
 
    
      if(results3.status == 200 || results3.status==201){
 
+    //   count1 = count1 + 1;
+
+    //   if(count1 == this.state.VendorPricing.length){
     
         Notiflix.Loading.Remove()
         this.props.setclearsocksitem()
         Notiflix.Notify.Success('Socks variant added successfully.')
         window.location.href = '/socksvariantlist'
       }
+    //  }
   
     }))
+    // }
 
     }
 
@@ -929,6 +956,7 @@ class SocksVariant extends Component {
                      updatedon : moment().format('lll'),
                           },"AddSocksVariant").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
              
                  
@@ -968,6 +996,7 @@ else{
             if(this.state.Sku != ''){
                 if(this.state.MarginOn != ''){
                     if(this.state.VendorSellingPrice != 0){
+            //   if(this.state.MarginPercent != ''){
                
                 var dt = this.state.VendorPricing.filter((value)=> value.Name == this.state.Name)
     
@@ -1009,6 +1038,10 @@ else{
                     
     
                   
+            //   }else
+            //   {
+            //     Notiflix.Notify.Failure('Please enter margin percent.');
+            //   }
             }else
             {
               Notiflix.Notify.Failure('Please enter vendor selling price.');
@@ -1107,7 +1140,17 @@ else{
                                                                 }
                                                             }}
                                                             className="wizardlist nav-link">SEO Details</a></li>
-                       
+                                                 {/* <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
+
+                                                                if (this.state.Page6 == 'Done') {
+                                                                    this.setState({
+                                                                        PageTitle: '6',
+                                                                        Page6: 'Done',
+    
+                                                                    })
+                                                                }
+                                                            }}
+                                                                className="wizardlist nav-link">Vendor Pricing</a></li> */}
                                                     
                                                                 <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
@@ -1138,7 +1181,14 @@ else{
                                                                 </div>
                                                                 <div className="toast-body">
                                                                 <div className="row">
-                                                                   
+                                                                    {/* <div className="col-md-6">
+                                                                        <div className="form-group mb-3">
+                                                                            <label for="validationCustom01">Item SKU [BMS]<span className="mandatory">*</span></label>
+                                                                            <input type="text" className="form-control" 
+                                                                            value={this.props.sockscredential.ItemSkuBms}
+                                                                            onChange={this.onChangeSku.bind(this)} />
+                                                                        </div>
+                                                                    </div> */}
                                                                     <div className="col-md-4">
                                                                         <div className="form-group mb-3">
                                                                             <label for="validationCustom01">Variant Name (160 Character)<span className="mandatory">*</span></label>
@@ -1195,7 +1245,13 @@ else{
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                        
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                         onClick={this.nextlabel.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -1329,7 +1385,13 @@ else{
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                    
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                     onClick={this.nextlabel2.bind(this)}  >Next</button>
                                                                         </div>
                                                                     </div>
@@ -1350,6 +1412,7 @@ else{
                                                                      <div className="form-group mb-3">
                                                                          <label for="validationCustom01">Price MRP (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                          <input type="text" className="form-control" 
+                                                                        //   disabled={!this.state.IsVisible}
                                                                          value={this.props.sockscredential.Price}
                                                                          onChange={this.onChangePrice.bind(this)}/>
                                                                      
@@ -1360,6 +1423,7 @@ else{
                                                                         <div className="form-group mb-3">
                                                                             <label for="validationCustom01">Select Vendor<span className="mandatory">*</span></label>
                                                                             <select type="text" className="form-control" 
+                                                                            //  disabled={!this.state.IsVisible} 
                                                                            value={this.state.Name} 
                                                                            onChange={(text)=>{
                                                                                this.setState({
@@ -1393,11 +1457,14 @@ else{
                                                                     <div className="form-group mb-3">
                                                                         <label for="validationCustom01">Vendor Item SKU<span className="mandatory">*</span></label>
                                                                          <input type="text" className="form-control" 
+                                                                        //   disabled={!this.state.IsVisible}
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -1406,6 +1473,7 @@ else{
                                                                         <div className="form-group mb-3">
                                                                             <label for="validationCustom01">Select BMS Margin On<span className="mandatory">*</span></label>
                                                                             <select type="text" className="form-control"  
+                                                                            //  disabled={!this.state.IsVisible}
                                                                            value={this.state.MarginOn} 
                                                                            onChange={(text)=>{
                                                                                this.setState({
@@ -1441,6 +1509,7 @@ else{
                                                                     <div className="form-group mb-3">
                                                                         <label for="validationCustom01">Vendor Selling Price (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                         <input type="text" className="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
                                                                        value={this.state.VendorSellingPrice} 
                                                                        onChange={(text)=>{
                                                                         if(this.state.DecimalRegex.test(text.target.value)){
@@ -1481,6 +1550,7 @@ else{
                                                                      <div className="form-group mb-3">
                                                                          <label for="validationCustom01">Discounted Price (<span>&#8377;</span>)<span className="mandatory"></span></label>
                                                                          <input type="text" className="form-control"  
+                                                                        //   disabled={!this.state.IsVisible}
                                                                          value={this.props.sockscredential.DiscountPrice}
                                                                          onChange={this.onChangeDpice.bind(this)} />
                                                                      </div>
@@ -1489,6 +1559,7 @@ else{
                                                                      <div className="form-group mb-3">
                                                                          <label for="validationCustom01">Discount Percent(%)<span className="mandatory">*</span></label>
                                                                          <input type="text" className="form-control" value={this.props.sockscredential.DiscountPer} 
+                                                                        //   disabled={!this.state.IsVisible}
                                                                          onChange={this.onChangeDisc.bind(this)}/>
                                                                      </div>
                                                                  </div>
@@ -1536,6 +1607,7 @@ else{
                                                                     <div className="form-group mb-3">
                                                                         <label for="validationCustom01">BMS Margin (%)<span className="mandatory">*</span></label>
                                                                         <input type="text" className="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
                                                                         value={this.state.MarginPercent} 
                                                                         onChange={(text)=>{
                                                                             if(this.state.DecimalRegex.test(text.target.value)){
@@ -1575,6 +1647,7 @@ else{
                                                                     <div className="form-group mb-3">
                                                                         <label for="validationCustom01">Margin Amount (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                         <input type="text" className="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
                                                                        value={this.state.Margin} 
                                                                        onChange={(text)=>{
                                                                         if(this.state.DecimalRegex.test(text.target.value)){
@@ -1667,7 +1740,13 @@ else{
                                                                              }}
                                                                          >Previous</button>
                                                                          <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                      
+                                                                         // onClick={()=>{
+                                                    
+                                                                         //     this.setState({
+                                                                         //         PageTitle : '4',
+                                                                         //         Page3 : 'Done'
+                                                                         //     })
+                                                                         //   }}
                                                                            onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                      </div>
                                                                  </div>
@@ -1700,6 +1779,7 @@ else{
                                                         <div className="col-md-9 ">
                                                         <label for="sw-arrows-first-name" >Product Image<span className="mandatory">*</span></label>
         
+                                                        {/* <div className="form-group"> */}
                                                          <div className="div1" className='row'>
                                                          {this.state.Photos.map((photo,index)=>(  
                                                               <div style={{    marginLeft: '1%',    marginRight: '2%'}}>   
@@ -1721,16 +1801,21 @@ else{
                                                                         }}
                                                                         ></XSquare>
                                                                         <input id="photo-upload" type="file" onChange={(e)=>{
+                                                                  //  e.preventDefault();
+                                                                  //  console.log(e.target.files[0])
                                                                    if(e.target.files[0] != undefined){
                                                                      if(e.target.files[0].size < 300000){
                                                                       var arr1 = [...this.state.Photos]
                                                                  const reader = new FileReader();
                                                                    const file = e.target.files[0];
                                                                    reader.onload = (e) => {
+                                                                    // console.log(e.target.result)
+                                                                    // this.setState({image: e.target.result});
                                                                     arr1[index].image =  e.target.result
                                                                     arr1[index].value =  e.target.result
                                                                     arr1[index].data =  file
                                                                     
+                                                                    // this.props.setstaffimage(e.target.result);
                                                                     this.setState({
                                                                       Photos : arr1,
                                                                       imageCount : this.state.imageCount + 1
@@ -1748,6 +1833,7 @@ else{
                                                                
                                                            </div>
                                                             ))}
+                                                                 {/* </div> */}
                                                          </div>
                                                         </div>
                                                             
@@ -1777,7 +1863,13 @@ else{
                                                                          }}
                                                                      >Previous</button>
                                                                      <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                     
+                                                                     // onClick={()=>{
+                                                
+                                                                     //     this.setState({
+                                                                     //         PageTitle : '4',
+                                                                     //         Page3 : 'Done'
+                                                                     //     })
+                                                                     //   }}
                                                                      onClick={this.nextlabel4.bind(this)} >Next</button>
                                                                  </div>
                                                              </div>
@@ -1843,7 +1935,13 @@ else{
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                       
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                             onClick={this.nextlabel5.bind(this)} >Next</button>
                                                                         </div>
                                                                     </div>
@@ -1901,9 +1999,11 @@ else{
                                                                          <input type="text" className="form-control" 
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -2156,7 +2256,13 @@ else{
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                          
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel6.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -2240,7 +2346,13 @@ else{
                                                                             }}
                                                                         >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                     
+                                                                        // onClick={()=>{
+                                                   
+                                                                        //     this.setState({
+                                                                        //         PageTitle : '5',
+                                                                        //         Page5 : 'Done'
+                                                                        //     })
+                                                                        //   }}
                                                                           onClick={this.SaveSocksVariant.bind(this)}>Add Socks Variant</button>
                                                                     </div>
                                                                 </div>

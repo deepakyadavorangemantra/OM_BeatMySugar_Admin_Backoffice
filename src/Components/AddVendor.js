@@ -190,6 +190,7 @@ class AddVendor extends Component {
           GetApiCall.getRequest("GetVendorFacilitiesData").then(resultdes =>
             resultdes.json().then(obj=> {
 
+                // console.log(obj.data)
 
               this.setState({
                FacilityData: obj.data,
@@ -201,6 +202,7 @@ class AddVendor extends Component {
             GetApiCall.getRequest("GetVendorAccreditationData").then(resultdes =>
                 resultdes.json().then(obj=> {
     
+                    // console.log(obj.data)
     
                   this.setState({
                    AccData: obj.data,
@@ -212,6 +214,7 @@ class AddVendor extends Component {
             GetApiCall.getRequest("GetVendorLicenseData").then(resultdes =>
                 resultdes.json().then(obj=> {
     
+                    // console.log(obj.data)
     
                   this.setState({
                    LicenseData: obj.data,
@@ -243,6 +246,7 @@ class AddVendor extends Component {
         
                       },"GetState").then((results) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         results.json().then(objstate => {
                   
                       
@@ -265,6 +269,7 @@ class AddVendor extends Component {
                 
                               },"GetCity").then((resultscity) => 
                               
+                                // const objs = JSON.parse(result._bodyText)
                                 resultscity.json().then(objcity => {
                           
                               
@@ -273,6 +278,7 @@ class AddVendor extends Component {
                 
                                     if(objcity.data.length != 0 ){
                                         this.props.setvendorcity(objcity.data[0].label)
+                                        // this.props.setpermanentcity(objcity.data[0].label)
                                         this.setState({
                                             CityId : objcity.data[0].value,
                                             CityData : objcity.data,
@@ -286,6 +292,7 @@ class AddVendor extends Component {
                     }))
                      
                 
+                    // Notiflix.Loading.Remove()
                 
                 }) 
                 );
@@ -300,10 +307,12 @@ class AddVendor extends Component {
                 
                   },"GetUserSubMenuAccessRights").then((resultssub) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     resultssub.json().then(objsub => {  
                     if(resultssub.status == 200 || resultssub.status==201){
         
                    var filteredRights = objsub.data;
+                        // console.log(filteredRights)
                 
                         var con = 0
                         for(var i = 0 ; i< filteredRights.length ;i++){
@@ -420,6 +429,7 @@ class AddVendor extends Component {
             if(this.props.vendorcredential.GSTIN!=''){
                 if(this.props.vendorcredential.PAN!=''){
                     if(this.props.vendorcredential.PAN.length == 10){
+                        // if(this.props.vendorcredential.TAN!=''){
                             if(this.state.MerchantId){
                                 if(this.state.Facility.length > 0){
                                 
@@ -436,6 +446,10 @@ class AddVendor extends Component {
                     else{
                         Notiflix.Notify.Failure('Please enter vendor merchant id.') 
                       }
+                    // }
+                    // else{
+                    //     Notiflix.Notify.Failure('Please enter TAN number.') 
+                    //   }
                     }
                     else{
                         Notiflix.Notify.Failure('Please enter a valid PAN number.') 
@@ -554,6 +568,7 @@ class AddVendor extends Component {
         this.props.setvendorlandmark(landmark.target.value)
     }
     onChangeCountry(country){
+        // this.props.setvendorcountry(country.target.value)
         this.setState({
             CountryId : country.target.value
           })
@@ -631,6 +646,7 @@ class AddVendor extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -642,6 +658,7 @@ class AddVendor extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -778,6 +795,7 @@ class AddVendor extends Component {
             for(var i =0 ; i<time.length;i++){
                 if(time[i].open == undefined || time[i].close == undefined){
 
+                    // Notiflix.Notify.Failure('Please select opening & closing timings for health center.')
                     cn = 1
                 }
 
@@ -897,6 +915,7 @@ OnAddContactPerson(){
                     updatedon : moment().format('lll'),
                          },"AddVendorFacilitiesMapping").then((results) => 
                 
+                   // const objs = JSON.parse(result._bodyText)
                    results.json().then(obj1 => {
             
                 
@@ -944,6 +963,7 @@ OnAddContactPerson(){
                     updatedon : moment().format('lll'),
                          },"AddVendorLicenseMapping").then((results) => 
                 
+                   // const objs = JSON.parse(result._bodyText)
                    results.json().then(obj1 => {
             
                 
@@ -992,6 +1012,7 @@ OnAddContactPerson(){
                     updatedon : moment().format('lll'),
                          },"AddVendorAccreditationmapping").then((results) => 
                 
+                   // const objs = JSON.parse(result._bodyText)
                    results.json().then(obj1 => {
             
                 
@@ -1044,6 +1065,7 @@ OnAddContactPerson(){
                     updatedon : moment().format('lll'),
                          },"AddVendorContactPersonMapping").then((results) => 
                 
+                   // const objs = JSON.parse(result._bodyText)
                    results.json().then(obj1 => {
             
                 
@@ -1093,6 +1115,7 @@ OnAddContactPerson(){
                     updatedon : moment().format('lll'),
                           },"AddVendorTimingMapping").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(objs => {
              
                  
@@ -1125,6 +1148,7 @@ OnAddContactPerson(){
         var login=localStorage.getItem('LoginDetail');
         var details=JSON.parse(login)
       
+        // console.log(this.state.imagedata != '')
         if(JSON.stringify(this.state.ImageData)  != '[]'){
       
           const form = new FormData();
@@ -1144,6 +1168,7 @@ OnAddContactPerson(){
           })
           ).then(res => {
          
+            // console.log(obj.data[0])
       
             PostApiCall.postRequest({
       
@@ -1155,6 +1180,7 @@ OnAddContactPerson(){
        
            },"UpdateVendorLogo").then((results1) => 
            
+             // const objs = JSON.parse(result._bodyText)
              results1.json().then(obj1 => {
        
            
@@ -1170,6 +1196,7 @@ OnAddContactPerson(){
       
       }else
       {
+        // console.log('in no cover')
         this.OnAddVendorCheque(obj)
       }
 
@@ -1182,6 +1209,7 @@ OnAddContactPerson(){
         var login=localStorage.getItem('LoginDetail');
         var details=JSON.parse(login)
       
+        // console.log(this.state.imagedata != '')
         if(JSON.stringify(this.state.ImageDataCheque)  != '[]'){
       
           const form = new FormData();
@@ -1201,6 +1229,7 @@ OnAddContactPerson(){
           })
           ).then(res => {
          
+            // console.log(obj.data[0])
       
             PostApiCall.postRequest({
       
@@ -1212,6 +1241,7 @@ OnAddContactPerson(){
        
            },"UpdateVendorCheque").then((results1) => 
            
+             // const objs = JSON.parse(result._bodyText)
              results1.json().then(obj1 => {
        
            
@@ -1275,6 +1305,7 @@ OnAddContactPerson(){
                  merchantid : this.state.MerchantId
                       },"AddVendor").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {
          
              
@@ -1579,7 +1610,13 @@ OnAddContactPerson(){
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-        
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                         onClick={this.SaveMasterinfo.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -1762,7 +1799,13 @@ OnAddContactPerson(){
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                    
+                                                                    //     onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                        onClick={this.SaveLicense.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1819,7 +1862,13 @@ OnAddContactPerson(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                           
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.SaveAccredition.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1962,7 +2011,13 @@ OnAddContactPerson(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                           
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                              onClick={this.SaveContactinfo.bind(this)} >Next</button>
                                                                         </div>
                                                                     </div>
@@ -2055,7 +2110,13 @@ OnAddContactPerson(){
                                                                             }}
                                                                         >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                        
+                                                                        // onClick={()=>{
+                                                   
+                                                                        //     this.setState({
+                                                                        //         PageTitle : '6',
+                                                                        //         Page5 : 'Done'
+                                                                        //     })
+                                                                        //   }}
                                                                           onClick={this.SaveBankdetail.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -2148,8 +2209,10 @@ OnAddContactPerson(){
                                                 <td>{data.day}</td>
                                                 <td> <TimePicker
                                                 disabled={!data.edit}
+                                                // value={this.state.TimingInfo[index].open}
                                                 value={this.state.TimingInfo[index].open == undefined ? '' : moment(this.state.TimingInfo[index].open)}
                                                         showSecond={false}
+                                                        // format={format}
                                                         use12Hours
                                                         inputReadOnly
                                                         onChange ={(value)=>{
@@ -2157,6 +2220,7 @@ OnAddContactPerson(){
                                                        
                                                             var arr = [...this.state.TimingInfo]
 
+                                                            // console.log(arr[index].day)
                                                             arr[index].open = value 
                                                       
                                                             this.setState({
@@ -2171,6 +2235,7 @@ OnAddContactPerson(){
                                                  disabled={!data.edit}
                                                  value={this.state.TimingInfo[index].close == undefined ? '' : moment(this.state.TimingInfo[index].close)}
                                                 showSecond={false}
+                                                // format={format}
                                                 use12Hours
                                                 inputReadOnly
                                                 onChange ={(value)=>{
@@ -2201,16 +2266,21 @@ OnAddContactPerson(){
                                                          disabled={!data.edit}
                                                         value={this.state.TimingInfo[index].open1 == undefined ? '' : moment(this.state.TimingInfo[index].open1)}
                                                      showSecond={false}
+                                                    //  format={format}
                                                      use12Hours
+                                                    //  inputReadOnly
                                                      onChange ={(value)=>{
                                                        
                                                         var arr = [...this.state.TimingInfo]
 
+                                                        // console.log(value >= arr[index].open)
 
                                                         if(value >= arr[index].open && value <= arr[index].close){
                                                             Notiflix.Notify.Failure('Time slot already booked for the day.')
                                                         }else
                                                         {
+                                                            // console.log(value && value.format(format))
+                                                            // console.log(arr[index].open1)
                                                             arr[index].open1 = value 
                                                    
                                                             this.setState({
@@ -2230,6 +2300,7 @@ OnAddContactPerson(){
                                 
                                                      disabled={!data.edit}
                                                   showSecond={false}
+                                                //   format={format}
                                                   use12Hours
                                                   inputReadOnly
                                                   onChange ={(value)=>{
@@ -2292,6 +2363,13 @@ OnAddContactPerson(){
                                                                         }}
                                                                     >Previous</button>
                                                                     <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    // onClick={()=>{
+                                               
+                                                                    //     this.setState({
+                                                                    //         PageTitle : '7',
+                                                                    //         Page6 : 'Done'
+                                                                    //     })
+                                                                    //   }}
                                                                      onClick={this.SaveTime.bind(this)} >Next</button>
                                                                 </div>
                                                             </div>
@@ -2501,6 +2579,13 @@ OnAddContactPerson(){
                                                                     }}
                                                                 >Previous</button>
                                                                 <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                //  onClick={()=>{
+                                           
+                                                                //     this.setState({
+                                                                //         PageTitle : '8',
+                                                                //         Page7 : 'Done'
+                                                                //     })
+                                                                //   }}
                                                                  onClick={this.SaveContactPerson.bind(this)} >Next</button>
                                                             </div>
                                                         </div>

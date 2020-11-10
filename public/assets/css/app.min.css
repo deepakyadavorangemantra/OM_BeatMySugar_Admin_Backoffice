@@ -66,34 +66,9 @@ body {
 	height: 100%;
 	padding-bottom: 30px
 }
-#sidebar-menu {
-    overflow-y: auto !important;
-    height: 100vh;
-}
-/* width */
-#sidebar-menu::-webkit-scrollbar {
-	width: 3px;
-  }
-  
-  /* Track */
-  #sidebar-menu ::-webkit-scrollbar-track {
-	background: #f1f1f1; 
-  }
-   
-  /* Handle */
-  #sidebar-menu::-webkit-scrollbar-thumb {
-	background: #9ea5ab; 
-  }
-  
-  /* Handle on hover */
-  #sidebar-menu::-webkit-scrollbar-thumb:hover {
-	background: #9ea5ab; 
-  }
+
 #sidebar-menu {
 	padding-bottom: 30px
-}
-div#sidebar-menu {
-    overflow-y: auto !important;
 }
 
 #sidebar-menu>ul>li.mm-active>a {
@@ -4277,12 +4252,7 @@ webkit-box-flex: 1;
 {
 	font-size:30px;
 }
-/* span.apexcharts-legend-marker{
-	display: none!important;
-}
-span.apexcharts-legend-text{
-	display: none!important;
-} */
+
 
 
 .zoom-in {
@@ -4313,19 +4283,6 @@ span.apexcharts-legend-text{
 	padding-right: 1rem!important;
 }
 
-/* .bg-box{
-	width: 79%;
-    background: #f9fafc;
-    box-shadow: 0 3px 20px rgba(0,0,0,.04);
-    height: 95%;
-    margin-top: .75rem;
-    position: absolute;
-    border-radius: .375rem;
-    margin-left: auto;
-    margin-right: auto;
-    right: 0;
-    left: 3px;
-} */
 div#apexcharts15hly9ud{
 	margin-left: 24%!important;
 }
@@ -4358,4 +4315,59 @@ div#apexcharts15hly9ud{
 	border-radius: 50%;
 	/* color: #fff!important; */
 
+}
+.react-datepicker__input-container {
+	margin-left: 8px!important;
+ 
+}
+.form-control-date{
+	height: calc(1.5em + 1rem + 2px);
+    padding: .5rem .75rem;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #4b4b5a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e2e7f1;
+	border-radius: .3rem;
+	
+}
+.form-control-daters{
+	height: calc(1.5em + 1rem + 5px);
+    padding: .5rem .75rem;
+    font-size: .7rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #4b4b5a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e2e7f1;
+	border-radius: .3rem;
+	
+}
+.form-date-picker{
+	height: calc(1.5em + 1rem + 2px);
+    padding: .5rem .75rem;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4b4b5a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e2e7f1;
+	border-radius: .3rem;
+	width: 7rem !important;
+}
+.visually-view{
+	width: 78vw!important;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+.card-body.getreport-card {
+    padding: 1rem!important;
 }

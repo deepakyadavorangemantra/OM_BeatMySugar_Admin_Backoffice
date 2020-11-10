@@ -37,6 +37,7 @@ class ChangePassword extends React.Component {
 
         var login=localStorage.getItem('LoginDetail');
         var details=JSON.parse(login)
+        // console.log(passdetails)
         if(details!=null){
             this.setState({
                 OldPassword:passdetails,
@@ -85,6 +86,7 @@ class ChangePassword extends React.Component {
                   
                       },"ChangePassword").then((results) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         results.json().then(obj => {
                   
                       
@@ -180,6 +182,7 @@ class ChangePassword extends React.Component {
                                                 />
 
                                                     <span class="login-icon-change-pass">
+                                                            {/* <i class="icon-dual" data-feather="lock"></i>*/}
                                                              <i style={{color : this.state.isOldPasswordVisible ? '#060a4a' : ''}} dangerouslySetInnerHTML={{__html:window.feather.icons.eye.toSvg()}} 
                                                              onClick={()=>{
                                                                  this.setState({
@@ -202,6 +205,7 @@ class ChangePassword extends React.Component {
                                                 />
 
                                             <span class="login-icon-change-pass">                       
+                                                            {/* <i class="icon-dual" data-feather="lock"></i>*/}
                                                              <i style={{color : this.state.isNewPasswordVisible ? '#060a4a' : ''}} dangerouslySetInnerHTML={{__html:window.feather.icons.eye.toSvg()}} 
                                                              onClick={()=>{
                                                                  this.setState({
@@ -224,6 +228,7 @@ class ChangePassword extends React.Component {
                                               
                                                 />
                                                      <span class="login-icon-change-pass">
+                                                            {/* <i class="icon-dual" data-feather="lock"></i>*/}
                                                              <i style={{color : this.state.isConPasswordVisible ? '#507dc0' : ''}} dangerouslySetInnerHTML={{__html:window.feather.icons.eye.toSvg()}} 
                                                              onClick={()=>{
                                                                  this.setState({

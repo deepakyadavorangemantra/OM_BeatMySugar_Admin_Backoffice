@@ -31,6 +31,7 @@ class DeviceFilterMaster extends Component {
                     
                 DeviceFData : obj.data
               })
+              // console.log(obj.data)
                Notiflix.Loading.Remove()
             }))
     }
@@ -353,6 +354,7 @@ class DeviceFilterMaster extends Component {
                                         
                                             },"DeleteDeviceFilterMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -370,6 +372,7 @@ class DeviceFilterMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

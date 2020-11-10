@@ -55,6 +55,7 @@ class ViewInsurance extends Component {
    
     Notiflix.Loading.Init({
         svgColor : '#507dc0'
+        //  #507dc0'
       });
       this.props.setclearinsurance()
       Notiflix.Loading.Dots('');
@@ -129,6 +130,7 @@ onChangeWeight(weight){
 }
 
 SaveInsurance(){
+    console.log(this.props.InsuranceCredentials)
     
   if(this.props.InsuranceCredentials.InsuredName!=''){
       if(this.props.InsuranceCredentials.DOB!=''){
@@ -143,7 +145,49 @@ SaveInsurance(){
                                 Notiflix.Loading.Dots('');
                                                                   
 
-                               
+                                // PostApiCall.postRequest({
+                                //        name : this.props.InsuranceCredentials.InsuredName,
+                                //         dob : this.props.InsuranceCredentials.DOB,
+                                //         address : this.props.InsuranceCredentials.Address,
+                                //         email : this.props.InsuranceCredentials.Email,
+                                //         mobile : this.props.InsuranceCredentials.Mobile,
+                                //         type : this.props.InsuranceCredentials.TypeOfInsurance,
+                                //         sumassured : this.props.InsuranceCredentials.SumAssured,
+                                //         currentdisease : this.state.Status,
+                                //         currentdiseasedescription : this.props.InsuranceCredentials.CurrentDisease,
+                                //         insurancepolicy: this.state.Policy,
+                                //         insurancepolicydescription : this.props.InsuranceCredentials.InsurancePolicy,
+                                //         selfdisclousre : this.props.InsuranceCredentials.SelfDisclosure,
+                                //         height : this.props.InsuranceCredentials.Height,
+                                //         weight : this.props.InsuranceCredentials.Weight,
+                                //         updatedon : moment().format('lll'),
+                                //         updatedby : 0,
+                                      
+                              
+                                //   },"AddInsurance").then((results) => 
+                                      
+                                  
+                                //  //    const objs = JSON.parse(result._bodyText)
+                                //     results.json().then(obj => {
+                              
+                                  
+                                //     if(results.status == 200 || results.status==201){
+                                //      this.props.setclearinsurance()
+                          
+                                //      Notiflix.Loading.Remove()
+                          
+                                //      Notiflix.Notify.Success('Insurance successfully added.')
+                                //      window.location.href = '/insurance'
+                                     
+                          
+                                //  }
+                                //  else{
+                                //      Notiflix.Loading.Remove()
+                                //      Notiflix.Notify.Failure('Something went Wrong.')
+                                //    } 
+                                //  }
+                                //     )
+                                //   )
                             }
                             else{
                                 Notiflix.Notify.Failure('Please enter sum assured.') 
@@ -255,6 +299,9 @@ SaveInsurance(){
                                                                <input type="text" class="form-control" id="validationCustom05"
                                                                disabled={!this.state.IsVisible}
                                                                value={moment(this.props.InsuranceCredentials.DOB).format('DD/MM/YYYY')}
+                                                            //    max={moment().format('DD-MM-YYYY')}
+                                                            //    onKeyDown={(e) => e.preventDefault()} 
+                                                            //    onChange={this.onChangeDOB.bind(this)}
                                                              />
                                                                
                                                            </div>
@@ -530,7 +577,13 @@ SaveInsurance(){
                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
                                                        disabled={!this.state.IsVisible}
                                                        onClick={this.UpdateInsurance}
-                                                   
+                                                    //    {() => {
+
+                                                    //        this.setState({
+                                                    //            PageTitle: '1',
+                                                    //            Page1: 'Done'
+                                                    //        })
+                                                    //    }}
                                                       >Update</button>
                                                    </div>
                                                </div>

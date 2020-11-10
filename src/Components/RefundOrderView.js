@@ -48,7 +48,10 @@ class RefundOrderView extends Component {
 
 
         PaymentData : [],
-        ProdData : []
+        ProdData : [],
+
+        VendorSplit : 0,
+        BMSSplit : 0
        
 
     }
@@ -62,6 +65,7 @@ class RefundOrderView extends Component {
    
     Notiflix.Loading.Init({
         svgColor : '#507dc0'
+        //  #507dc0'
       });
 
       var dt = JSON.parse(localStorage.getItem('RefundSettle'))
@@ -78,11 +82,13 @@ class RefundOrderView extends Component {
  
  },"GetPaymentSplitFromOrder").then((results2) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results2.json().then(obj2 => {
 
  
    if(results2.status == 200 || results2.status==201){
 
+    console.log(obj2.data)
     for(var i = 0 ;i<Object.keys(obj2.data).length;i++){
         if(dt.fld_merchantid == obj2.data[i].fld_merchantid){
             this.setState({
@@ -104,6 +110,7 @@ class RefundOrderView extends Component {
      
      },"GetFoodOrderDetail").then((results2) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results2.json().then(obj2 => {
     
      
@@ -115,6 +122,8 @@ this.setState({
     ProductName : obj2.data[0].fld_prodname,
     ProdData : obj2.data[0]
 })
+
+this.getSplitData(obj2.data[0],dt)
 
        }
     }))
@@ -129,6 +138,7 @@ this.setState({
      
      },"GetFootwearOrderDetail").then((results2) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results2.json().then(obj2 => {
     
      
@@ -140,7 +150,7 @@ this.setState({
     ProductName : obj2.data[0].fld_prodname,
     ProdData : obj2.data[0]
 })
-
+this.getSplitData(obj2.data[0],dt)
 
        }
     }))
@@ -155,6 +165,7 @@ this.setState({
      
      },"GetSocksOrderDetail").then((results2) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results2.json().then(obj2 => {
     
      
@@ -165,7 +176,7 @@ this.setState({
             ProductName : obj2.data[0].fld_prodname,
             ProdData : obj2.data[0]
         })
-        
+        this.getSplitData(obj2.data[0],dt)
 
        }
     }))
@@ -175,6 +186,34 @@ this.setState({
     }
 
 
+
+    getSplitData(product,master){
+
+        var mrp = product.fld_marginon == 'Vendor Selling Price' ? product.fld_vendorsellingprice : master.mrp
+
+        var ptc = mrp*product.fld_quantity
+
+        var tpsp = master.fld_price*product.fld_quantity
+
+        var cp = tpsp-((tpsp)*master.fld_offerpercent/100)
+
+        var gp = parseFloat((cp/(100+product.fld_taxpercent))*100).toFixed(2)
+
+        var tcs = gp*(product.fld_tcs/100)
+
+        var tds = gp*(product.fld_tds/100)
+
+        var bmsm = ptc*(product.fld_marginpercent/100)
+
+        var vensp = ptc-bmsm-tcs-tds
+
+        console.log(tcs)
+
+        this.setState({
+            VendorSplit : parseFloat(vensp).toFixed(2),
+            BMSSplit : parseFloat(cp-vensp).toFixed(2)
+        })
+    }
 
 
 OnClickRefund(){
@@ -192,10 +231,11 @@ OnClickRefund(){
 {
     Notiflix.Loading.Dots()
 
+    // console.log(this.state.PaymentData.fld_paymentid)
 
     PostApiCall.postRequest({
 
-      paymentid : this.state.PaymentData.fld_paymentid,
+      paymentid : this.state.PaymentData.fld_vendorpaymentid,
       refundAmount : this.state.TotalAmount,
       refundType : 1,
       merchantId : this.state.ReturnData.fld_merchantid,
@@ -205,6 +245,7 @@ OnClickRefund(){
  
  },"AddPaymentRefund").then((results2) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results2.json().then(obj2 => {
 
  
@@ -215,10 +256,11 @@ OnClickRefund(){
         returndid : this.state.ReturnData.fld_id,
         orderdetailid : this.state.ReturnData.fld_orderdetailid,
         orderid : this.state.ReturnData.fld_orderid,
-        status : 'Refunded'
+        status : 'Partially Refunded'
  
  },"UpdateReturnStatus").then((results) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results.json().then(obj => {
 
  
@@ -542,9 +584,8 @@ Notiflix.Notify.Failure('Please enter Vendor Refund Amount.')
                                                        <label for="validationCustom05">BMS Margin Amount</label>
                                                       <input type="text" class="form-control"
                                                        disabled
-                                                       value={parseFloat(((((this.state.ReturnData.fld_price*this.state.ReturnData.fld_quantity)/(1+(this.state.ReturnData.fld_taxpercent/100))-(this.state.ReturnData.fld_offerpercent == '' || this.state.ReturnData.fld_offerpercent == null ? 0 : ((this.state.ReturnData.fld_price*this.state.ReturnData.fld_quantity)/(1+(this.state.ReturnData.fld_taxpercent/100)))*this.state.ReturnData.fld_offerpercent/100)))+((((this.state.ReturnData.fld_price*this.state.ReturnData.fld_quantity)/(1+(this.state.ReturnData.fld_taxpercent/100))-(this.state.ReturnData.fld_offerpercent == '' || this.state.ReturnData.fld_offerpercent == null ? 0 : ((this.state.ReturnData.fld_price*this.state.ReturnData.fld_quantity)/(1+(this.state.ReturnData.fld_taxpercent/100)))*this.state.ReturnData.fld_offerpercent/100)))*(this.state.ReturnData.fld_taxpercent/100)))-((this.state.ProdData.fld_marginon == 'Vendor Selling Price' ? (this.state.ReturnData.fld_vendorsellingprice-((this.state.ProdData.fld_marginon == 'Vendor Selling Price' ? (this.state.ReturnData.fld_vendorsellingprice*(this.state.ProdData.fld_marginpercent/100)) : (this.state.ReturnData.fld_mrp*(this.state.ProdData.fld_marginpercent/100))))) : (this.state.ReturnData.fld_mrp-((this.state.ProdData.fld_marginon == 'Vendor Selling Price' ? (this.state.ReturnData.fld_vendorsellingprice*(this.state.ProdData.fld_marginpercent/100)) : (this.state.ReturnData.fld_mrp*(this.state.ProdData.fld_marginpercent/100)))))) - ((((this.state.ReturnData.fld_price*this.state.ReturnData.fld_quantity)/(1+(this.state.ReturnData.fld_taxpercent/100)))*(this.state.ProdData.fld_tcs/100))) - ((((this.state.ReturnData.fld_price*this.state.ReturnData.fld_quantity)/(1+(this.state.ReturnData.fld_taxpercent/100)))*(this.state.ProdData.fld_tds/100))))).toFixed(2)}
-                                                       
-                                                     />
+                                         
+                                                   value={this.state.BMSSplit}                                    />
                                                        
                                                    </div>
                                                </div> 
@@ -554,8 +595,7 @@ Notiflix.Notify.Failure('Please enter Vendor Refund Amount.')
                                                        <label for="validationCustom05">Vendor Margin Amount</label>
                                                       <input type="text" class="form-control"
                                                        disabled
-                                                       value={parseFloat((this.state.ProdData.fld_marginon == 'Vendor Selling Price' ? (this.state.ReturnData.fld_vendorsellingprice-((this.state.ProdData.fld_marginon == 'Vendor Selling Price' ? (this.state.ReturnData.fld_vendorsellingprice*(this.state.ProdData.fld_marginpercent/100)) : (this.state.ReturnData.fld_mrp*(this.state.ProdData.fld_marginpercent/100))))) : (this.state.ReturnData.fld_mrp-((this.state.ProdData.fld_marginon == 'Vendor Selling Price' ? (this.state.ReturnData.fld_vendorsellingprice*(this.state.ProdData.fld_marginpercent/100)) : (this.state.ReturnData.fld_mrp*(this.state.ProdData.fld_marginpercent/100)))))) - ((((this.state.ReturnData.fld_price*this.state.ReturnData.fld_quantity)/(1+(this.state.ReturnData.fld_taxpercent/100)))*(this.state.ProdData.fld_tcs/100))) - ((((this.state.ReturnData.fld_price*this.state.ReturnData.fld_quantity)/(1+(this.state.ReturnData.fld_taxpercent/100)))*(this.state.ProdData.fld_tds/100)))).toFixed(2)}
-                                                       
+                                                    value={this.state.VendorSplit}
                                                      />
                                                        
                                                    </div>

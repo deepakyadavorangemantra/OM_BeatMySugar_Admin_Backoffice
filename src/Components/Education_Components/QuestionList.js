@@ -80,7 +80,7 @@ class QuestionListView extends Component {
                             {
                                 label: 'Yes',
                                 onClick: () => {
-                                    this.props.removeQuestionData( data.fld_id);
+                                    // this.props.removeQuestionData( data.fld_id);
                                 }
                             },
                             {

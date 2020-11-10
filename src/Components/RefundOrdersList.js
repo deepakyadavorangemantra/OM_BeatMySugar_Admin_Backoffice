@@ -26,12 +26,14 @@ class RefundOrdersList extends Component {
           GetApiCall.getRequest("GetRefundOrdersForRelease").then(resultdes =>
               resultdes.json().then(obj => {
              
+            //   console.log(obj.data)
               
                 this.setState({
                   OrderData : obj.data
                 })
   
   
+                // Notiflix.Loading.Remove();
               }))
 
 
@@ -74,9 +76,12 @@ class RefundOrdersList extends Component {
                                     <tr>
                                     <th>Order No.</th>
                                        <th>Customer Name</th>
-                                    
+                                        {/* <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Amount</th> */}
                                         <th>Reason for Returning</th>
-                             
+                                        {/* <th>Comments</th> */}
+                                        {/* <th>View Product Image</th> */}
                                          <th>Action</th>
                                        
                                         
@@ -100,9 +105,13 @@ class RefundOrdersList extends Component {
                                 </Helmet> : ''}
                                                  <td>{data.fld_ordernumber} <br/> {data.fld_orderdate}</td>
                                                  <td>{data.fld_name} <br/> {data.fld_email} <br/> {data.fld_mobile}</td>
-                            
+                                 {/* <td>Footwear</td>
+                                 <td>1</td>
+                                 <td>500</td> */}
                                  <td>{data.fld_reasonforreturn}</td>
-                            
+                                 {/* <td></td>  */}
+                                 {/* <td>
+                                 <button  class="btn btn-primary">View Image</button></td> */}
                                  <td
                                  onClick={()=>{
                                     localStorage.setItem('RefundSettle',JSON.stringify(data))

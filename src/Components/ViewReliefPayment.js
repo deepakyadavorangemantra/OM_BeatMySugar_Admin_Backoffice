@@ -63,6 +63,7 @@ class ReliefView extends React.Component
 
     var ordermain = JSON.parse(localStorage.getItem('ReliefDetails'))
    
+    // console.log(ordermain)
 
     this.setState({
         MainOrder : ordermain
@@ -75,15 +76,21 @@ class ReliefView extends React.Component
  
  },"GetOrderDetail").then((results1) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results1.json().then(obj1 => {
 
  
    if(results1.status == 200 || results1.status==201){
 
+    // console.log(obj1.data)
+    // this.setState({
+    //     CartData : obj1.data
+    // })
 
     var dt = []
     for(var i =0 ;i<Object.keys(obj1.data).length;i++){
 
+        // console.log(obj1.data[i].fld_productid)
         if(obj1.data[i].fld_category == 'Food'){
 
             PostApiCall.postRequest({
@@ -93,11 +100,13 @@ class ReliefView extends React.Component
          
          },"GetFoodOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null)
             if(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null && obj2.data[0].fld_shipvendorid != 0){
 
               this.setState({
@@ -123,11 +132,13 @@ class ReliefView extends React.Component
          
          },"GetFootwearOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data[0])
             if(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null && obj2.data[0].fld_shipvendorid != 0){
 
               this.setState({
@@ -153,6 +164,7 @@ class ReliefView extends React.Component
          
          },"GetSocksOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
@@ -183,6 +195,16 @@ class ReliefView extends React.Component
 }))
 
 
+// GetApiCall.getRequest("GetVendorData").then(resultdes =>
+//   resultdes.json().then(objcategory =>{
+
+//       this.setState({
+//           VendorData:objcategory.data,
+//       })
+
+//   }))
+
+//   vend = new Array(this.state.CartData.length)
       
     }
 
@@ -259,6 +281,7 @@ for(var i = 0 ;i<grouped.length ;i++){
 
 console.log(net)
 
+// console.log(grouped[i])
 
 
 var ship =  grouped[i][0].fld_vendorid == this.state.ExtraChargeVendor ? this.state.MainOrder.fld_shippingcharges : 0 
@@ -306,6 +329,7 @@ var grp =grouped[i]
  
  },"AddVendorOrder").then((results) => 
  
+ // const objs = JSON.parse(result._bodyText)
  results.json().then(obj => {
  
  
@@ -391,6 +415,7 @@ var grp =grouped[i]
     
     },"AddVendorOrderDetail").then((results1) => 
     
+      // const objs = JSON.parse(result._bodyText)
       results1.json().then(obj1 => {
     
     
@@ -404,6 +429,7 @@ var grp =grouped[i]
           Notiflix.Loading.Remove()
     
           Notiflix.Notify.Info('Order has been assigned to vendors.')
+          // window.location.href = '/neworders' 
         
         }
     
@@ -462,6 +488,7 @@ else
 
         var vendorData = []
         var cn = 0
+        // console.log(this.state.SelectedProduct)
 
         for(var i =0 ;i<this.state.SelectedProduct.length;i++){
 
@@ -475,12 +502,14 @@ else
        
        },"GetFoodVendorDataAssign").then((results2) => 
        
+         // const objs = JSON.parse(result._bodyText)
          results2.json().then(obj2 => {
       
        
          if(results2.status == 200 || results2.status==201){
 
 
+          // console.log(obj2.data)
           vendorData.push(obj2.data[0])
 
           this.setState({
@@ -523,6 +552,7 @@ else
        
        },"GetFootwearVendorDataAssign").then((results2) => 
        
+         // const objs = JSON.parse(result._bodyText)
          results2.json().then(obj2 => {
       
        
@@ -567,6 +597,7 @@ else
        
        },"GetSocksVendorDataAssign").then((results2) => 
        
+         // const objs = JSON.parse(result._bodyText)
          results2.json().then(obj2 => {
       
        
@@ -608,6 +639,9 @@ else
        
         }
 
+        // this.setState({
+        //   open : true
+        // })
 
       }else
       {
@@ -621,6 +655,7 @@ else
     handleAssignPlace(){
       if(this.state.SelectedVendor != ''){
 
+        // console.log(this.state.PlacedCount+this.state.SelectedProduct.length)
    
         if(this.state.PlacedCount+this.state.SelectedProduct.length == this.state.CartData.length){
 
@@ -628,6 +663,7 @@ else
      
           if(this.state.ShipAssignedTo != ''){
             this.FinalAssign()
+            // console.log('can assign')
           }else
           {
             Notiflix.Notify.Failure('Please select vendor to assign shipping & cod charges.')
@@ -639,6 +675,7 @@ else
         {
 
           this.FinalAssign()
+          // console.log('no issue')
 
         }
 
@@ -723,6 +760,7 @@ else
      
      },"AddVendorOrder").then((results) => 
      
+     // const objs = JSON.parse(result._bodyText)
      results.json().then(obj => {
      
      
@@ -803,6 +841,7 @@ else
         
         },"AddVendorOrderDetail").then((results1) => 
         
+          // const objs = JSON.parse(result._bodyText)
           results1.json().then(obj1 => {
         
         
@@ -873,7 +912,7 @@ else
          Haryana - 121 001. INDIA.</p>
                                    <tr rowspan="8" class="success" style={{display:'table',width:'100%',  backgroundColor: '#f7f7f7'}}>
                                 <td colspan="8" style={{textAlign: 'right', paddingRight: '1%', fontWeight: 'bold', fontSize: '20px',}}>
-                                   Cutomer Order Form</td></tr></td>
+                                   Customer Order Form</td></tr></td>
                         </tr>
          
                               
@@ -927,6 +966,7 @@ else
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Net Weight</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Rate</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST %</span></td>
+              {/* <td style={{paddingTop: '1%', paddingBottom: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST Amount</span></td> */}
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Total (INR)</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Select Product & Assign Vendor</span></td>
               </tr>
@@ -943,6 +983,7 @@ else
     <td style={{width:'8%',padding: '5px'}}> {info.fld_productweight != undefined ? info.fld_productweight+" "+info.fld_productunit : '-'}</td>
     <td style={{width:'8%',padding: '5px',whiteSpace:'nowrap'}}>&#8377; {parseFloat(info.fld_price).toFixed(2)}</td>
     <td style={{width:'8%',padding: '5px',whiteSpace:'nowrap'}}>{info.fld_taxpercent}%</td>
+     {/* <td></td> */}
     <td style={{padding: '5px',whiteSpace:'nowrap'}}> &#8377; {parseFloat(info.fld_quantity*info.fld_price).toFixed(2)}</td>
      <td style={{width:'30%',padding: '5px'}}>
 
@@ -1060,7 +1101,43 @@ else
                               </tr>
 
                             
-                            
+                              {/* <tr style={{width:'100%',display:'table'}}>
+                              <td  style={{textAlign: 'right', padding: '1%'}}><span style={{fontWeight: 'bold'}}>
+                              Select Vendor to assign Shipping & COD Charges</span></td><td style={{textAlign: 'right', paddingRight: '1%',width:'50%'}}>
+
+                              <select type="text" class="form-control" 
+                onChange={(text)=>{
+
+                  this.setState({
+                    ExtraChargeVendor : text.target.value
+                  })
+                 
+                }}
+                 >
+                   <option value={0}>Select Vendor</option>
+                {this.state.VendorSelectedData.map(
+                  company => (
+                    <option
+                    key={company.label}
+                    value={company.value}>
+                      {company.label}
+                    </option>
+                  )
+                )}
+               
+            </select>
+                                </td>
+                                
+                              </tr>
+                               */}
+                              {/* <tr style={{width:'100%',display:'table'}}>
+                          <td  style={{paddingTop: '1%', paddingBottom: '1%', textAlign: 'center'}}>Have a Question? Call us on 
+                          +91 90244 22444 or Email us at wecare@beatmysugar.com</td>
+                        </tr>
+                        <tr class="success" style={{width:'100%',display:'table'}}>
+                        <td style={{paddingTop: '1%', paddingBottom: '1%', textAlign: 'center',background : '#f7f7f7'}}>Visit
+                             us at <a href="https://www.beatmysugar.com/" style={{fontWeight:'600'}}>www.beatmysugar.com</a></td>
+                        </tr> */}
                           </td>
                         </tr>
          
@@ -1181,6 +1258,7 @@ cellpadding="0">
             <div class="form-group mb-3">
 
                 <input type="checkbox"
+                // disabled={this.state.ShipAssignedTo != this.state.SelectedVendor && this.state.ShipAssignedTo != '' ? true : false}
                 checked={this.state.ShipAssignedTo == '' ? false : true}
               onChange={()=>{
                 if(this.state.ShipAssignedTo == ''){

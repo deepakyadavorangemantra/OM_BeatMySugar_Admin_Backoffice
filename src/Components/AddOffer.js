@@ -93,6 +93,7 @@ class  AddOffer extends Component {
                                                           
                                                           },"AddOffer").then((results) => 
                                                           
+                                                            // const objs = JSON.parse(result._bodyText)
                                                             results.json().then(obj => {
   
                                                           
@@ -171,6 +172,7 @@ class  AddOffer extends Component {
     }
 
   
+    //   if(event.target.value.length <= 160){
    
     photoUpload = e =>{
         e.preventDefault();
@@ -186,7 +188,9 @@ class  AddOffer extends Component {
         }
         reader.readAsDataURL(file);
      }
-
+    //   else {
+    //         Notiflix.Notify.Failure("File too large, upload file less than 100 kb.");
+    //       }
       }
 
        
@@ -486,6 +490,7 @@ class  AddOffer extends Component {
                                                                         }
                                                                          
                                                                        }}
+                                                                    // onClick={this.nextlabel2.bind(this)}
                                                                        >Next</button>
                                                                         </div>
                                                                     </div>
@@ -600,6 +605,7 @@ class  AddOffer extends Component {
                                                                          
                                                                         
                                                                        }}
+                                                                    // onClick={this.nextlabel2.bind(this)}
                                                                        >Next</button>
                                                                         </div>
                                                                     </div>
@@ -671,6 +677,7 @@ class  AddOffer extends Component {
                                                                         }
                                                                         
                                                                        }}
+                                                                    // onClick={this.nextlabel2.bind(this)}
                                                                        >Next</button>
                                                                         </div>
                                                                     </div>

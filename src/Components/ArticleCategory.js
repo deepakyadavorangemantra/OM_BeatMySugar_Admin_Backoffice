@@ -399,6 +399,7 @@ class ArticleCategoryMaster extends Component {
                                         
                                             },"DeleteArticleCategoryMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -416,6 +417,7 @@ class ArticleCategoryMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

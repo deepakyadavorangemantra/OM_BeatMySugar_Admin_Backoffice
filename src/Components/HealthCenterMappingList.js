@@ -46,6 +46,7 @@ class HealthCenterMapping extends Component {
     
                   },"GetHealthCenterDietitianMappingList").then((results) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
               
                   
@@ -54,27 +55,32 @@ class HealthCenterMapping extends Component {
                         this.setState({
                             DocData : obj.data
                         })
+                        // Notiflix.Loading.Remove()
 
 
                     }
                 }))
               }else
               {
+                // console.log(DocData1)
                 PostApiCall.postRequest({
           
                     id : DocData1.fld_id,
     
                   },"GetHealthCenterDoctorMappingList").then((results) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
               
                   
                     if(results.status == 200 || results.status==201){
                     
 
+                        // console.log(obj.data)
                         this.setState({
                             DocData : obj.data
                         })
+                        // Notiflix.Loading.Remove()
 
                     }
                 }))
@@ -90,10 +96,12 @@ class HealthCenterMapping extends Component {
                   
                     },"GetUserSubMenuAccessRights").then((resultssub) => 
                     
+                      // const objs = JSON.parse(result._bodyText)
                       resultssub.json().then(objsub => {  
                       if(resultssub.status == 200 || resultssub.status==201){
           
                      var filteredRights = objsub.data;
+                          // console.log(filteredRights)
                   
                           var con = 0
                           for(var i = 0 ; i< filteredRights.length ;i++){
@@ -185,7 +193,11 @@ class HealthCenterMapping extends Component {
                                         
                                         <tr>
                                         <th>Health Center Name</th>
-                                      
+                                       {/* <th>Day</th>
+                                       <th>Opening Time</th>
+                                       <th>Closing Time</th>
+                                       <th>Opening Time</th>
+                                       <th>Closing Time</th> */}
                                         <th>Action</th>
                                         </tr>
                                     
@@ -216,7 +228,11 @@ class HealthCenterMapping extends Component {
 
                             </Helmet> : ''}
                                 <td>{data.fld_name}</td>
-                                
+                                {/* <td>{data.fld_day}</td>
+                                <td>{data.fld_openingtime}</td>
+                                <td>{data.fld_closingtime}</td>
+                                <td>{data.fld_openingtime2}</td>
+                                <td>{data.fld_closingtime2}</td> */}
                                 <td>  <div class="align-self-center tableact" style={{    textAlign: 'center'}}
                                         
                                 onClick={()=>{
@@ -228,6 +244,7 @@ class HealthCenterMapping extends Component {
                                     <span  >
                                     <Edit3/>
                                         </span>
+                                        {/* &nbsp;&nbsp;<Trash2/> */}
                                         </div> &nbsp;&nbsp;
                                         </td>
 

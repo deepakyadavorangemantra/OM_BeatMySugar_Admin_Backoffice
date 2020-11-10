@@ -135,6 +135,7 @@ class DietitianView extends Component {
            var det = localStorage.getItem('NutritionistDetails')
            var DocData = JSON.parse(det)
 
+        //    console.log(DocData)
 
            new Promise( ( resolve, reject ) => {
             setTimeout( resolve, 1000 );
@@ -219,6 +220,7 @@ class DietitianView extends Component {
       
            var arr1 =[]
            const date2 = new Date();
+               // console.log(Math.abs(date2.getUTCFullYear() - 1930))
                arr1.push({label : 'Select Year',value:'Select Year'})
            for(var i = 0 ; i <= Math.abs(date2.getUTCFullYear() - 1950) ;i++){
       
@@ -239,6 +241,7 @@ class DietitianView extends Component {
 
            
 
+        // Notiflix.Loading.Remove()
 
         var login=localStorage.getItem('LoginDetail');
         var details=JSON.parse(login)
@@ -249,10 +252,12 @@ class DietitianView extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -332,6 +337,7 @@ class DietitianView extends Component {
     StartDateOfPractice = event =>{
         this.props.setStartDateOfPractice(event.target.value)
   
+        // this.props.setOverallExperience(this.monthDiff(new Date(),new Date(event.target.value)))
     }
 
     handleStartDateOfPracticeChange = event =>{
@@ -453,6 +459,7 @@ class DietitianView extends Component {
 
     handleExperienceChange = () =>{
                                     
+        // if(this.props.Doc.OverallExperience != ''){
             if(this.state.QualificationInfo.length >0 ){       
                                 this.setState({
                                 PageTitle : '3',
@@ -460,18 +467,23 @@ class DietitianView extends Component {
                                 })
     
             }else{Notiflix.Notify.Failure('Add atleast one qualification.')}
+        // }else{Notiflix.Notify.Failure('Please enter Title.')}
             
           
     }
 
     handleQualification = () =>{
 
+            // if(this.state.CertificateData.length >0 ){   
                     this.setState({
                         PageTitle : '4',
                         Page3 : 'Done'
                     }) 
 
     
+                // }else{Notiflix.Notify.Failure('Add atleast one medical certificate.')}
+        //     }else{Notiflix.Notify.Failure('Please enter Institute.')}
+        // } else{Notiflix.Notify.Failure('Please enter Qualification.')}                                             
     }
 
 
@@ -499,6 +511,7 @@ class DietitianView extends Component {
                                 })
                                 ).then(res => {
                           
+                                //  console.log(i)
 
                                  cert.push(res.data.Message.split(',')[2].split('=')[1].trim())
                           
@@ -508,6 +521,7 @@ class DietitianView extends Component {
             
                                             this.UpdateCertificatePdf(cert,data,obj)
 
+                                            // Notiflix.Loading.Remove()
                     
                                         }
                                    
@@ -551,6 +565,7 @@ class DietitianView extends Component {
 
                 this.OnConsentSubmit(obj)
 
+                // Notiflix.Loading.Remove()
 
             }
          }
@@ -613,6 +628,7 @@ class DietitianView extends Component {
                             updatedon : moment().format('lll'),
                                   },"AddDietitianQualificationMapping").then((results) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(objs => {
                      
                          
@@ -621,6 +637,7 @@ class DietitianView extends Component {
                                 count = count + 1
                                 if(count == this.state.QualificationInfo.length){
 
+                                    // this.OnSpecialisationSubmit(obj)
                                     this.OnDeleteCertificate(obj)
 
 
@@ -646,6 +663,7 @@ class DietitianView extends Component {
                 certificate : this.state.DeletedCertificate[i]
                       },"DeleteDietitianCertificate").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj1 => {
          
                 if(results.status == 200 || results.status==201){
@@ -655,6 +673,7 @@ class DietitianView extends Component {
                     {
 
                         this.OnFilterCertificate(obj)
+                        // this.OnCertificateSubmit(obj)
                     }
 
                 }
@@ -664,6 +683,7 @@ class DietitianView extends Component {
         }
     }
     else{
+        // this.OnCertificateSubmit(obj)
         this.OnFilterCertificate(obj)
     }
 
@@ -672,6 +692,7 @@ class DietitianView extends Component {
     OnFilterCertificate(obj){
 
         var dt = [...this.state.CertificateData]
+        // console.log(dt)
         var count = 0
         for(var i = 0 ;i < this.state.CertificateData.length;i++)
         { 
@@ -681,6 +702,7 @@ class DietitianView extends Component {
               
                 count = count + 1
                 
+                // dt.splice(i,1)
                 dt[i] = false
                
                
@@ -696,6 +718,7 @@ class DietitianView extends Component {
                 CertificateData : dt.filter(Boolean)
             })
             
+            // console.log(dt.filter(Boolean))
             this.OnCertificateSubmit(obj)
         }
 
@@ -725,6 +748,7 @@ class DietitianView extends Component {
                 updatedon : moment().format('lll'),
                       },"AddDietitianCertificateMapping").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj1 => {
          
              
@@ -880,6 +904,7 @@ else{
     handleSubmit = () =>{
        
 
+        // console.log(this.state.QualificationInfo)
                 if(this.state.ConsentFile != null){
 
 
@@ -914,6 +939,7 @@ else{
                              updatedon : moment().format('lll'),
                                   },"UpdateDietitian").then((results) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(obj => {
                      
                          
@@ -1012,6 +1038,10 @@ else{
                     CertificateData: arr2
                   })
                      
+                    // this.setState({
+                    //     Certificate : '',
+                    //   CertData: '',
+                    // })
                 }
                 else
                 {
@@ -1054,6 +1084,7 @@ else{
           
               },"UpdateDietitianApprovalStatus").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {
     
                 if(results.status == 200 || results.status==201){
@@ -1071,6 +1102,7 @@ else{
                   },
                   {
                     label: 'No',
+                    // onClick: () => alert('Click No')
                   }
                 ]
               });
@@ -1126,7 +1158,9 @@ else{
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Dietitian Details</button>
                                                 </div>
-                                
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
+                  
                                     </div>
                                 </div>
                             </div>
@@ -1592,6 +1626,8 @@ else{
                                                                                         reader.onloadend = () => {
                                                                                           
                                                                                           this.setState({
+                                                                                            // file: file,
+                                                                                            // imagePreviewUrl: reader.result
                                                                                             CertData : file,
                                                                                             Certificate : file.name
                                                                                           });
@@ -1632,6 +1668,8 @@ else{
                                             }}>
                                                 <tr>
                                                     <th style={{borderRight : '1px solid #fff'}}>Certificate Name</th>
+                                                    {/* <th style={{borderRight : '1px solid #fff'}}>Institute</th>
+                                                    <th style={{borderRight : '1px solid #fff'}}>Completion Year</th> */}
                                                     <th>Action</th>
                                                    
                                                 </tr>
@@ -2030,6 +2068,7 @@ else{
                                                                     reader.onloadend = () => {
                                                                       
                                                                       this.setState({
+                                                                        // file: file,
                                                                         ConsentFile: reader.result,
                                                                         ConsentData : file,
                                                                        
@@ -2061,7 +2100,23 @@ else{
                                                          </select> 
                                                     </div>
                                                 </div>
-                                                
+                                                {/* <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label for="validationCustom01">Approved<span className="mandatory">*</span></label><br/>
+                                                    <select type="text" class="form-control" 
+                                                    value = {this.props.Doc.Approval}
+                                                    onChange = {this.handleApprovalChange}
+                                                    required >
+                                                   {this.state.FlagData.map(title => (
+                           
+                                                        <option key={title.value} value={title.value}>
+                                                            {title.label}
+                                                        </option>
+                                                        ))}
+                                                    
+                                                </select>
+                                                    </div>
+                                            </div> */}
                                                        
                                                         </div>
                                                         

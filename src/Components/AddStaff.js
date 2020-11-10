@@ -151,6 +151,7 @@ class AddStaff extends Component {
           GetApiCall.getRequest("GetDesignation").then(resultdes =>
             resultdes.json().then(objdesignation => {
              this.props.setdesignation(objdesignation.data[0].value);
+            // console.log(objcolor.data)
             
               this.setState({
                 Designationdata : objdesignation.data,
@@ -223,6 +224,7 @@ class AddStaff extends Component {
             
                           },"GetState").then((results) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(objstate => {
                       
                           
@@ -247,6 +249,7 @@ class AddStaff extends Component {
                     
                                   },"GetCity").then((resultscity) => 
                                   
+                                    // const objs = JSON.parse(result._bodyText)
                                     resultscity.json().then(objcity => {
                               
                                   
@@ -286,10 +289,12 @@ class AddStaff extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -507,6 +512,7 @@ class AddStaff extends Component {
       }
 
       onChangeBlood(bloodgroup){
+        // console.log(bloodgroup.target.value)
          this.props.setbloodgroup(bloodgroup.target.value)
      }
      onChangeChronic(chronicdisease){
@@ -581,6 +587,7 @@ class AddStaff extends Component {
      }
 
      onChangeCountry(country){
+        // console.log(this.state.CountryData[country.target.value - 1].label)
         this.setState({
             CountryId : country.target.value
           })
@@ -639,6 +646,7 @@ class AddStaff extends Component {
      }
     
      onChangeState(state){
+        //  this.props.setstate(state.target.value)
          this.setState({
             StateId: state.target.value
           })
@@ -659,6 +667,7 @@ class AddStaff extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -670,6 +679,7 @@ class AddStaff extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -677,6 +687,7 @@ class AddStaff extends Component {
      }
 
      onChangeCity(city){
+        // this.props.setcity(city.target.value)
         this.setState({
             CityId : city.target.value
           })
@@ -806,6 +817,7 @@ class AddStaff extends Component {
 
      }
      onChangePermanentState(state){
+         //  this.props.setstate(state.target.value)
          this.setState({
             StatePermanentId: state.target.value
           })
@@ -826,6 +838,7 @@ class AddStaff extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -837,6 +850,7 @@ class AddStaff extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -921,6 +935,7 @@ class AddStaff extends Component {
                         if(this.state.Status!=''){
 
                             if(this.state.AddAccess){
+                    //  console.log(this.props.staffcredentials)
                    
                this.setState({
                         PageTitle : '7',
@@ -972,6 +987,7 @@ class AddStaff extends Component {
      password : this.props.staffcredentials.Password,
                },"AddStaff").then((results) => 
               
+                 // const objs = JSON.parse(result._bodyText)
                  results.json().then(obj => {
           
               
@@ -1390,7 +1406,12 @@ else{
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                        
+                                                                        //  onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
                                                                         onClick={this.nextlabel.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -1463,7 +1484,13 @@ else{
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                   
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                     onClick={this.nextlabel2.bind(this)}
                                                                        >Next</button>
                                                                         </div>
@@ -1537,7 +1564,13 @@ else{
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                        onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1633,7 +1666,13 @@ else{
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                       
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel4.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1751,7 +1790,13 @@ else{
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                         
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel5.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1915,7 +1960,13 @@ else{
                                                                             }}
                                                                         >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                     
+                                                                        // onClick={()=>{
+                                                   
+                                                                        //     this.setState({
+                                                                        //         PageTitle : '6',
+                                                                        //         Page5 : 'Done'
+                                                                        //     })
+                                                                        //   }}
                                                                           onClick={this.nextlabel6.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -1941,6 +1992,7 @@ else{
                                                                 onChange={this.onChangePassword.bind(this)}></input>
 
                                                                 <span className="login-icon-change-pass">
+                                                            {/* <i className="icon-dual" data-feather="lock"></i>*/}
                                                              <i style={{color : this.state.isPasswordVisible ? '#507dc0' : ''}} dangerouslySetInnerHTML={{__html:window.feather.icons.eye.toSvg()}} 
                                                              onClick={()=>{
                                                                  this.setState({
@@ -1960,6 +2012,7 @@ else{
                                                              value={this.props.staffcredentials.ConfirmPassword}
                                                              onChange={this.onChangeConfirmPassword.bind(this)}></input>
                                                                                      <span className="login-icon-change-pass">
+                                                            {/* <i className="icon-dual" data-feather="lock"></i>*/}
                                                              <i style={{color : this.state.isConPasswordVisible ? '#507dc0' : ''}} dangerouslySetInnerHTML={{__html:window.feather.icons.eye.toSvg()}} 
                                                              onClick={()=>{
                                                                  this.setState({
@@ -2018,7 +2071,13 @@ else{
                                                                         }}
                                                                     >Previous</button>
                                                                     <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                  
+                                                                    // onClick={()=>{
+                                               
+                                                                    //     this.setState({
+                                                                    //         PageTitle : '6',
+                                                                    //         Page6 : 'Done'
+                                                                    //     })
+                                                                    //   }}
                                                                      onClick={this.savestaff.bind(this)} >Submit</button>
                                                                 </div>
                                                             </div>

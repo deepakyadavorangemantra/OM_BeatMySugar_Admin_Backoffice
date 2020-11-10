@@ -137,6 +137,7 @@ class ViewCareer extends Component {
 
               },"GetState").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(objstate => {
           
               
@@ -159,6 +160,7 @@ class ViewCareer extends Component {
         
                       },"GetCity").then((resultscity) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         resultscity.json().then(objcity => {
                   
                       
@@ -285,6 +287,7 @@ class ViewCareer extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -296,6 +299,7 @@ class ViewCareer extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -460,6 +464,7 @@ class ViewCareer extends Component {
         },"UpdateCareer").then((results) => 
             
         
+       //    const objs = JSON.parse(result._bodyText)
           results.json().then(obj => {
     
         
@@ -644,6 +649,13 @@ class ViewCareer extends Component {
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                       onClick={this.SaveJobtitle.bind(this)} >Next</button>
                                                                     </div>
                                                                 </div>
@@ -742,6 +754,13 @@ class ViewCareer extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                    //     onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                     onClick={this.SaveLocation.bind(this)}
                                                                        >Next</button>
                                                                         </div>
@@ -796,6 +815,13 @@ class ViewCareer extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.SaveEmployment.bind(this)}
                                                                               >Next</button>
                                                                         </div>
@@ -845,6 +871,13 @@ class ViewCareer extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                              onClick={this.SaveQualification.bind(this)}
                                                                               >Next</button>
                                                                         </div>
@@ -894,6 +927,13 @@ class ViewCareer extends Component {
                                                                             }}
                                                                         >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                        // onClick={()=>{
+                                                   
+                                                                        //     this.setState({
+                                                                        //         PageTitle : '6',
+                                                                        //         Page5 : 'Done'
+                                                                        //     })
+                                                                        //   }}
                                                                         onClick={this.SaveExperience.bind(this)}
                                                                           >Next</button>
                                                                     </div>
@@ -949,6 +989,13 @@ class ViewCareer extends Component {
                                                                         }}
                                                                     >Previous</button>
                                                                     <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    // onClick={()=>{
+                                               
+                                                                    //     this.setState({
+                                                                    //         PageTitle : '7',
+                                                                    //         Page6 : 'Done'
+                                                                    //     })
+                                                                    //   }}
                                                                      onClick={this.SaveTime.bind(this)} 
                                                                      >Next</button>
                                                                 </div>
@@ -996,6 +1043,13 @@ class ViewCareer extends Component {
                                                                     }}
                                                                 >Previous</button>
                                                                 <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                //  onClick={()=>{
+                                           
+                                                                //     this.setState({
+                                                                //         PageTitle : '8',
+                                                                //         Page7 : 'Done'
+                                                                //     })
+                                                                //   }}
                                                                   onClick={this.SaveJobDescription.bind(this)}
                                                                   >Next </button>
                                                             </div>
@@ -1059,6 +1113,13 @@ class ViewCareer extends Component {
                                                                     }}
                                                                 >Previous</button>
                                                                 <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                //  onClick={()=>{
+                                           
+                                                                //     this.setState({
+                                                                //         PageTitle : '8',
+                                                                //         Page8: 'Done'
+                                                                //     })
+                                                                //   }}
                                                                 onClick={this.SaveCareer.bind(this)}
                                                                   >Update </button>
                                                             </div>

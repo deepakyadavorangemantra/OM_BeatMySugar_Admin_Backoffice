@@ -41,6 +41,7 @@ class HealthFacility extends Component {
                         
                     FacilityData : obj.data
                   })
+                //   console.log(obj.data)
                    Notiflix.Loading.Remove()
                 }))
         }
@@ -366,6 +367,7 @@ class HealthFacility extends Component {
                                         
                                             },"DeleteHealthCenterFacilitiesMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -383,6 +385,7 @@ class HealthFacility extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });
@@ -391,6 +394,7 @@ class HealthFacility extends Component {
                                            <span>
                                              <Edit3 style={{marginLeft: '10px'}}
                                              onClick={()=>{
+                                            //    console.log(data);
                                                this.setState({
                                                  Status : data.fld_status,
                                                  openedit : true,

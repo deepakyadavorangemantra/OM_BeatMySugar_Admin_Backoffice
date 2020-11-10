@@ -130,6 +130,7 @@ class ViewFootwear extends Component {
           var det = localStorage.getItem('FootwearDetails')
           var FootwearData = JSON.parse(det)
            
+        //   console.log(FootwearData)
 
            new Promise( ( resolve, reject ) => {
             setTimeout( resolve, 1000 );
@@ -170,12 +171,14 @@ class ViewFootwear extends Component {
 
         GetApiCall.getRequest("GetGstData").then(resultdes =>
             resultdes.json().then(objGst =>{
+            //    this.props.setfootweargst(objGst.data[0].value);
                 this.setState({
                     GSTData:objGst.data
                 })
             }))
             GetApiCall.getRequest("GetCompany").then(resultdes =>
                 resultdes.json().then(objcompany =>{
+                    // this.props.setfootwearcompany(objcompany.data[0].value);
                     this.setState({
                         Companydata:objcompany.data,
                         ManufactureData:objcompany.data,
@@ -185,6 +188,7 @@ class ViewFootwear extends Component {
                 }))
                 GetApiCall.getRequest("GetBrandData").then(resultdes =>
                     resultdes.json().then(objbrand => {
+                    // this.props.setfootwearbrand(objbrand.data[0].value);
                    
                       this.setState({
                         Branddata : objbrand.data,
@@ -193,11 +197,13 @@ class ViewFootwear extends Component {
                     }))
                     GetApiCall.getRequest("GetFootwearTypeMaster").then(resultdes =>
                         resultdes.json().then(objtype => {
+                        // this.props.setfootwearitemtype(objtype.data[0].value);
                        
                           this.setState({
                             TypeData : objtype.data,
                             
                           })
+                        //   Notiflix.Loading.Remove()
                         }))
 
                         GetApiCall.getRequest("GetCountry").then(resultdes =>
@@ -225,10 +231,12 @@ class ViewFootwear extends Component {
                         
                           },"GetUserSubMenuAccessRights").then((resultssub) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             resultssub.json().then(objsub => {  
                             if(resultssub.status == 200 || resultssub.status==201){
                 
                            var filteredRights = objsub.data;
+                                // console.log(filteredRights)
                         
                                 var con = 0
                                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -418,6 +426,7 @@ class ViewFootwear extends Component {
                         },"UpdateFootwearItemMaster").then((results) => 
                             
                         
+                       //    const objs = JSON.parse(result._bodyText)
                           results.json().then(obj => {
                     
                         
@@ -479,6 +488,7 @@ class ViewFootwear extends Component {
               
                   },"UpdateFootwearItemMasterApprovalStatus").then((results) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
         
                     if(results.status == 200 || results.status==201){
@@ -498,6 +508,7 @@ class ViewFootwear extends Component {
                       },
                       {
                         label: 'No',
+                        // onClick: () => alert('Click No')
                       }
                     ]
                   });
@@ -551,6 +562,8 @@ class ViewFootwear extends Component {
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Footwear Details</button>
                                                 </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
                   
                                     </div>
                                 </div>
@@ -775,7 +788,13 @@ class ViewFootwear extends Component {
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                        
+                                                                        //  onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                        onClick={this.nextlabel.bind(this)} >Next</button>
                                                                     </div>
                                                                 </div>
@@ -833,7 +852,13 @@ class ViewFootwear extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                        
+                                                                        //    onClick={()=>{
+                                                                            
+                                                                        //      this.setState({
+                                                                        //          PageTitle : '3',
+                                                                        //          Page2 : 'Done'
+                                                                        //      })
+                                                                        //    }}
                                                                      onClick={this.nextlabel2.bind(this)} >Next</button>
                                                                         </div>
                                                                     </div>
@@ -942,7 +967,13 @@ class ViewFootwear extends Component {
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
                                                                                 disabled={!this.state.IsVisible} 
-                                                                            
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                             onClick={this.Savefootwear.bind(this)}>Update Footwear Item</button>
                                                                         </div>
                                                                     </div>

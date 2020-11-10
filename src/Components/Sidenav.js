@@ -46,7 +46,9 @@ import VendorList from './VendorList'
 import DoctorList from './DoctorList'
 import DietitianList from './DietitianList'
 import { BrowserRouter as Router, Route, Switch, Link, a } from 'react-router-dom'
-import {FileText, Home,Briefcase, User,Layout,Users,Grid,Lock,Gift,BookOpen,PlusCircle,Clipboard,File,LogOut,Archive,LifeBuoy, Bookmark, Eye, CheckCircle,RotateCcw,X} from 'react-feather';
+import {FileText, Home,Briefcase, User,Layout,Users,Grid,Lock,Gift,BookOpen,PlusCircle,Clipboard,File,LogOut,Archive,LifeBuoy, Bookmark, Eye, CheckCircle,RotateCcw,X,PieChart, Mail} from 'react-feather';
+// import { Route,BrowserRouter as Router,Switch,a} from "react-router-dom";
+// import {Home,Briefcase, User,Layout,Users,Grid,Lock,Gift,BookOpen,PlusCircle,Clipboard,File,LogOut,Archive,LifeBuoy, Bookmark, } from 'react-feather';
 import Routes from './Routes';
 import ArticleList from './ArticleList'
 import ContributorList from './ContributorsList'
@@ -64,7 +66,7 @@ import ArticleTag from './ArticleTag';
 import ArticleCategory from './ArticleCategory';
 import ArticleSubCategory from './ArticleSubCategory';
 import AddNewVariant from './AddVarient';
-// import AddNewBookVariant from './AddBookVariant';
+import AddNewBookVariant from './AddBookVariant';
 import AddFootwearVariant from './AddFootwearVariant'
 import DoctorView from './DoctorView';
 import HealthCenterView from './HealthCenterView';
@@ -128,6 +130,21 @@ import ViewRefundForm  from './ViewRefund'
 import RefundOrderView from './RefundOrderView';
 import CancelOrdersList from './CancelOrderList';
 import ViewCancelOrders from './ViewCancelOrders';
+import Orders from './Orders';
+import Products from './Products';
+
+import Customers from './Customers';
+import ItemComparision from './ItemComparision';
+import Vendors from './Vendors';
+import SettlementReport from './SettlementReportNew';
+
+import CODMaster from './CODMaster';
+import ViewCustomer from './ViewCustomers';
+import BMSMessage from './BMS_Message';
+import BMSMessageGrid from './BMS_MessageList'
+import FestiveOffers from './FestiveOffers';
+import AddFestiveOffer from './AddFestiveOffer';
+import UpdateFestiveOffers from './UpdateFestiveOffers';
 
 import EduChapter from '../Pages/Education/Chapter';
 import EduCongratulations from '../Pages/Education/Congratulations';
@@ -159,6 +176,13 @@ class Sidenav extends React.Component {
                 <Gift/>,
                 <File />,
                 <File />,
+                <PieChart />,
+                <RotateCcw/>,
+                <X/>,
+                <Bookmark />,
+                <LifeBuoy/>,
+                <CheckCircle />,
+                <Gift/>
                 
             ]
         }
@@ -172,6 +196,7 @@ class Sidenav extends React.Component {
       var login=localStorage.getItem('LoginDetail');
       var details=JSON.parse(login)
 
+    //   console.log(details)
 
     if(details == null){
         window.location.href = '/'
@@ -191,9 +216,11 @@ class Sidenav extends React.Component {
     
       },"GetUserMenu").then((results) => 
       
+        // const objs = JSON.parse(result._bodyText)
         results.json().then(obj => {  
         if(results.status == 200 || results.status==201){
     
+            // console.log(obj.data)
             this.setState({
                 Menu : obj.data
             })
@@ -205,6 +232,7 @@ class Sidenav extends React.Component {
             
               },"GetUserSubMenu").then((resultssub) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 resultssub.json().then(objsub => {  
                 if(resultssub.status == 200 || resultssub.status==201){
             
@@ -226,6 +254,7 @@ class Sidenav extends React.Component {
     
                                 data.push(objsub.data[j])
                                 arr[i] = data
+                                // console.log(arr)
                                 this.setState({
                                     SubMenu : arr
                                 })
@@ -278,33 +307,21 @@ class Sidenav extends React.Component {
             <div className="sidebar-content">
                 {/*<!--- Sidemenu -->*/}
                 <div id="sidebar-menu" className="slimscroll-menu">
-                    <ul className="metismenu" id="menu-bar1">
-                    <li>
-                        <a >
-                            <BookOpen/>
-                            <span style={{paddingLeft:'3px'}}>Education Module</span>
-                        </a>
-                        
-                        <ul className="nav-second-level" aria-expanded="true">
-                            <li><Link to='/edu-dashboard'>Dashboard</Link></li>
-                            <li><Link to='/edu-chapter'>Chapter</Link></li>
-                            <li><Link to='/edu-topics'>Topics</Link></li>
-                            <li><Link to='/edu-question'>Question</Link></li>
-                            <li><Link to='/edu-congratulations'>Congratulations</Link></li>
-                            <li><Link to='/edu-reminders'>Reminders</Link></li>
-                        </ul>
-                    </li>
+                    <ul className="metismenu" id="menu-bar">
+             
                     {this.state.Menu.map((menu,index)=>(
                                     
                                     <li key={index}>
-                                      
+                                         {/* <Helmet>
+                                        <script src="assets/js/app.min.js"></script>
+                                    </Helmet> */}
 
                                
                                     <a href={menu.fld_pagename}  >
                                    
                                        {this.state.IconArr[menu.fld_iconurl-1]}
                                 <span> {menu.fld_menuname}</span>
-                              {this.state.SubMenu[index] == undefined ? <span></span>  : this.state.SubMenu[index].length > 0 || menu.fld_menuname == 'Master Management' ? <span className="menu-arrow"></span> : <span></span>}  
+                              {this.state.SubMenu[index] == undefined ? <span></span>  : this.state.SubMenu[index].length > 0 || menu.fld_menuname == 'Master Management' || menu.fld_menuname == 'Reports' ? <span className="menu-arrow"></span> : <span></span>}  
                                     </a>
 
                                     {menu.fld_menuname == 'Master Management' ? 
@@ -322,8 +339,9 @@ class Sidenav extends React.Component {
                                         <li> <a href='/brandmaster'>Brand</a> </li>
                                        
                                      
-        
+                                        <li> <a href='/codservicecharge'>COD Service Charge</a></li>
                                        <li><a href='/companymaster'>Company</a> </li>
+                                       
         
                                        <li> <a href='/devicecategorymaster'> Device Categories  </a></li>
                                         <li> <a href='/devicefiltermaster'> Device Filters</a></li>
@@ -376,6 +394,25 @@ class Sidenav extends React.Component {
                     
                                     :
 
+
+                                    menu.fld_menuname == 'Reports' ?
+
+
+                                       
+                                    <ul className="nav-second-level" aria-expanded="false">
+                               
+
+                                    <li> <a href='/orders'>Orders</a></li>
+                                    <li> <a href='/customers'>Customers</a></li>
+                                    <li><a href='/products'>Products</a></li>
+                                    {/* <li><a href='/itemcomparision'>Item Comparision of Sales by Month</a></li> */}
+                                    <li><a href='/vendors'>Vendors</a></li>
+                                    <li><a href='/ordersettlement'>Settlement Report</a></li>
+                                    </ul>
+
+                                    :
+
+
                               this.state.SubMenu[index] == undefined ? <span></span>  : this.state.SubMenu[index].length > 0 ? 
 
                                     <ul className="nav-second-level" aria-expanded="false">
@@ -402,12 +439,32 @@ class Sidenav extends React.Component {
 
                                  
 
-
+                        
                                 
                         
-                               
+                                {/* <li>
+                                <a href='/offerlist'>
+                                     <Gift/>
+                                     <span style={{paddingLeft:'3px'}}>Offer Managemnent </span>
+                                 </a>
+                             </li> */}
 
-                            <li>
+
+                             {/* <li>
+                                <a href='/neworders'>
+                                     <File/>
+                                     <span style={{paddingLeft:'3px'}}>Order Managemnet </span>
+                                 </a>
+                             </li>
+
+                             <li>
+                                <a href='/vendororders'>
+                                     <File/>
+                                     <span style={{paddingLeft:'3px'}}>Vendor Orders </span>
+                                 </a>
+                             </li> */}
+{/* 
+<li>
                                 <a href='/returnmanagementlist'>
                                      <RotateCcw/>
                                      <span style={{paddingLeft:'3px'}}>Return Management </span>
@@ -441,9 +498,47 @@ class Sidenav extends React.Component {
                                <CheckCircle/>
                                <span style={{paddingLeft:'3px'}}>Verify Order </span>
                            </a>
-                       </li>
-
+                       </li> */}
+                       <li>
+                            <Link to='/edu-chapter' >
+                                <BookOpen/>
+                                <span style={{paddingLeft:'3px'}}>Education Module</span>
+                            </Link>
+{/*                             
+                            <ul className="nav-second-level" aria-expanded="true">
+                                <li><Link to='/edu-dashboard'>Dashboard</Link></li>
+                                <li><Link to='/edu-chapter'>Chapter</Link></li>
+                                <li><Link to='/edu-topics'>Topics</Link></li>
+                                <li><Link to='/edu-question'>Question</Link></li>
+                                <li><Link to='/edu-congratulations'>Congratulations</Link></li>
+                                <li><Link to='/edu-reminders'>Reminders</Link></li>
+                            </ul> */}
+                        </li>
                         <li>
+                            <Link to='/edu-congratulations' >
+                            <Gift/> 
+                                <span style={{paddingLeft:'3px'}}>Congratulations</span>
+                            </Link>
+
+                        </li>
+
+                       <li>
+                       <a href='/bmssms'>
+                            <Mail/>
+                            <span style={{paddingLeft:'3px'}}>SMS </span>
+                        </a>
+                    </li>
+
+                   
+
+{/* <li>
+                           <a href='/festiveoffers'>
+                                <Gift/>
+                                <span style={{paddingLeft:'3px'}}>Festive Offers</span>
+                            </a>
+                        </li> */}
+
+                    <li>
                            <a href='/changepassword'>
                                 <Lock/>
                                 <span style={{paddingLeft:'3px'}}>Change Password </span>
@@ -537,7 +632,7 @@ class Sidenav extends React.Component {
         <Route exact path='/articlecategory' component={ArticleCategory}></Route>
         <Route exact path='/articlesubcategory' component={ArticleSubCategory}></Route>
         <Route exact path='/addfoodvariant' component={AddNewVariant}></Route>
-        {/* <Route exact path='/addbookvariant' component={AddNewBookVariant}></Route> */}
+        <Route exact path='/addbookvariant' component={AddNewBookVariant}></Route>
         <Route exact path='/addnewfootwearvariant' component={AddFootwearVariant}></Route>
         <Route exact path='/addsocksvariant' component={AddSocksVariant}></Route>
 
@@ -622,6 +717,21 @@ class Sidenav extends React.Component {
         <Route exact path='/cancelorderlist' component={CancelOrdersList}></Route>
 
         <Route exact path='/viewcancelorder' component={ViewCancelOrders}></Route>
+        <Route exact path='/orders' component={Orders}></Route>
+        <Route exact path='/products' component={Products}></Route>
+        <Route exact path='/customers' component={Customers}></Route>
+        <Route exact path='/itemcomparision' component={ItemComparision }></Route>
+        <Route exact path='/vendors' component={Vendors }></Route>
+        <Route exact path='/ordersettlement' component={SettlementReport }></Route>
+        
+        <Route exact path='/codservicecharge' component={CODMaster}></Route>
+        <Route exact path='/viewcustomers' component={ViewCustomer}></Route>
+        <Route exact path='/bmssms' component={BMSMessage}></Route>
+       
+
+        <Route exact path='/festiveoffers' component={FestiveOffers}></Route>
+        <Route exact path='/addfestiveoffer' component={AddFestiveOffer}></Route>
+        <Route exact path='/viewfestiveoffers' component={UpdateFestiveOffers}></Route>
 
         {/* Education Module */}
 
@@ -631,7 +741,7 @@ class Sidenav extends React.Component {
         <Route exact path='/edu-question' component={EduQuestion}></Route>
         <Route exact path='/edu-topics' component={EduTopics}></Route>
         <Route exact path='/edu-chapterInfo' component={ChapterInfoDetails}></Route>
-        
+
        </Switch>
       
         </Router>

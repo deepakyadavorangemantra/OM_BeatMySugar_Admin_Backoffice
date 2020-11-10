@@ -66,6 +66,7 @@ class QualificationMaster extends Component {
          this.state = {
             open:false,
             QualificationData : [],
+            // Status : 'Active',
             Id : '',
             openedit : false,
           };
@@ -153,7 +154,25 @@ class QualificationMaster extends Component {
             </div>
         </div>
 
-        
+        {/* <div className="col-md-6">
+              <div class="form-group mb-3">
+                <label for="validationCustom01">Status<span class="mandatory">*</span></label><br/>
+                <label class="radio-inline">
+                <input type="radio" name="optradio" checked = {this.state.Status == 'Active' ? true : false} onChange= {()=>{
+                  this.setState({
+                    Status : 'Active'
+                  })
+                }} /> Active
+              </label>
+               <label class="radio-inline" style={{marginLeft:'10px'}}>
+                <input type="radio" name="optradio" checked = {this.state.Status == 'Inactive' ? true : false} onChange= {()=>{
+                  this.setState({
+                    Status : 'Inactive'
+                  })
+                }} /> Inactive
+              </label> 
+                </div>
+            </div> */}
       </div>
       <div class="modal-footer">
       <button class="btn btn-primary" type="submit" style={{float:'right'}}  onClick={()=>{
@@ -198,7 +217,25 @@ class QualificationMaster extends Component {
             </div>
         </div>
 
-        
+        {/* <div className="col-md-6">
+              <div class="form-group mb-3">
+                <label for="validationCustom01">Status<span class="mandatory">*</span></label><br/>
+                <label class="radio-inline">
+                <input type="radio" name="optradio" checked = {this.state.Status == 'Active' ? true : false} onChange= {()=>{
+                  this.setState({
+                    Status : 'Active'
+                  })
+                }} /> Active
+              </label>
+               <label class="radio-inline" style={{marginLeft:'10px'}}>
+                <input type="radio" name="optradio" checked = {this.state.Status == 'Inactive' ? true : false} onChange= {()=>{
+                  this.setState({
+                    Status : 'Inactive'
+                  })
+                }} /> Inactive
+              </label> 
+                </div>
+            </div> */}
       </div>
       <div class="modal-footer">
       <button class="btn btn-primary" type="submit" style={{float:'right'}}  onClick={()=>{
@@ -291,6 +328,7 @@ class QualificationMaster extends Component {
                                   
                                        </Helmet> : ''}
                                            <td>{data.fld_qualification}</td>
+                                           {/* <td style={{color:data.fld_status == 'Active' ? 'green' : 'red'}}><b>{data.fld_status}</b></td> */}
                                            <td>{moment(data.fld_updatedon).format('ll')}</td>
                                            <td className="tableact"
                                          
@@ -314,6 +352,7 @@ class QualificationMaster extends Component {
                                         
                                             },"DeleteQualificationMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -331,6 +370,7 @@ class QualificationMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

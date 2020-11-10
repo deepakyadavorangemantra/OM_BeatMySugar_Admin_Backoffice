@@ -113,6 +113,7 @@ class Dashboard extends React.Component {
             width: 380,
             type: 'pie',
           },
+        //   colors: ['#507dc0', '#507dc0', '#507dc0'],
           labels: ['Food', 'Footwear', 'Socks'],
           responsive: [{
             breakpoint: 480,
@@ -227,6 +228,7 @@ class Dashboard extends React.Component {
            
 
 
+        //   console.log(moment().format('ll'))
 
           PostApiCall.postRequest(
             {
@@ -242,14 +244,20 @@ class Dashboard extends React.Component {
               if (results.status == 200 || results.status == 201) {
                  this.setState({
                     DashboardData : obj.data,
+                    // categories:categories
                    
                   })
+                    // const data=[]
                     const saleSseries=[]
                   for(let i=0;i<=11;i++){
                     if(i===categories.indexOf(moment().format('MMM'))){
+                        // data[i]=obj.data[0].OrderThisMonth
+                        // saleSseries[i]=obj.data[0].TotalSalesAmountThisMonth
 
                     }
                     else{
+                        // data[i]=0
+                        // saleSseries[i]=Math.floor(Math.random()*10)
                     }
                     if(i===0){
                         saleSseries[i]=obj.data[0].TotalFoodItem
@@ -264,11 +272,9 @@ class Dashboard extends React.Component {
                     }                   
                 
                    }
-                
-   this.setState({...this.state.saleSseries1,saleSseries1:saleSseries})
 
-                
-   console.log(obj.data)
+                this.setState({...this.state.saleSseries1,saleSseries1:saleSseries})
+
                 this.setState({
                    TotalCustomers: obj.data[0].TotalCustomers,
                    CustomerMonth:obj.data[0].TotalCustomersThisMonth,
@@ -343,7 +349,7 @@ class Dashboard extends React.Component {
              
               const categories=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec']
 
-              const saleScategories=['Food', 'Footwear', 'Socks']
+           
 
               this.setState({
                 categories:categories
@@ -363,6 +369,7 @@ class Dashboard extends React.Component {
                 
                 }
               }
+          
               this.setState({series:[...this.state.series,{name : 'Order Count',data:data}]})
               this.setState({Salesseries:[...this.state.Salesseries,{name : 'Sales',data:data2}]})
             }))
@@ -376,6 +383,7 @@ class Dashboard extends React.Component {
                this.setState({
                      NewCustomerData: obj.data
                  })
+                //  console.log(obj.data)
     
                  Notiflix.Loading.Remove();
                }))
@@ -697,7 +705,80 @@ class Dashboard extends React.Component {
                       
 
                       
-                     
+                      {/*  <div className="row">
+                        <div className="col-sm-4 col-xl-12">
+                        <div className="page-title align-items-center">
+                        
+                                <h4 className="mb-1 mt-0">Return & Refund</h4>
+                            </div>
+                        </div>
+                        <div className="col-md-6 col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <div className="media p-3">
+                                            <div className="media-body">
+                                                <span className="text-muted text-uppercase font-size-12 font-weight-bold">Open Requests
+                                                    </span>
+                                                <h2 className="mb-0">2189</h2>
+                                            </div>
+                                          
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <div className="media p-3">
+                                            <div className="media-body">
+                                                <span className="text-muted text-uppercase font-size-12 font-weight-bold">Total Requests</span>
+                                                <h2 className="mb-0">2189</h2>
+                                            </div>
+                                          
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-6 col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <div className="media p-3">
+                                            <div className="media-body">
+                                                <span className="text-muted text-uppercase font-size-12 font-weight-bold">Total Refund Amount</span>
+                                                <h2 className="mb-0">2189</h2>
+                                            </div>
+                                          
+                                            <div className="align-self-center">
+                                                <div id="today-revenue-chart" className="apex-charts"></div>
+                                                <span className="text-success font-weight-bold font-size-13"><i
+                                                        className='uil uil-arrow-up'></i> 10.21%</span>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-6 col-xl-3">
+                                <div className="card">
+                                    <div className="card-body p-0">
+                                        <div className="media p-3">
+                                            <div className="media-body">
+                                                <span className="text-muted text-uppercase font-size-12 font-weight-bold">Total Refund this Month</span>
+                                                <h2 className="mb-0"> 200</h2>
+                                            </div>
+                                          
+                                             <div className="align-self-center">
+                                                <div id="today-revenue-chart" className="apex-charts"></div>
+                                                <span className="text-success font-weight-bold font-size-13"><i
+                                                        className='uil uil-arrow-up'></i> 10.21%</span>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                        </div>*/}
 
                      
 

@@ -63,7 +63,9 @@ const ImgUploadCover =({
    
       <input id="photo-upload" type="file" onChange={onChange}/> 
 
-      
+      {/* <XSquare class='product-img'
+       onClick={onCancel}
+       ></XSquare> */}
     </label>
 
 
@@ -258,6 +260,7 @@ class ViewFoodVariant extends Component {
         if(VariantData.VendorPricing != null){
             for(var i = 0; i < VariantData.VendorPricing.split('*').length ; i++){
                 
+                // console.log(VariantData.VendorPricing.split('*')[i].split('#')[0])
                 var mar = VariantData.VendorPricing.split('*')[i].split('#')[2] == 'Maximum Retail Price (MRP)' ? parseFloat(VariantData.fld_price*(VariantData.VendorPricing.split('*')[i].split('#')[5]/100)).toFixed(2) : parseFloat(VariantData.VendorPricing.split('*')[i].split('#')[3]*(VariantData.VendorPricing.split('*')[i].split('#')[5]/100)).toFixed(2)
                 var dis = VariantData.VendorPricing.split('*')[i].split('#')[2] == 'Maximum Retail Price (MRP)' ? parseFloat(VariantData.fld_price - VariantData.fld_discountprice) : parseFloat(VariantData.VendorPricing.split('*')[i].split('#')[3] - VariantData.fld_discountprice)
                 var cstp = VariantData.VendorPricing.split('*')[i].split('#')[2] == 'Maximum Retail Price (MRP)' ? parseFloat(VariantData.fld_price - (VariantData.fld_price*(VariantData.VendorPricing.split('*')[i].split('#')[5]/100))).toFixed(2) : parseFloat(VariantData.VendorPricing.split('*')[i].split('#')[3] - (VariantData.VendorPricing.split('*')[i].split('#')[3]*(VariantData.VendorPricing.split('*')[i].split('#')[5]/100))).toFixed(2)
@@ -315,6 +318,10 @@ class ViewFoodVariant extends Component {
 
                     cn = cn +1
 
+                    // console.log((VariantData.VariantImage.split('#')[i].split('-').pop()).split('.')[0])
+                    // this.setState({
+                    //     imageCount : this.state.imageCount +1
+                    // })
                     qua1[((VariantData.VariantImage.split('#')[i].split('-').pop()).split('.')[0])-1].image = VariantData.VariantImage.split('#')[i]
                     qua1[((VariantData.VariantImage.split('#')[i].split('-').pop()).split('.')[0])-1].url = VariantData.VariantImage.split('#')[i]
                     qua1[((VariantData.VariantImage.split('#')[i].split('-').pop()).split('.')[0])-1].remove = 'No'
@@ -344,10 +351,16 @@ class ViewFoodVariant extends Component {
 
         GetApiCall.getRequest("GetPackagingTypeData").then(resultdes =>
             resultdes.json().then(objcategory =>{
+                // this.props.setfoodpackaging(objcategory.data[0].value);
                 this.setState({
                     PackagingTypeData:objcategory.data,
                 })
 
+                // this.props.setweightunit(this.state.WeightData[0].value)
+                // this.props.setpackweightunit(this.state.PackageMeasuretData[0].value)
+                // this.props.setpackunit(this.state.PackageMeasureUnitData[0].value)
+
+                // Notiflix.Loading.Remove()
             }))
 
 
@@ -360,10 +373,12 @@ class ViewFoodVariant extends Component {
                                 
                                   },"GetUserSubMenuAccessRights").then((resultssub) => 
                                   
+                                    // const objs = JSON.parse(result._bodyText)
                                     resultssub.json().then(objsub => {  
                                     if(resultssub.status == 200 || resultssub.status==201){
                         
                                    var filteredRights = objsub.data;
+                                        // console.log(filteredRights)
                                 
                                         var con = 0
                                         for(var i = 0 ; i< filteredRights.length ;i++){
@@ -442,6 +457,7 @@ class ViewFoodVariant extends Component {
 
         
       nextlabel(){
+        //    if(this.props.foodcredential.ItemSkuBms!=''){
                if(this.props.foodcredential.VarientName!=''){
                 if(this.props.foodcredential.VarientName.length < 160){
 
@@ -458,6 +474,10 @@ class ViewFoodVariant extends Component {
                        else{
                         Notiflix.Notify.Failure('Please enter variant name.')
                        }
+                    // }
+                    // else{
+                    //     Notiflix.Notify.Failure('Please enter item SKU of BeatMySugar.')
+                    // }
 
               }
 
@@ -693,12 +713,19 @@ class ViewFoodVariant extends Component {
             if((this.props.setfooddiscount(discountprice.target.value))){
             this.props.setfooddiscountprice(discountprice.target.value)
 
+            // if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
             this.props.setfooddiscount(parseFloat(((this.props.foodcredential.Price-discountprice.target.value)/this.props.foodcredential.Price)*100).toFixed(2))
+            // }else
+            // {
+            // this.props.setfooddiscount(parseFloat(((this.state.VendorSellingPrice-discountprice.target.value)/this.state.VendorSellingPrice)*100).toFixed(2))
+
+            // }
 
             var cusbasepr = parseFloat(discountprice.target.value/(1+(this.state.MasterData.fld_gstpercent/100))).toFixed(2)
 
             var invoiceamt = parseFloat(cusbasepr*(this.state.MasterData.fld_gstpercent/100)).toFixed(2)
 
+            // console.log(parseFloat(cusbasepr*(this.state.MasterData.TcsPercent/100)).toFixed(2))
             this.setState({
                 CustomerBasePrice : cusbasepr,
                 InvoiceGstAmount : invoiceamt,
@@ -775,6 +802,7 @@ onChangeBMS(bmsmargin){
 }
 nextlabel4(){
 
+    // console.log(this.state.Photos)
   if(this.state.imagePreviewUrlCover != null ){
 
     if(this.state.imageCount > 0){
@@ -853,6 +881,7 @@ nextlabel5(){
         var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+  // console.log(this.state.imagedata != '')
   if(this.state.ImageCoverData != ''){
 
     
@@ -873,6 +902,7 @@ nextlabel5(){
     })
     ).then(res => {
    
+      // console.log(obj.data[0])
 
       PostApiCall.postRequest({
 
@@ -884,6 +914,7 @@ nextlabel5(){
  
      },"AddFoodVariantImage").then((results1) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results1.json().then(obj1 => {
  
      
@@ -910,10 +941,12 @@ nextlabel5(){
  
      },"AddFoodVariantImage").then((results1) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results1.json().then(obj1 => {
  
      
        if(results1.status == 200 || results1.status==201){
+  // console.log('in no cover')
   this.OnAddProductImages(obj)
        }
 }))
@@ -932,12 +965,14 @@ nextlabel5(){
       
         for(var i =0 ; i <this.state.Photos.length;i++){
       
+          // console.log(this.state.Photos)
         
       
           if(this.state.Photos[i].value != ''){
       
             const form1 = new FormData();
       
+            // console.log(this.state.Photos[i].data)
          
         form1.append('file', this.state.Photos[i].data);
         form1.append('foldername' , 'Food')
@@ -954,6 +989,7 @@ nextlabel5(){
         status: image1.status
         })
         ).then(res1 => {
+        // console.log(res.data)
       
       
           PostApiCall.postRequest({
@@ -966,6 +1002,7 @@ nextlabel5(){
       
          },"AddFoodVariantImage").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
       
          
@@ -1001,6 +1038,7 @@ nextlabel5(){
               
                  },"DeleteFoodVariantImage").then((results2) => 
                  
+                   // const objs = JSON.parse(result._bodyText)
                    results2.json().then(obj2 => {
               
                  
@@ -1035,6 +1073,7 @@ nextlabel5(){
               
                  },"AddFoodVariantImage").then((results2) => 
                  
+                   // const objs = JSON.parse(result._bodyText)
                    results2.json().then(obj2 => {
               
                  
@@ -1073,6 +1112,7 @@ nextlabel5(){
   var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+//   for(var j =0 ; j<this.state.VendorPricing.length;j++){
 
     PostApiCall.postRequest({
 
@@ -1090,19 +1130,25 @@ nextlabel5(){
 
    },"AddFoodVariantVendorPricing").then((results3) => 
    
+     // const objs = JSON.parse(result._bodyText)
      results3.json().then(obj3 => {
 
    
      if(results3.status == 200 || results3.status==201){
 
+    //   count1 = count1 + 1;
+
+    //   if(count1 == this.state.VendorPricing.length){
     
         Notiflix.Loading.Remove()
         this.props.setclearfooditem()
         Notiflix.Notify.Success('Food variant updated successfully.')
         window.location.href = '/foodvariantlist'
+    //   }
      }
   
     }))
+    // }
 
     }
 
@@ -1146,6 +1192,7 @@ SaveVariant(){
                      updatedon : moment().format('lll'),
                           },"UpdateFoodVariant").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
              
                  
@@ -1199,6 +1246,7 @@ ApproveFood(){
       
           },"UpdateFoodVariantApprovalStatus").then((results) => 
           
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
 
             if(results.status == 200 || results.status==201){
@@ -1216,6 +1264,7 @@ ApproveFood(){
               },
               {
                 label: 'No',
+                // onClick: () => alert('Click No')
               }
             ]
           });
@@ -1231,6 +1280,7 @@ OnAddVendorPricing(){
         if(this.state.Sku != ''){
             if(this.state.MarginOn != ''){
                 if(this.state.VendorSellingPrice != 0){
+        //   if(this.state.MarginPercent != ''){
            
             var dt = this.state.VendorPricing.filter((value)=> value.Name == this.state.Name)
 
@@ -1280,6 +1330,10 @@ OnAddVendorPricing(){
                 
 
               
+        //   }else
+        //   {
+        //     Notiflix.Notify.Failure('Please enter margin percent.');
+        //   }
         }else
         {
           Notiflix.Notify.Failure('Please enter vendor selling price.');
@@ -1347,6 +1401,8 @@ OnAddVendorPricing(){
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Food Item Variant Details</button>
                                                 </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
                   
                                     </div>
                                 </div>
@@ -1414,7 +1470,17 @@ OnAddVendorPricing(){
                                                                 }
                                                             }}
                                                             class="wizardlist nav-link">SEO Details</a></li>
-                                                
+                                                 {/* <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
+
+                                                                if (this.state.Page6 == 'Done') {
+                                                                    this.setState({
+                                                                        PageTitle: '6',
+                                                                        Page4: 'Done',
+    
+                                                                    })
+                                                                }
+                                                            }}
+                                                                class="wizardlist nav-link">Vendor Pricing</a></li> */}
                                                 
                                                                 <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
@@ -1446,7 +1512,14 @@ OnAddVendorPricing(){
                                                             <div class="toast-body">
                                                                 <div class="row">
                                                                    
-                                                                  
+                                                                   {/* <div class="col-md-6">
+                                                                        <div class="form-group mb-3">
+                                                                            <label for="validationCustom01">Item SKU [BMS]<span className="mandatory">*</span></label>
+                                                                            <input type="text" class="form-control"
+                                                                            value={this.props.foodcredential.ItemSkuBms}
+                                                                            onChange={this.onchangesku.bind(this)}/>
+                                                                        </div>
+                                                                    </div> */}
                                                                     <div class="col-md-6">
                                                                         <div class="form-group mb-3">
                                                                             <label for="validationCustom01">Variant Name (160 Character)<span className="mandatory">*</span></label>
@@ -1490,6 +1563,13 @@ OnAddVendorPricing(){
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                         onClick={this.nextlabel.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -1671,6 +1751,13 @@ OnAddVendorPricing(){
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                        onClick={this.nextlabel2.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1737,9 +1824,11 @@ OnAddVendorPricing(){
                                                                           disabled={!this.state.IsVisible}
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -2015,6 +2104,13 @@ OnAddVendorPricing(){
                                                                              }}
                                                                          >Previous</button>
                                                                          <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                         // onClick={()=>{
+                                                    
+                                                                         //     this.setState({
+                                                                         //         PageTitle : '4',
+                                                                         //         Page3 : 'Done'
+                                                                         //     })
+                                                                         //   }}
                                                                            onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                      </div>
                                                                  </div>
@@ -2046,6 +2142,7 @@ OnAddVendorPricing(){
                                                         <div class="col-md-9 ">
                                                         <label for="sw-arrows-first-name" >Product Image<span className="mandatory">*</span></label>
         
+                                                        {/* <div class="form-group"> */}
                                                          <div class="div1" class='row'>
                                                          {this.state.Photos.map((photo,index)=>(  
                                                               <div style={{    marginLeft: '1%',    marginRight: '2%'}}>   
@@ -2071,16 +2168,21 @@ OnAddVendorPricing(){
                                                                         <input id="photo-upload" 
                                                                          disabled={!this.state.IsVisible}
                                                                         type="file" onChange={(e)=>{
+                                                                  //  e.preventDefault();
+                                                                  //  console.log(e.target.files[0])
                                                                    if(e.target.files[0] != undefined){
                                                                      if(e.target.files[0].size < 300000){
                                                                       var arr1 = [...this.state.Photos]
                                                                  const reader = new FileReader();
                                                                    const file = e.target.files[0];
                                                                    reader.onload = (e) => {
+                                                                    // console.log(e.target.result)
+                                                                    // this.setState({image: e.target.result});
                                                                     arr1[index].image =  e.target.result
                                                                     arr1[index].value =  e.target.result
                                                                     arr1[index].data =  file
                                                                     
+                                                                    // this.props.setstaffimage(e.target.result);
                                                                     this.setState({
                                                                       Photos : arr1,
                                                                       imageCount : this.state.imageCount + 1
@@ -2098,6 +2200,7 @@ OnAddVendorPricing(){
                                                                
                                                            </div>
                                                             ))}
+                                                                 {/* </div> */}
                                                          </div>
                                                         </div>
                                                             
@@ -2126,6 +2229,13 @@ OnAddVendorPricing(){
                                                                          }}
                                                                      >Previous</button>
                                                                      <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                     // onClick={()=>{
+                                                
+                                                                     //     this.setState({
+                                                                     //         PageTitle : '4',
+                                                                     //         Page3 : 'Done'
+                                                                     //     })
+                                                                     //   }}
                                                                        onClick={this.nextlabel4.bind(this)}>Next</button>
                                                                  </div>
                                                              </div>
@@ -2197,6 +2307,13 @@ OnAddVendorPricing(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel5.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -2256,9 +2373,11 @@ OnAddVendorPricing(){
                                                                           disabled={!this.state.IsVisible}
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -2599,6 +2718,13 @@ OnAddVendorPricing(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel6.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -2684,6 +2810,13 @@ OnAddVendorPricing(){
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
                                                                              disabled={!this.state.IsVisible}
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page5 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.SaveVariant.bind(this)}>Update Variant</button>
                                                                         </div>
                                                                     </div>

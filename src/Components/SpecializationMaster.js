@@ -152,7 +152,25 @@ class SpecializationMaster extends Component {
             </div>
         </div>
 
-      
+        {/* <div className="col-md-6">
+              <div class="form-group mb-3">
+                <label for="validationCustom01">Status<span class="mandatory">*</span></label><br/>
+                <label class="radio-inline">
+                <input type="radio" name="optradio" checked = {this.state.Status == 'Active' ? true : false} onChange= {()=>{
+                  this.setState({
+                    Status : 'Active'
+                  })
+                }} /> Active
+              </label>
+               <label class="radio-inline" style={{marginLeft:'10px'}}>
+                <input type="radio" name="optradio" checked = {this.state.Status == 'Inactive' ? true : false} onChange= {()=>{
+                  this.setState({
+                    Status : 'Inactive'
+                  })
+                }} /> Inactive
+              </label> 
+                </div>
+            </div> */}
       </div>
       <div class="modal-footer">
       <button class="btn btn-primary" type="submit" style={{float:'right'}}  onClick={()=>{
@@ -197,7 +215,25 @@ class SpecializationMaster extends Component {
             </div>
         </div>
 
-       
+        {/* <div className="col-md-6">
+              <div class="form-group mb-3">
+                <label for="validationCustom01">Status<span class="mandatory">*</span></label><br/>
+                <label class="radio-inline">
+                <input type="radio" name="optradio" checked = {this.state.Status == 'Active' ? true : false} onChange= {()=>{
+                  this.setState({
+                    Status : 'Active'
+                  })
+                }} /> Active
+              </label>
+               <label class="radio-inline" style={{marginLeft:'10px'}}>
+                <input type="radio" name="optradio" checked = {this.state.Status == 'Inactive' ? true : false} onChange= {()=>{
+                  this.setState({
+                    Status : 'Inactive'
+                  })
+                }} /> Inactive
+              </label> 
+                </div>
+            </div> */}
       </div>
       <div class="modal-footer">
       <button class="btn btn-primary" type="submit" style={{float:'right'}}  onClick={()=>{
@@ -312,6 +348,7 @@ class SpecializationMaster extends Component {
                                         
                                             },"DeleteSpecializationMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -329,6 +366,7 @@ class SpecializationMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

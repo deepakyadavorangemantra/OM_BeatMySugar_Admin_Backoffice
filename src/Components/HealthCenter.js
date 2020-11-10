@@ -184,6 +184,7 @@ class HealthCenter extends Component {
 
               },"GetState").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(objstate => {
           
               
@@ -206,6 +207,7 @@ class HealthCenter extends Component {
         
                       },"GetCity").then((resultscity) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         resultscity.json().then(objcity => {
                   
                       
@@ -228,6 +230,7 @@ class HealthCenter extends Component {
             }))
              
         
+            // Notiflix.Loading.Remove()
         
         }) 
         );
@@ -242,10 +245,12 @@ class HealthCenter extends Component {
                   
                     },"GetUserSubMenuAccessRights").then((resultssub) => 
                     
+                      // const objs = JSON.parse(result._bodyText)
                       resultssub.json().then(objsub => {  
                       if(resultssub.status == 200 || resultssub.status==201){
           
                      var filteredRights = objsub.data;
+                          // console.log(filteredRights)
                   
                           var con = 0
                           for(var i = 0 ; i< filteredRights.length ;i++){
@@ -301,6 +306,7 @@ class HealthCenter extends Component {
     }
 
     handleCountryChange = event =>{
+        // this.props.setCountry(event.target.value)
         this.setState({
             CountryId : event.target.value
           })
@@ -361,6 +367,7 @@ class HealthCenter extends Component {
     }
 
     handleStateChange = event =>{
+        // this.props.setStateAc(event.target.value)
         this.setState({
             StateId: event.target.value
           })
@@ -381,6 +388,7 @@ class HealthCenter extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -392,6 +400,7 @@ class HealthCenter extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -399,6 +408,7 @@ class HealthCenter extends Component {
     }
 
     handleCityChange = event =>{
+        // this.props.setCity(event.target.value)
         this.setState({
             CityId : event.target.value
           })
@@ -509,6 +519,7 @@ class HealthCenter extends Component {
 
     handleContactInfo = () =>{
         if(this.props.Health.Address !=''){
+            // if(this.props.Health.Area !=''){
                                 if(this.props.Health.Pincode !=''){
                                     if(this.props.Health.Pincode.length == 6){
 
@@ -527,18 +538,56 @@ class HealthCenter extends Component {
  
                                     }else{Notiflix.Notify.Failure('Please enter valid pincode.')}
                                 }else{Notiflix.Notify.Failure('Please enter pincode.')}
+            // }else{Notiflix.Notify.Failure('Please enter the locality / area.')}
         }else{Notiflix.Notify.Failure('Please enter health center address.')}
     }
 
     handleFacilitiesServiceChange = () =>{
+    //    if(this.state.Facilities.length > 0){
+    //     if(this.state.Services.length > 0){
             this.setState({
                 PageTitle : '4',
                 Page3 : 'Done'
             })
-    
+    //     }else{Notiflix.Notify.Failure('Please select health center services.')}      
+    //    }else{Notiflix.Notify.Failure('Please select health center facilities.')}
     }
 
-    
+    // handleTimings = () =>{                                         
+        
+    //         var time = this.state.TimingInfo.filter(value => value.check)
+
+        
+
+    //         var cn = 0
+
+    //         if(time.length > 0){
+    //             for(var i =0 ; i<time.length;i++){
+    //                 if(time[i].open == '' || time[i].close == ''){
+
+    //                     // Notiflix.Notify.Failure('Please select opening & closing timings for health center.')
+    //                     cn = 1
+    //                 }
+
+    //             }
+    //             if(cn == 1){
+    //                 Notiflix.Notify.Failure('Please select opening & closing timings for health center for seleted days.')
+    //             }else
+    //             {
+    //               this.setState({
+    //                   FinalTime : time,
+    //             PageTitle : '5',
+    //             Page4 : 'Done'
+    //         })
+    //             }
+
+    //         }
+        
+    //      else{Notiflix.Notify.Failure('Please select timings for health center.')}  
+            
+          
+    // }
+
     OnFacilitiesSubmit(obj){
 
         var login=localStorage.getItem('LoginDetail');
@@ -559,6 +608,7 @@ class HealthCenter extends Component {
                             updatedon : moment().format('lll'),
                                   },"AddHealthCenterFacilitiesMappings").then((results) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(objs => {
                      
                          
@@ -600,6 +650,7 @@ if(this.state.Services.length > 0){
                             updatedon : moment().format('lll'),
                                   },"AddHealthCenterServicesMapping").then((results) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(objs => {
                      
                          
@@ -608,6 +659,7 @@ if(this.state.Services.length > 0){
                                 count = count + 1
                                 if(count == this.state.Services.length){
 
+                                    // this.OnTimingSubmit(obj)
 
                                     this.props.setClearHc()
                                     Notiflix.Loading.Remove()
@@ -627,7 +679,50 @@ if(this.state.Services.length > 0){
                 }
     }
 
-    
+    // OnTimingSubmit(obj){
+
+
+    //     var login=localStorage.getItem('LoginDetail');
+    //                 var details=JSON.parse(login)
+                      
+           
+    //                 var count = 0
+
+    //                 Notiflix.Loading.Dots('');
+
+    //                 for(var i = 0 ;i < this.state.FinalTime.length;i++)
+    //                  {                        
+    //                     PostApiCall.postRequest({
+    //                         healthcenterid : (JSON.parse(JSON.stringify(obj.data[0]))).HealthCenterId,
+    //                         day : this.state.FinalTime[i].day,
+    //                         openingtime : this.state.FinalTime[i].open,
+    //                         closingtime : this.state.FinalTime[i].close,
+    //                         updatedby : details[0].fld_staffid,
+    //                         updatedon : moment().format('lll'),
+    //                               },"AddHealthCenterTimingsMapping").then((results) => 
+                         
+    //                         // const objs = JSON.parse(result._bodyText)
+    //                         results.json().then(objs => {
+                     
+                         
+    //                         if(results.status == 200 || results.status==201){
+
+    //                             count = count + 1
+    //                             if(count == this.state.FinalTime.length){
+
+    //                                 this.props.setClearHc()
+    //                                 Notiflix.Loading.Remove()
+    //                                 Notiflix.Notify.Success('Health Center successfully added.')
+    //                                 window.location.href = '/healthcenterlist'
+
+    //                             }
+
+    //                         }
+    //                     }))
+    //                 }
+
+    // }
+
 
     handleSubmit = () =>{
 
@@ -661,6 +756,7 @@ if(this.state.Services.length > 0){
                  updatedon : moment().format('lll'),
                       },"AddHealthCenter").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {
          
              
@@ -745,7 +841,17 @@ if(this.state.Services.length > 0){
                                                                 }
                                                             }}
                                                             class="wizardlist nav-link">Facilities & Services</a></li>
-                                               
+                                                 {/* <li className={this.state.PageTitle == '4' ? 'active nav-item' : this.state.Page4 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
+
+                                                                if (this.state.Page4 == 'Done') {
+                                                                    this.setState({
+                                                                        PageTitle: '4',
+                                                                        Page4: 'Done',
+    
+                                                                    })
+                                                                }
+                                                            }}
+                                                                class="wizardlist nav-link">Timings </a></li> */}
                                                     <li className={this.state.PageTitle == '4' ? 'active nav-item' : this.state.Page4 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
                                                                     if (this.state.Page4 == 'Done') {
@@ -776,7 +882,16 @@ if(this.state.Services.length > 0){
                                                                         <div class="row">
                                                                             <div class="col-md-12">
                                                                                 <div class="row">
-                                                                              
+                                                                                {/* <div class="col-md-6">
+                                                                                <div class="form-group mb-2">
+                                                                                    <label for="validationCustom05">Health Center Code<span className="mandatory">*</span></label>
+                                                                                    <input type="text" class="form-control" id="validationCustom05"
+                                                                                    value = {this.props.Health.HealthCenterCode}
+                                                                                    onChange = {this.handleHealthCenterCodeChange}
+                                                                                   ></input>
+                                                                                    
+                                                                                </div>
+                                                                            </div>  */}
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group mb-2">
                                                                                     <label for="validationCustom05">Health Center Type<span className="mandatory">*</span></label>
@@ -1103,7 +1218,167 @@ if(this.state.Services.length > 0){
                                                             </div>
                                                         </div>
 
+                                                        {/* <div id="sw-arrows-step-4"
+                                                            className="tab-pane step-content"
+                                                            style={{ display: this.state.PageTitle == '4' ? 'block' : 'none' }}>
+                                                            
+
+                                                            <div class="toast fade show" role="alert" aria-live="assertive"
+                                                    aria-atomic="true" data-toggle="toast" style={{overflow: 'visible'}}>
+
+                               <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+
+                                        <table id="selection-datatable" class="table table-striped dt-responsive nowrap">
+                                            <thead style={{
+                                                  background: '#2e4a9a',
+                                                  color: '#fff'
+                                            }}>
+                                                <tr>
+                                                <th style={{borderRight : '1px solid #fff'}}>Select Timing</th>
+                                                    <th style={{borderRight : '1px solid #fff'}}>Day</th>
+                                                    <th style={{borderRight : '1px solid #fff'}}>Opening Time</th>
+                                                    <th >Closing Time</th>
+                                                   
+                                                   
+                                                </tr>
+                                            </thead>
+                                        
+                                     
+                                           
+                                           
+                                    <tbody >
+                                 
+                                
+                                        
+                                         {this.state.TimingData.map((data,index)=>(
+                                           
+                                           
+                                       
+                                                <tr key={index}>
+                                                      <td> <input type="checkbox"
+                                                      onChange={()=>{
+                                                          var arr = [...this.state.TimingInfo]
+                                                          var arr2 = [...this.state.TimingData]
+                                                        if(arr[index].check){
+
+                                                            arr[index].check = false
+                                                            arr2[index].edit = false
+
+                                                            arr[index].day = ''
+                                                            arr[index].open = ''
+                                                            arr[index].close = ''
+                                                            
+                                                            this.setState({
+                                                                TimingInfo : arr,
+                                                                TimingData : arr2
+                                                            })
+                                                            
+                                                        }else
+                                                        {
+                                                            arr[index].check = true
+                                                            arr[index].day = data.day
+                                                            arr[index].open = ''
+                                                            arr[index].close = ''
+                                                           
+                                                            arr2[index].edit = true
+
+                                                            this.setState({
+                                                                TimingInfo : arr,
+                                                                TimingData : arr2
+                                                            })
+                                                        }
+                                                          
+                                                      }}
+                                                      checked={this.state.TimingInfo[index].check ? true : false}
+                                                      style={{verticalAlign:'middle'}}/></td>
+                                                <td>{data.day}</td>
+                                                <td> <TimePicker
+                                                        onTimeChange ={(time)=>{
+                                                           
+                                                            
+                                                            var arr = [...this.state.TimingInfo]
+                                                            arr[index].open = time.hour+':'+time.minute+' '+time.meridiem
                                                       
+                                                            this.setState({
+                                                                TimingInfo : arr,
+                                                               
+                                                            })
+                                                        }}
+                                                            theme="basic"
+                                                        disabled={!data.edit}
+                                                        time={this.state.TimingInfo[index].open} // initial time, default current time
+                                                        timeMode="12" // use 24 or 12 hours mode, default 24
+                                                   
+                                                    /></td>
+                                                <td>  <TimePicker
+                                                onTimeChange ={(time)=>{
+                                                   
+                                                    
+                                                    var arr = [...this.state.TimingInfo]
+                                                    arr[index].close = time.hour+':'+time.minute+' '+time.meridiem
+                                              
+                                                    this.setState({
+                                                        TimingInfo : arr,
+                                                       
+                                                    })
+                                                }}
+                                                            theme="basic"
+                                                            disabled={!data.edit}
+                                                            time={this.state.TimingInfo[index].close}// initial time, default current time
+                                                        timeMode="12" // use 24 or 12 hours mode, default 24
+                                                   
+                                                    /></td>
+                        
+                                              
+                                                </tr>
+                                
+                                          
+                                        ))} 
+       
+                                            
+       
+                                              </tbody>   
+                                     
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+        
+                                                        </div>
+
+
+                                                            
+                                                 
+                                                       
+                                                            <div className="toast fade show" role="alert" aria-live="assertive"
+                                                                aria-atomic="true" data-toggle="toast">
+                                                                <div className='row'>
+                                                                   
+                                                                    <div className="col-md-12">
+                                                                        <div className="btn-toolbar sw-toolbar sw-toolbar-top justify-content-right" style={{ float: 'right' }}>
+
+                                                                            <button className="btn btn-secondary sw-btn-prev btn-radius-right"
+                                                                                onClick={() => {
+
+                                                                                    this.setState({
+                                                                                        PageTitle: '3',
+                                                                                        Page4: 'Done'
+                                                                                    })
+                                                                                }}
+                                                                            >Previous</button>
+                                                                            <button className="btn btn-secondary sw-btn-next  btn-radius-left" onClick={this.handleTimings.bind(this)}>Next</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>---end 4 row-- */}
 
                                                         <div id="sw-arrows-step-4"
                                                         className="tab-pane step-content"
@@ -1133,7 +1408,19 @@ if(this.state.Services.length > 0){
                                                                 </select> 
                                                             </div>
                                                         </div>
-                                                        
+                                                        {/* <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label for="validationCustom01">Approval<span className="mandatory">*</span></label><br/>
+                                                            <select type="text" class="form-control" 
+                                                             value = {this.props.Health.Approval}
+                                                             onChange = {this.handleApprovalChange}
+                                                            required >
+                                                            <option>Yes</option>
+                                                            <option>No</option>
+                                                            
+                                                        </select>
+                                                            </div>
+                                                    </div> */}
                                                     
                                                         </div>
                                                         

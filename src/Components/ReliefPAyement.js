@@ -32,6 +32,7 @@ class ReliefPaymentList extends Component {
           GetApiCall.getRequest("GetNewOrders").then(resultdes =>
               resultdes.json().then(obj => {
              
+            //   console.log(obj.data)
               
                 this.setState({
                   OrderData : obj.data
@@ -43,7 +44,44 @@ class ReliefPaymentList extends Component {
 
 
 
-       
+        // var login=localStorage.getItem('LoginDetail');
+        // var details=JSON.parse(login)
+
+        // PostApiCall.postRequest({
+  
+        //     staffid : details[0].fld_staffid,
+        
+        //   },"GetUserSubMenuAccessRights").then((resultssub) => 
+          
+        //     // const objs = JSON.parse(result._bodyText)
+        //     resultssub.json().then(objsub => {  
+        //     if(resultssub.status == 200 || resultssub.status==201){
+
+        //    var filteredRights = objsub.data;
+        //         // console.log(filteredRights)
+        
+        //         var con = 0
+        //         for(var i = 0 ; i< filteredRights.length ;i++){
+   
+        //             if(filteredRights[i].fld_menuname == 'Add Staff'){
+        
+        //               if(filteredRights[i].fld_access == 1){
+        //                this.setState({
+        //                  AddAccess : true
+        //                })
+        //               }
+        //             }
+                   
+        //           con = con + 1
+        //           if(con == filteredRights.length){
+        //               Notiflix.Loading.Remove();
+        //           }
+        //         }
+        
+
+        //     }
+
+        // }))
 
     
     }
@@ -76,7 +114,23 @@ class ReliefPaymentList extends Component {
                     </div> 
 
                     <div class="row">
-                   
+                   {/* <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                                                       <div class="col text-right">
+                                       <a href='/addfootwear'>
+                                       <button 
+                                       
+                                       class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
+                                               class="uil-plus mr-1"></i>Add New Footwear Item</button>
+                                  
+                                       </a>
+                                                                       </div>
+                                </div>
+                            </div>
+                        </div> 
+                     </div>*/}
                 
                 </div>
                     
@@ -141,6 +195,7 @@ class ReliefPaymentList extends Component {
                                 <span  >
                                 <Edit3/>
                                     </span>
+                                    {/* &nbsp;&nbsp;<Trash2/> */}
                                     </div> &nbsp;&nbsp;
                                      </td>
                                   

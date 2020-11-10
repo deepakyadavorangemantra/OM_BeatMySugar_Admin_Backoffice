@@ -99,4 +99,5 @@ export default combineReducers({
     ViewInsurance:ViewInsurance,
     // Education Reducer
     educationChapter : ChapterReducer
+
 })

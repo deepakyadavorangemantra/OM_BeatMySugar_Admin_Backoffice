@@ -124,6 +124,7 @@ class ViewSocks extends Component {
           var det = localStorage.getItem('SocksDetails')
           var SocksData = JSON.parse(det)
            
+        //   console.log(SocksData)
 
            new Promise( ( resolve, reject ) => {
             setTimeout( resolve, 1000 );
@@ -165,12 +166,14 @@ class ViewSocks extends Component {
 
         GetApiCall.getRequest("GetGstData").then(resultdes =>
             resultdes.json().then(objGst =>{
+            //    this.props.setsocksgst(objGst.data[0].value);
                 this.setState({
                     GSTData:objGst.data
                 })
             }))
             GetApiCall.getRequest("GetCompany").then(resultdes =>
                 resultdes.json().then(objcompany =>{
+                    // this.props.setsockscompany(objcompany.data[0].value);
                     this.setState({
                         Companydata:objcompany.data,
                         ManufactureData:objcompany.data,
@@ -180,6 +183,7 @@ class ViewSocks extends Component {
                 }))
                 GetApiCall.getRequest("GetBrandData").then(resultdes =>
                     resultdes.json().then(objbrand => {
+                    // this.props.setsocksbrand(objbrand.data[0].value);
                    
                       this.setState({
                         Branddata : objbrand.data,
@@ -189,11 +193,13 @@ class ViewSocks extends Component {
 
                  GetApiCall.getRequest("GetSocksTypeMaster").then(resultdes =>
                         resultdes.json().then(objtype => {
+                        // this.props.setsocksitemtype(objtype.data[0].value);
                        
                           this.setState({
                             TypeData : objtype.data,
                             
                           })
+                        //   Notiflix.Loading.Remove()
                         }))
 
                         GetApiCall.getRequest("GetCountry").then(resultdes =>
@@ -220,10 +226,12 @@ class ViewSocks extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -408,6 +416,7 @@ class ViewSocks extends Component {
                     },"UpdateSocksItemMaster").then((results) => 
                         
                     
+                   //    const objs = JSON.parse(result._bodyText)
                       results.json().then(obj => {
                 
                     
@@ -464,6 +473,7 @@ class ViewSocks extends Component {
                                       
                                           },"UpdateSocksItemMasterApprovalStatus").then((results) => 
                                           
+                                            // const objs = JSON.parse(result._bodyText)
                                             results.json().then(obj => {
                                 
                                             if(results.status == 200 || results.status==201){
@@ -481,6 +491,7 @@ class ViewSocks extends Component {
                                               },
                                               {
                                                 label: 'No',
+                                                // onClick: () => alert('Click No')
                                               }
                                             ]
                                           });
@@ -539,6 +550,8 @@ class ViewSocks extends Component {
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Socks Details</button>
                                                 </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
                   
                                     </div>
                                 </div>
@@ -765,7 +778,13 @@ class ViewSocks extends Component {
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                        
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                         onClick={this.nextlabel.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -821,6 +840,13 @@ class ViewSocks extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                     onClick={this.nextlabel2.bind(this)}  >Next</button>
                                                                         </div>
                                                                     </div>
@@ -933,6 +959,13 @@ class ViewSocks extends Component {
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
                                                                             disabled={!this.state.IsVisible} 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                             onClick={this.SaveSocks.bind(this)} >Update Socks Item</button>
                                                                         </div>
                                                                     </div>

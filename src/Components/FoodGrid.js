@@ -28,12 +28,14 @@ class FoodGrid extends Component {
               GetApiCall.getRequest("GetFoodItemMaster").then(resultdes =>
                   resultdes.json().then(obj => {
                  
+                  // console.log(obj.data)
                   
                     this.setState({
                       FoodData : obj.data
                     })
       
       
+                    // Notiflix.Loading.Remove();
                   }))
 
                   var login=localStorage.getItem('LoginDetail');
@@ -45,10 +47,12 @@ class FoodGrid extends Component {
                   
                     },"GetUserSubMenuAccessRights").then((resultssub) => 
                     
+                      // const objs = JSON.parse(result._bodyText)
                       resultssub.json().then(objsub => {  
                       if(resultssub.status == 200 || resultssub.status==201){
           
                      var filteredRights = objsub.data;
+                          // console.log(filteredRights)
                   
                           var con = 0
                           for(var i = 0 ; i< filteredRights.length ;i++){
@@ -212,6 +216,7 @@ class FoodGrid extends Component {
                                 <span  >
                                 <Edit3/>
                                     </span>
+                                    {/* &nbsp;&nbsp;<Trash2/> */}
                                     </div> &nbsp;&nbsp;
                                      </td>
                                   

@@ -38,6 +38,8 @@ class ViewFood extends Component {
             Page4 : 'Pending',
             Page5 : 'Pending',
             Page6 : 'Pending',
+        //       FilterData:[{'label':'Mithai','value' : 'Mithai'},{'label':'Sour','value' : 'Sour'},{'label':'Mango','value' : 'Mango'},{'label':'Grapes','value' : 'Grapes'}
+        // ],
         DecimalRegex : /^(\d*\.?\d{0,2}|\.\d{0,9})$/,
         NumRegex: /^[0-9]*$/,
         AlphaNumericRegex : /^[a-zA-Z0-9]*$/,
@@ -114,6 +116,7 @@ class ViewFood extends Component {
 
           var det = localStorage.getItem('FoodItemMasterDetails')
           var FoodData = JSON.parse(det)
+        //    console.log(FoodData)
 
         new Promise( ( resolve, reject ) => {
             setTimeout( resolve, 1000 );
@@ -172,6 +175,7 @@ class ViewFood extends Component {
 
         GetApiCall.getRequest("GetBrandData").then(resultdes =>
             resultdes.json().then(objbrand => {
+            // this.props.setbrand(objbrand.data[0].value);
            
               this.setState({
                 Branddata : objbrand.data,
@@ -180,6 +184,7 @@ class ViewFood extends Component {
             }))
             GetApiCall.getRequest("GetFoodCategoryData").then(resultdes =>
                 resultdes.json().then(objcategory =>{
+                    // this.props.setfooditemcategory(objcategory.data[0].value);
                     this.setState({
                         Categorydata:objcategory.data,
                     })
@@ -194,12 +199,14 @@ class ViewFood extends Component {
 
                     GetApiCall.getRequest("GetFoodFlavourData").then(resultdes =>
                      resultdes.json().then(objflavour =>{
+                        //  this.props.setfooditemflavor(objflavour.data[0].value);
                             this.setState({
                                 Flavourdata:objflavour.data,
                             })
                         }))
                         GetApiCall.getRequest("GetGstData").then(resultdes =>
                             resultdes.json().then(objGst =>{
+                                //  this.props.setfoodgst(objGst.data[0].value);
                                 this.setState({
                                     GSTdata:objGst.data,
                                 })
@@ -207,6 +214,7 @@ class ViewFood extends Component {
                             }))
                             GetApiCall.getRequest("GetCompany").then(resultdes =>
                                 resultdes.json().then(objcompany =>{
+                                    // this.props.setfoodcompany(objcompany.data[0].value);
                                     this.setState({
                                         Companydata:objcompany.data,
                                         ManufactureData:objcompany.data,
@@ -239,10 +247,12 @@ class ViewFood extends Component {
                                 
                                   },"GetUserSubMenuAccessRights").then((resultssub) => 
                                   
+                                    // const objs = JSON.parse(result._bodyText)
                                     resultssub.json().then(objsub => {  
                                     if(resultssub.status == 200 || resultssub.status==201){
                         
                                    var filteredRights = objsub.data;
+                                        // console.log(filteredRights)
                                 
                                         var con = 0
                                         for(var i = 0 ; i< filteredRights.length ;i++){
@@ -422,6 +432,7 @@ SaveProduct(){
                   if(this.props.foodcredential.HSNCode!=''){
                        
                            
+                        // console.log(this.props.foodcredential)
                      
                         var login=localStorage.getItem('LoginDetail');
                          var details=JSON.parse(login)
@@ -453,6 +464,7 @@ SaveProduct(){
                       
                           },"UpdateFoodItemMaster").then((results) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(obj => {
                       
                           
@@ -470,6 +482,7 @@ SaveProduct(){
                                      
                                    },"AddFoodItemMaster_FilterMapping").then((results) => 
                                    
+                                     // const objs = JSON.parse(result._bodyText)
                                      results.json().then(obj => {
                                
                                    
@@ -539,6 +552,7 @@ ApproveFood(){
       
           },"UpdateFoodItemMasterApprovalStatus").then((results) => 
           
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
 
             if(results.status == 200 || results.status==201){
@@ -556,6 +570,7 @@ ApproveFood(){
               },
               {
                 label: 'No',
+                // onClick: () => alert('Click No')
               }
             ]
           });
@@ -611,6 +626,8 @@ ApproveFood(){
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Food Item Details</button>
                                                 </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
                   
                                     </div>
                                 </div>
@@ -854,6 +871,13 @@ ApproveFood(){
         
                                                                                 <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                                 <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                                // onClick={() => {
+        
+                                                                                //     this.setState({
+                                                                                //         PageTitle: '2',
+                                                                                //         Page1: 'Done'
+                                                                                //     })
+                                                                                // }}
                                                                                 onClick={this.nextlabel.bind(this)}>Next</button>
                                                                             </div>
                                                                         </div>
@@ -920,6 +944,13 @@ ApproveFood(){
                                                                       }}
                                                                    >Previous</button>
                                                                    <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                //    onClick={()=>{
+                                                                     
+                                                                //      this.setState({
+                                                                //          PageTitle : '3',
+                                                                //          Page2 : 'Done'
+                                                                //      })
+                                                                //    }}
                                                                    onClick={this.nextlabel2.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -977,6 +1008,13 @@ ApproveFood(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1087,6 +1125,13 @@ ApproveFood(){
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
                                                                              disabled={!this.state.IsVisible}
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.SaveProduct.bind(this)}>Update Food Item</button>
                                                                         </div>
                                                                     </div>

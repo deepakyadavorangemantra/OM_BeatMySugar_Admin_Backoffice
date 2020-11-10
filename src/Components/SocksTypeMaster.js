@@ -361,6 +361,7 @@ class SocksTypeMaster extends Component {
                                         
                                             },"DeleteSocksTypeMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -378,6 +379,7 @@ class SocksTypeMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

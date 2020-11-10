@@ -28,12 +28,14 @@ class SocksGrid extends Component {
               GetApiCall.getRequest("GetSocksItemMaster").then(resultdes =>
                   resultdes.json().then(obj => {
                  
+                  // console.log(obj.data)
                   
                     this.setState({
                       SocksData : obj.data
                     })
       
       
+                    // Notiflix.Loading.Remove();
                   }))
 
 
@@ -46,10 +48,12 @@ class SocksGrid extends Component {
                   
                     },"GetUserSubMenuAccessRights").then((resultssub) => 
                     
+                      // const objs = JSON.parse(result._bodyText)
                       resultssub.json().then(objsub => {  
                       if(resultssub.status == 200 || resultssub.status==201){
           
                      var filteredRights = objsub.data;
+                          // console.log(filteredRights)
                   
                           var con = 0
                           for(var i = 0 ; i< filteredRights.length ;i++){
@@ -218,6 +222,7 @@ class SocksGrid extends Component {
                           <span  >
                           <Edit3/>
                               </span>
+                              {/* &nbsp;&nbsp;<Trash2/> */}
                               </div> &nbsp;&nbsp;
                                </td>
                             

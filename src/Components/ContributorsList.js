@@ -24,6 +24,7 @@ class ContributorList extends Component {
                GetApiCall.getRequest("GetContributors").then(resultdes =>
                    resultdes.json().then(obj => {
                   
+                   // console.log(obj.data)
                    
                      this.setState({
                         ContributorData : obj.data
@@ -133,6 +134,7 @@ class ContributorList extends Component {
                                 <span  >
                                 <Edit3/>
                                     </span>
+                                    {/* &nbsp;&nbsp;<Trash2/> */}
                                     </div> &nbsp;&nbsp;
                                      </td>
                                   

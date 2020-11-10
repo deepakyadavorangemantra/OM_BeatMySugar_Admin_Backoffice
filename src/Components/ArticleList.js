@@ -37,6 +37,7 @@ class ArticleList extends Component {
               GetApiCall.getRequest("GetArticleList").then(resultdes =>
                   resultdes.json().then(obj => {
                  
+                  // console.log(obj.data)
                   
                     this.setState({
                         ArticleData : obj.data,
@@ -68,6 +69,7 @@ class ArticleList extends Component {
                 },"Updateblogpublish").then((resultArticel) =>
                 resultArticel.json().then(objArtical => {
                     if(resultArticel.status == 200 || resultArticel.status == 201){
+                    //   this.props.setClearTag()
                       Notiflix.Loading.Remove();
                       Notiflix.Notify.Success('Article published successfully.')
                       window.location.reload()
@@ -83,6 +85,7 @@ class ArticleList extends Component {
             {
                 Notiflix.Notify.Failure('Please select publish date.')
             }
+            // console.log(this.state.PublishDate)
         }
         
      
@@ -252,6 +255,7 @@ class ArticleList extends Component {
                                             <span  >
                                             <Edit3/>
                                                 </span>
+                                                {/* &nbsp;&nbsp;<Trash2/> */}
                                                 </div> &nbsp;&nbsp;
                                                 </td>
                                             

@@ -31,6 +31,7 @@ class VenderLicense extends Component {
                 VenderData : obj.data
             })
              Notiflix.Loading.Remove()
+            //  console.log(obj.data)
           }))
       
          
@@ -353,6 +354,7 @@ class VenderLicense extends Component {
                                         
                                             },"DeleteVendorLicenseMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -370,6 +372,7 @@ class VenderLicense extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

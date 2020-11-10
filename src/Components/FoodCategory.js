@@ -44,6 +44,7 @@ class FoodCategory extends Component {
       
           GetApiCall.getRequest("GetFoodCategoryList").then(resultdes =>
             resultdes.json().then(obj => {
+              // console.log(obj.data)
                 this.setState({
                 FoodlistData : obj.data
               })
@@ -203,6 +204,15 @@ class FoodCategory extends Component {
       </div>
       <div class="modal-body">
         <div class="row">
+        {/* <div class="col-md-4">
+            <div class="form-group mb-3">
+                <label for="validationCustom01">Brand Logo<span className="mandatory">*</span></label>
+              <div class="div1">
+                <ImgUpload onChange={this.photoUpload} src={this.state.imagePreviewUrl}/>
+              
+        </div>
+            </div>
+        </div> */}
         <div div class="col-md-8">
 
             <div class="form-group mb-3">
@@ -444,6 +454,7 @@ class FoodCategory extends Component {
                                         
                                             },"DeleteFoodCategoryMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -461,6 +472,7 @@ class FoodCategory extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });
@@ -489,7 +501,11 @@ class FoodCategory extends Component {
                            
                                      
                                    ))}
-                                    
+                                    {/* <tr>
+                                        <td>Test</td>
+                                        <td>March 24, 2020</td>
+                                        <td className="tableact"><Edit3/> &nbsp;&nbsp; <Trash2/></td>
+                                    </tr> */}
                                    
                                     </tbody>
                                     </table>

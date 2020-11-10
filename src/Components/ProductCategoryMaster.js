@@ -212,6 +212,7 @@ class ProductCategoryMaster extends Component {
                                         
                                             },"DeleteMedicineCategoryMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -229,6 +230,7 @@ class ProductCategoryMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });
