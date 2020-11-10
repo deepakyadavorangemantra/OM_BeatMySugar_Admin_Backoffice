@@ -304,7 +304,7 @@ class EduTopics extends Component {
                                              onClick={()=>{
                                                this.setState({
                                                  open : true,
-                                                 topicEditData : data
+                                                 sate:{topicEditData : data}
                                                })
 
                                             //    this.props.setSubCategoryName(data.fld_subcategory)

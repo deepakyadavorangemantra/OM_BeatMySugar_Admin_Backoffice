@@ -394,10 +394,11 @@ class EduChapter extends Component {
                                         <div className="col text-right">
                                         <button 
                                         onClick={()=>{
-                                            this.setState({
-                                                open : true,
-                                                chapterEditData : ''
-                                            })
+                                            // this.setState({
+                                            //     open : true,
+                                            //     chapterEditData : ''
+                                            // })
+                                            this.props.history.push('/edu-chapterInfo');
                                         }}
                                         className="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 className="uil-plus mr-1"></i>Add New Chapter</button>
@@ -478,12 +479,14 @@ class EduChapter extends Component {
                                              <Edit3 style={{marginLeft: '10px'}}
                                              onClick={()=>{
                                               // this.props.dispatch(setNameAccred(data.fld_name));
-                                               this.setState({
+                                              //  this.setState({
                                                 
-                                                chapterEditData : data,
-                                                open : true,
+                                              //   chapterEditData : data,
+                                              //   open : true,
                                         
-                                               })
+                                              //  })
+                                              this.props.history.push({pathname:'/edu-chapterInfo', state: {  chapterEditData : data} });
+                                              // this.props.history.push('/edu-chapterInfo');
                                              }}
                                              
                                              ></Edit3>
