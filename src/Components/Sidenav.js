@@ -135,6 +135,7 @@ import EduDashboard from '../Pages/Education/Dashboard';
 import EduQuestion from '../Pages/Education/Question';
 import EduTopics from '../Pages/Education/Topics';
 import EduReminders from '../Pages/Education/Reminders';
+import ChapterInfoDetails from '../Pages/Education/ChapterInfoDetails';
 
 class Sidenav extends React.Component {
 
@@ -629,7 +630,7 @@ class Sidenav extends React.Component {
         <Route exact path='/edu-dashboard' component={EduDashboard}></Route>
         <Route exact path='/edu-question' component={EduQuestion}></Route>
         <Route exact path='/edu-topics' component={EduTopics}></Route>
-        <Route exact path='/edu-reminders' component={EduReminders}></Route>
+        <Route exact path='/edu-chapterInfo' component={ChapterInfoDetails}></Route>
         
        </Switch>
       
