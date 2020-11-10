@@ -214,6 +214,7 @@ class FoodVariant extends Component {
                 this.props.setpackweightunit(this.state.PackageMeasuretData[0].value)
                 this.props.setpackunit(this.state.PackageMeasureUnitData[0].value)
 
+                // Notiflix.Loading.Remove()
             }))
 
 
@@ -226,10 +227,12 @@ class FoodVariant extends Component {
             
               },"GetUserSubMenuAccessRights").then((resultssub) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 resultssub.json().then(objsub => {  
                 if(resultssub.status == 200 || resultssub.status==201){
     
                var filteredRights = objsub.data;
+                    // console.log(filteredRights)
             
                     var con = 0
                     for(var i = 0 ; i< filteredRights.length ;i++){
@@ -302,6 +305,7 @@ class FoodVariant extends Component {
 
         
       nextlabel(){
+        //    if(this.props.foodcredential.ItemSkuBms!=''){
                if(this.props.foodcredential.VarientName!=''){
                 if(this.props.foodcredential.VarientName.length < 160){
 
@@ -318,6 +322,10 @@ class FoodVariant extends Component {
                        else{
                         Notiflix.Notify.Failure('Please enter variant name.')
                        }
+                    // }
+                    // else{
+                    //     Notiflix.Notify.Failure('Please enter item SKU of BeatMySugar.')
+                    // }
 
               }
 
@@ -553,12 +561,19 @@ class FoodVariant extends Component {
             if((this.props.setfooddiscount(discountprice.target.value))){
             this.props.setfooddiscountprice(discountprice.target.value)
 
+            // if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
             this.props.setfooddiscount(parseFloat(((this.props.foodcredential.Price-discountprice.target.value)/this.props.foodcredential.Price)*100).toFixed(2))
+            // }else
+            // {
+            // this.props.setfooddiscount(parseFloat(((this.state.VendorSellingPrice-discountprice.target.value)/this.state.VendorSellingPrice)*100).toFixed(2))
+
+            // }
 
             var cusbasepr = parseFloat(discountprice.target.value/(1+(this.state.MasterData.fld_gstpercent/100))).toFixed(2)
 
             var invoiceamt = parseFloat(cusbasepr*(this.state.MasterData.fld_gstpercent/100)).toFixed(2)
 
+            // console.log(parseFloat(cusbasepr*(this.state.MasterData.TcsPercent/100)).toFixed(2))
             this.setState({
                 CustomerBasePrice : cusbasepr,
                 InvoiceGstAmount : invoiceamt,
@@ -713,6 +728,7 @@ nextlabel5(){
         var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+  // console.log(this.state.imagedata != '')
   if(this.state.ImageCoverData != ''){
 
     const form = new FormData();
@@ -732,6 +748,7 @@ nextlabel5(){
     })
     ).then(res => {
    
+      // console.log(obj.data[0])
 
       PostApiCall.postRequest({
 
@@ -743,6 +760,7 @@ nextlabel5(){
  
      },"AddFoodVariantImage").then((results1) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results1.json().then(obj1 => {
  
      
@@ -758,6 +776,7 @@ nextlabel5(){
 
 }else
 {
+  // console.log('in no cover')
   this.OnAddProductImages(obj)
 }
     }
@@ -774,12 +793,14 @@ nextlabel5(){
       
         for(var i =0 ; i <this.state.Photos.length;i++){
       
+          // console.log(this.state.Photos)
         
       
           if(this.state.Photos[i].value != ''){
       
             const form1 = new FormData();
       
+            // console.log(this.state.Photos[i].data)
          
         form1.append('file', this.state.Photos[i].data);
         form1.append('foldername' , 'Food')
@@ -796,6 +817,7 @@ nextlabel5(){
         status: image1.status
         })
         ).then(res1 => {
+        // console.log(res.data)
       
       
           PostApiCall.postRequest({
@@ -808,6 +830,7 @@ nextlabel5(){
       
          },"AddFoodVariantImage").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
       
          
@@ -855,6 +878,7 @@ nextlabel5(){
   var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+//   for(var j =0 ; j<this.state.VendorPricing.length;j++){
 
     PostApiCall.postRequest({
 
@@ -872,19 +896,25 @@ nextlabel5(){
 
    },"AddFoodVariantVendorPricing").then((results3) => 
    
+     // const objs = JSON.parse(result._bodyText)
      results3.json().then(obj3 => {
 
    
      if(results3.status == 200 || results3.status==201){
 
+    //   count1 = count1 + 1;
+
+    //   if(count1 == this.state.VendorPricing.length){
     
         Notiflix.Loading.Remove()
         this.props.setclearfooditem()
         Notiflix.Notify.Success('Food variant added successfully.')
         window.location.href = '/foodvariantlist'
+    //   }
      }
   
     }))
+    // }
 
     }
 
@@ -928,6 +958,7 @@ SaveVariant(){
                      updatedon : moment().format('lll'),
                           },"AddFoodVariant").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
              
                  
@@ -966,6 +997,7 @@ OnAddVendorPricing(){
         if(this.state.Sku != ''){
             if(this.state.MarginOn != ''){
                 if(this.state.VendorSellingPrice != 0){
+        //   if(this.state.MarginPercent != ''){
            
             var dt = this.state.VendorPricing.filter((value)=> value.Name == this.state.Name)
 
@@ -1015,6 +1047,10 @@ OnAddVendorPricing(){
                 
 
               
+        //   }else
+        //   {
+        //     Notiflix.Notify.Failure('Please enter margin percent.');
+        //   }
         }else
         {
           Notiflix.Notify.Failure('Please enter vendor selling price.');
@@ -1112,7 +1148,17 @@ OnAddVendorPricing(){
                                                                 }
                                                             }}
                                                             className="wizardlist nav-link">SEO Details</a></li>
-                                                
+                                                 {/* <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
+
+                                                                if (this.state.Page6 == 'Done') {
+                                                                    this.setState({
+                                                                        PageTitle: '6',
+                                                                        Page4: 'Done',
+    
+                                                                    })
+                                                                }
+                                                            }}
+                                                                className="wizardlist nav-link">Vendor Pricing</a></li> */}
                                                 
                                                                 <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
@@ -1144,7 +1190,14 @@ OnAddVendorPricing(){
                                                             <div className="toast-body">
                                                                 <div className="row">
                                                                    
-                                                                  
+                                                                   {/* <div className="col-md-6">
+                                                                        <div className="form-group mb-3">
+                                                                            <label for="validationCustom01">Item SKU [BMS]<span className="mandatory">*</span></label>
+                                                                            <input type="text" className="form-control"
+                                                                            value={this.props.foodcredential.ItemSkuBms}
+                                                                            onChange={this.onchangesku.bind(this)}/>
+                                                                        </div>
+                                                                    </div> */}
                                                                     <div className="col-md-6">
                                                                         <div className="form-group mb-3">
                                                                             <label for="validationCustom01">Variant Name (160 Character)<span className="mandatory">*</span></label>
@@ -1186,7 +1239,13 @@ OnAddVendorPricing(){
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                       
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                         onClick={this.nextlabel.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -1360,7 +1419,13 @@ OnAddVendorPricing(){
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                   
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                        onClick={this.nextlabel2.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1380,6 +1445,7 @@ OnAddVendorPricing(){
                                                                      <div className="form-group mb-3">
                                                                          <label for="validationCustom01">Price MRP (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                          <input type="text" className="form-control" 
+                                                                        //   disabled={!this.state.IsVisible}
                                                                          value={this.props.foodcredential.Price}
                                                                          onChange={this.onChangeprice.bind(this)}/>
                                                                      
@@ -1390,6 +1456,7 @@ OnAddVendorPricing(){
                                                                         <div className="form-group mb-3">
                                                                             <label for="validationCustom01">Select Vendor<span className="mandatory">*</span></label>
                                                                             <select type="text" className="form-control" 
+                                                                            //  disabled={!this.state.IsVisible} 
                                                                            value={this.state.Name} 
                                                                            onChange={(text)=>{
                                                                                this.setState({
@@ -1423,11 +1490,14 @@ OnAddVendorPricing(){
                                                                     <div className="form-group mb-3">
                                                                         <label for="validationCustom01">Vendor Item SKU<span className="mandatory">*</span></label>
                                                                          <input type="text" className="form-control" 
+                                                                        //   disabled={!this.state.IsVisible}
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -1436,6 +1506,7 @@ OnAddVendorPricing(){
                                                                         <div className="form-group mb-3">
                                                                             <label for="validationCustom01">Select BMS Margin On<span className="mandatory">*</span></label>
                                                                             <select type="text" className="form-control"  
+                                                                            //  disabled={!this.state.IsVisible}
                                                                            value={this.state.MarginOn} 
                                                                            onChange={(text)=>{
                                                                                this.setState({
@@ -1471,6 +1542,7 @@ OnAddVendorPricing(){
                                                                     <div className="form-group mb-3">
                                                                         <label for="validationCustom01">Vendor Selling Price (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                         <input type="text" className="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
                                                                        value={this.state.VendorSellingPrice} 
                                                                        onChange={(text)=>{
                                                                         if(this.state.DecimalRegex.test(text.target.value)){
@@ -1511,6 +1583,7 @@ OnAddVendorPricing(){
                                                                      <div className="form-group mb-3">
                                                                          <label for="validationCustom01">Discounted Price (<span>&#8377;</span>)<span className="mandatory"></span></label>
                                                                          <input type="text" className="form-control"  
+                                                                        //   disabled={!this.state.IsVisible}
                                                                          value={this.props.foodcredential.DiscountPrice}
                                                                          onChange={this.onChangediscprice.bind(this)} />
                                                                      </div>
@@ -1519,6 +1592,7 @@ OnAddVendorPricing(){
                                                                      <div className="form-group mb-3">
                                                                          <label for="validationCustom01">Discount Percent(%)<span className="mandatory">*</span></label>
                                                                          <input type="text" className="form-control" value={this.props.foodcredential.DiscountPer} 
+                                                                        //   disabled={!this.state.IsVisible}
                                                                          onChange={this.onChangeDiscount.bind(this)}/>
                                                                      </div>
                                                                  </div>
@@ -1566,6 +1640,7 @@ OnAddVendorPricing(){
                                                                     <div className="form-group mb-3">
                                                                         <label for="validationCustom01">BMS Margin (%)<span className="mandatory">*</span></label>
                                                                         <input type="text" className="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
                                                                         value={this.state.MarginPercent} 
                                                                         onChange={(text)=>{
                                                                             if(this.state.DecimalRegex.test(text.target.value)){
@@ -1605,6 +1680,7 @@ OnAddVendorPricing(){
                                                                     <div className="form-group mb-3">
                                                                         <label for="validationCustom01">Margin Amount (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                         <input type="text" className="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
                                                                        value={this.state.Margin} 
                                                                        onChange={(text)=>{
                                                                         if(this.state.DecimalRegex.test(text.target.value)){
@@ -1697,7 +1773,13 @@ OnAddVendorPricing(){
                                                                              }}
                                                                          >Previous</button>
                                                                          <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                        
+                                                                         // onClick={()=>{
+                                                    
+                                                                         //     this.setState({
+                                                                         //         PageTitle : '4',
+                                                                         //         Page3 : 'Done'
+                                                                         //     })
+                                                                         //   }}
                                                                            onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                      </div>
                                                                  </div>
@@ -1729,6 +1811,7 @@ OnAddVendorPricing(){
                                                         <div className="col-md-9 ">
                                                         <label for="sw-arrows-first-name" >Product Image<span className="mandatory">*</span></label>
         
+                                                        {/* <div className="form-group"> */}
                                                          <div className="div1" className='row'>
                                                          {this.state.Photos.map((photo,index)=>(  
                                                               <div style={{    marginLeft: '1%',    marginRight: '2%'}}>   
@@ -1750,16 +1833,21 @@ OnAddVendorPricing(){
                                                                         }}
                                                                         ></XSquare>
                                                                         <input id="photo-upload" type="file" onChange={(e)=>{
+                                                                  //  e.preventDefault();
+                                                                  //  console.log(e.target.files[0])
                                                                    if(e.target.files[0] != undefined){
                                                                      if(e.target.files[0].size < 300000){
                                                                       var arr1 = [...this.state.Photos]
                                                                  const reader = new FileReader();
                                                                    const file = e.target.files[0];
                                                                    reader.onload = (e) => {
+                                                                    // console.log(e.target.result)
+                                                                    // this.setState({image: e.target.result});
                                                                     arr1[index].image =  e.target.result
                                                                     arr1[index].value =  e.target.result
                                                                     arr1[index].data =  file
                                                                     
+                                                                    // this.props.setstaffimage(e.target.result);
                                                                     this.setState({
                                                                       Photos : arr1,
                                                                       imageCount : this.state.imageCount + 1
@@ -1777,6 +1865,7 @@ OnAddVendorPricing(){
                                                                
                                                            </div>
                                                             ))}
+                                                                 {/* </div> */}
                                                          </div>
                                                         </div>
                                                             
@@ -1805,7 +1894,13 @@ OnAddVendorPricing(){
                                                                          }}
                                                                      >Previous</button>
                                                                      <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                    
+                                                                     // onClick={()=>{
+                                                
+                                                                     //     this.setState({
+                                                                     //         PageTitle : '4',
+                                                                     //         Page3 : 'Done'
+                                                                     //     })
+                                                                     //   }}
                                                                        onClick={this.nextlabel4.bind(this)}>Next</button>
                                                                  </div>
                                                              </div>
@@ -1874,7 +1969,13 @@ OnAddVendorPricing(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                            
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel5.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1931,9 +2032,11 @@ OnAddVendorPricing(){
                                                                          <input type="text" className="form-control" 
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -2257,7 +2360,13 @@ OnAddVendorPricing(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                            
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel6.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -2339,7 +2448,13 @@ OnAddVendorPricing(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                            
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page5 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.SaveVariant.bind(this)}>Add Variant</button>
                                                                         </div>
                                                                     </div>

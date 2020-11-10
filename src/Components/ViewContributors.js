@@ -87,6 +87,7 @@ class ViewContributors extends Component {
           var det = localStorage.getItem('ContributorDetails')
           var ContributorData = JSON.parse(det)
                   
+            // console.log(ContributorData)
             this.setState({
                 imagePreviewUrl : ContributorData.fld_photo
             })
@@ -122,9 +123,13 @@ class ViewContributors extends Component {
            this.props.setPhone(ContributorData.fld_phone)
            this.props.setMobileNumber(ContributorData.fld_mobile)
            this.props.setEmailAddress(ContributorData.fld_email)
+    //        this.state.ProfileData(ContributorData.fld_profile)
+    // this.props.Show(ContributorData.fld_showonwebsite)
           
         GetApiCall.getRequest("GetDesignation").then(resultdes =>
             resultdes.json().then(objdesignation => {
+            //  this.props.setDesignation(objdesignation.data[0].value);
+            // console.log(objcolor.data)
             
               this.setState({
                 Designationdata : objdesignation.data,
@@ -155,6 +160,7 @@ class ViewContributors extends Component {
     
                   },"GetState").then((results) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(objstate => {
               
                   
@@ -178,6 +184,7 @@ class ViewContributors extends Component {
             
                           },"GetCity").then((resultscity) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             resultscity.json().then(objcity => {
                       
                           
@@ -254,6 +261,7 @@ class ViewContributors extends Component {
     }
 
     handleCountryChange = event =>{
+        // this.props.setCountry(event.target.value)
         this.setState({
             CountryId : event.target.value
           })
@@ -314,6 +322,7 @@ class ViewContributors extends Component {
     }
 
     handleStateChange = event =>{
+        // this.props.setStateAc(event.target.value)
         this.setState({
             StateId: event.target.value
           })
@@ -334,6 +343,7 @@ class ViewContributors extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -345,6 +355,7 @@ class ViewContributors extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -352,6 +363,7 @@ class ViewContributors extends Component {
     }
 
     handleCityChange = event =>{
+        // this.props.setCity(event.target.value)
         this.setState({
             CityId : event.target.value
           })
@@ -391,12 +403,17 @@ class ViewContributors extends Component {
     }
    
     handleBasicInfo = ()=>{    
+        // if(JSON.stringify(this.state.ImageData) != '[]'){
             if (this.props.Contri.Name != '') {
                     if(this.state.ShortDescription!=''){
                         if(((this.state.ShortDescription.replace( /(<([^>]+)>)/ig, '').trim()).length) <= 350) {
                         if(this.state.ProfileData!=''){
                             if(((this.state.ShortDescription.replace( /(<([^>]+)>)/ig, '').trim()).length) <= 2500) {
                           
+                    // this.setState({
+                    //     PageTitle: '3',
+                    //     Page2: 'Done'
+                    // })
                         this.setState({
                             PageTitle: '2',
                             Page1: 'Done'
@@ -423,6 +440,10 @@ class ViewContributors extends Component {
                 Notiflix.Notify.Failure('Please enter contributor'+"'"+'s name.')
             }
        
+    // }
+    //     else{
+    //       Notiflix.Notify.Failure('Please upload contributor'+"'"+'s photo.')
+    //    }
     }
 
     SkipContactPage(){
@@ -485,6 +506,8 @@ class ViewContributors extends Component {
     handleSubmitChange = () =>{
         
         if(this.state.Show != ''){
+            // console.log(this.state.Show == 'Yes' ?  'Show' : 'Dont Show')
+            // console.log(this.props.Contri)
             this.setState({
                 PageTitle: '3',
                 Page3: 'Done'
@@ -516,6 +539,7 @@ class ViewContributors extends Component {
                      updatedon : moment().format('lll'),
                           },"UpdateContributor").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
              
                  

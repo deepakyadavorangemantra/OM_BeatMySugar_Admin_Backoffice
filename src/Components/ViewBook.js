@@ -146,6 +146,7 @@ class ViewBooks extends Component {
 
         GetApiCall.getRequest("GetGstData").then(resultdes =>
             resultdes.json().then(objGst =>{
+                // this.props.setbookgst(objGst.data[0].value);
                 this.setState({
                     GSTData:objGst.data
                 })
@@ -157,6 +158,7 @@ class ViewBooks extends Component {
                     this.setState({
                         Categorydata:objCategory.data,
                     })
+                    // Notiflix.Loading.Remove()
                 }))
 
 
@@ -170,10 +172,12 @@ class ViewBooks extends Component {
                 
                   },"GetUserSubMenuAccessRights").then((resultssub) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     resultssub.json().then(objsub => {  
                     if(resultssub.status == 200 || resultssub.status==201){
         
                    var filteredRights = objsub.data;
+                        // console.log(filteredRights)
                 
                         var con = 0
                         for(var i = 0 ; i< filteredRights.length ;i++){
@@ -230,9 +234,11 @@ class ViewBooks extends Component {
           this.props.setpublishedby(publishedby.target.value)
       }
       onChangeCat(category){
+        //   console.log(category.target.value)
           this.props.setbookitemcategory(category.target.value)
       }
       onChangeReturn(returnable){
+        //   console.log(returnable.target.value)
         if(returnable.target.value == 'No'){
             this.setState({
                 isReturnable : false
@@ -248,12 +254,15 @@ class ViewBooks extends Component {
           this.props.setbookreturnable(returnable.target.value)
       }
       onChangeReturnday(returnableday){
+        //   console.log(returnableday.target.value)
           this.props.setbookreturnabledays(returnableday.target.value)
       }
       onChangeHsn(hsncode){
+        //   console.log(hsncode.target.value)
           this.props.setbookhsn(hsncode.target.value)
       }
       onChangeGst(gst){
+        //   console.log(gst.target.value)
        this.props.setbookgst(gst.target.value)
     }
       
@@ -288,10 +297,12 @@ class ViewBooks extends Component {
       }
 
       onChangeaboutbook(aboutbook){
+        //   console.log(aboutbook.target.value)
         this.setState({AboutBook:aboutbook.editor.getData()})
     
       }
       onChangeAboutauthor(author){
+        // console.log(author.target.value)
         this.setState({AboutAuthor:author.editor.getData()})
        
       }
@@ -333,6 +344,7 @@ class ViewBooks extends Component {
                          },"UpdateBookItemMaster").then((results) => 
                              
                          
+                        //    const objs = JSON.parse(result._bodyText)
                            results.json().then(obj => {
                      
                          
@@ -396,6 +408,7 @@ class ViewBooks extends Component {
                   
                       },"UpdateBooksItemMasterApprovalStatus").then((results) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         results.json().then(obj => {
             
                         if(results.status == 200 || results.status==201){
@@ -413,6 +426,7 @@ class ViewBooks extends Component {
                           },
                           {
                             label: 'No',
+                            // onClick: () => alert('Click No')
                           }
                         ]
                       });
@@ -467,7 +481,9 @@ class ViewBooks extends Component {
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Book Details</button>
                                                 </div>
-                                   
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
+                  
                                     </div>
                                 </div>
                             </div>
@@ -606,6 +622,13 @@ class ViewBooks extends Component {
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                        onClick={this.nextlabel.bind(this)} >Next</button>
                                                                     </div>
                                                                 </div>
@@ -671,6 +694,13 @@ class ViewBooks extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                        onClick={this.nextlabel2.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -775,6 +805,13 @@ class ViewBooks extends Component {
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
                                                                                disabled={!this.state.IsVisible}
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                             onClick={this.Savebook.bind(this)}>Update Book Item</button>
                                                                         </div>
                                                                     </div>

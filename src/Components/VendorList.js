@@ -27,12 +27,14 @@ class VendorList extends Component {
           GetApiCall.getRequest("GetVendorList").then(resultdes =>
               resultdes.json().then(obj => {
              
+              // console.log(obj.data)
               
                 this.setState({
                   VendorData : obj.data
                 })
   
   
+                // Notiflix.Loading.Remove();
               }))
 
               var login=localStorage.getItem('LoginDetail');
@@ -44,10 +46,12 @@ class VendorList extends Component {
               
                 },"GetUserSubMenuAccessRights").then((resultssub) => 
                 
+                  // const objs = JSON.parse(result._bodyText)
                   resultssub.json().then(objsub => {  
                   if(resultssub.status == 200 || resultssub.status==201){
       
                  var filteredRights = objsub.data;
+                      // console.log(filteredRights)
               
                       var con = 0
                       for(var i = 0 ; i< filteredRights.length ;i++){

@@ -358,6 +358,7 @@ class ArticleTagMaster extends Component {
                                         
                                             },"DeleteTagMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -375,6 +376,7 @@ class ArticleTagMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

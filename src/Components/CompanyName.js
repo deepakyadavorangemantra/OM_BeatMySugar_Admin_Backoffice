@@ -36,6 +36,7 @@ class CompanyName extends Component {
 
   componentDidMount() {
 
+    // console.log(this.props.companycredentials)
 
     Notiflix.Loading.Init({
       svgColor : '#507dc0'
@@ -553,6 +554,7 @@ class CompanyName extends Component {
                                         
                                             },"DeleteCompanyMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -570,6 +572,7 @@ class CompanyName extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

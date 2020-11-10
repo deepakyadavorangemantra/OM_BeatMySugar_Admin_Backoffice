@@ -36,6 +36,7 @@ class HealthCenterMapping extends Component {
               GetApiCall.getRequest("GetDietitianList").then(resultdes =>
                 resultdes.json().then(obj => {
                
+                // console.log(obj.data)
                 
                   this.setState({
                       DietData : obj.data,
@@ -49,6 +50,7 @@ class HealthCenterMapping extends Component {
               GetApiCall.getRequest("GetDoctorList").then(resultdes =>
                   resultdes.json().then(obj => {
                  
+                  // console.log(obj.data)
                   
                     this.setState({
                         DocData : obj.data,
@@ -56,6 +58,7 @@ class HealthCenterMapping extends Component {
                     })
       
       
+                    // Notiflix.Loading.Remove();
                   }))
 
 
@@ -68,10 +71,12 @@ class HealthCenterMapping extends Component {
                   
                     },"GetUserSubMenuAccessRights").then((resultssub) => 
                     
+                      // const objs = JSON.parse(result._bodyText)
                       resultssub.json().then(objsub => {  
                       if(resultssub.status == 200 || resultssub.status==201){
           
                      var filteredRights = objsub.data;
+                          // console.log(filteredRights)
                   
                           var con = 0
                           for(var i = 0 ; i< filteredRights.length ;i++){
@@ -176,6 +181,7 @@ class HealthCenterMapping extends Component {
                                                            {
                                                        
                                                        
+                                                             // console.log(item.fld_itemcode)
                                                        
                                                            if ( item.fld_name.toLowerCase().includes(text.target.value.toLowerCase())  ){
                                                              return true
@@ -193,6 +199,7 @@ class HealthCenterMapping extends Component {
                                                                {
                                                            
                                                            
+                                                                 // console.log(item.fld_itemcode)
                                                            
                                                                if ( item.fld_name.toLowerCase().includes(text.target.value.toLowerCase())  ){
                                                                  return true
@@ -266,7 +273,14 @@ class HealthCenterMapping extends Component {
                                     
                                 
                                 <tr key={index}>
-                                          
+                                            {/* { index == 0  ?
+                                    <Helmet>
+                                
+                            <script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
+                            <script src="assets/js/pages/datatables.init.js"></script>
+                            <script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
+
+                            </Helmet> : ''} */}
                                 <td>{data.fld_title+' '+data.fld_name}</td>
                                 <td><img style={{width:'100px',height: '100px'}} src={data.fld_photo} /></td>
                                 <td>{data.fld_medicalregistrationid}</td>
@@ -281,6 +295,7 @@ class HealthCenterMapping extends Component {
                                 }}
                                 >
                             Assign Health Center 
+                                {/* &nbsp;&nbsp;<Trash2/> */}
                                 </button> &nbsp;&nbsp;
                                 </td>
 
@@ -304,7 +319,14 @@ class HealthCenterMapping extends Component {
                                     
                                 
                                 <tr key={index}>
-                                          
+                                          {/* { index == 0   ?
+                                    <Helmet>
+                                
+                            <script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
+                            <script src="assets/js/pages/datatables.init.js"></script>
+                            <script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
+
+                            </Helmet> : ''} */}
                                           
                                 <td>{data.fld_title+' '+data.fld_name}</td>
                                 <td><img style={{width:'100px',height: '100px'}} src={data.fld_photo} /></td>
@@ -320,6 +342,7 @@ class HealthCenterMapping extends Component {
                                 }}
                                 >
                                     Assign Health Center 
+                                {/* &nbsp;&nbsp;<Trash2/> */}
                                 </button> &nbsp;&nbsp;
                                 </td>
 

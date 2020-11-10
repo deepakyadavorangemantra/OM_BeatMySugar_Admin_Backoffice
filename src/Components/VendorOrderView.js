@@ -69,15 +69,21 @@ class VendorOrderView extends React.Component
  
  },"GetVendorOrderDetail").then((results1) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results1.json().then(obj1 => {
 
  
    if(results1.status == 200 || results1.status==201){
 
+    // console.log(obj1.data)
+    // this.setState({
+    //     CartData : obj1.data
+    // })
 
     var dt = []
     for(var i =0 ;i<Object.keys(obj1.data).length;i++){
 
+        // console.log(obj1.data[i].fld_productid)
         if(obj1.data[i].fld_category == 'Food'){
 
             PostApiCall.postRequest({
@@ -87,11 +93,13 @@ class VendorOrderView extends React.Component
          
          },"GetVendorFoodOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data)
             dt.push(obj2.data[0])
               this.setState({
         CartData : dt
@@ -110,11 +118,13 @@ class VendorOrderView extends React.Component
          
          },"GetVendorFootwearOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data)
             dt.push(obj2.data[0])
               this.setState({
         CartData : dt
@@ -133,11 +143,13 @@ class VendorOrderView extends React.Component
          
          },"GetVendorSocksOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data)
             dt.push(obj2.data[0])
               this.setState({
         CartData : dt
@@ -293,14 +305,17 @@ class VendorOrderView extends React.Component
 
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold',width:'20%'}}> 
               Product</span></td>
-              
+              {/* <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}> 
+              Brand</span></td> */}
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Quantity</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Base Value</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Offer Discount</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Net Value</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST Rate</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST Amount</span></td>
+              {/* <td style={{paddingTop: '1%', paddingBottom: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST Amount</span></td> */}
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Total Amount(INR)</span></td>
+              {/* <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Select Product & Assign Vendor</span></td> */}
               </tr>
         
     {this.state.CartData.map((info,index)=>(
@@ -311,9 +326,10 @@ class VendorOrderView extends React.Component
     <td style={{width:'30%',padding: '5px'}}>{info.fld_prodname}  <br/><b>{info.fld_brand}</b></td>
     <td style={{width:'7%',padding: '5px'}}>{info.fld_quantity}</td>
     <td style={{width:'9%',padding: '5px'}}>&#8377;{parseFloat((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))).toFixed(2)}</td>
-    <td style={{width:'8%',padding: '5px'}}> &#8377;{this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : parseFloat(((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100).toFixed(2)}</td>
+    <td style={{width:'8%',padding: '5px'}}> {this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? '-' : '₹ '+parseFloat(((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100).toFixed(2)}</td>
     <td style={{width:'8%',padding: '5px',whiteSpace:'nowrap'}}>&#8377; {parseFloat((((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))-(this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : ((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100)))).toFixed(2)}</td>
     <td style={{width:'8%',padding: '5px',whiteSpace:'nowrap'}}>{info.fld_taxpercent}%</td>
+     {/* <td></td> */}
     <td style={{padding: '5px',whiteSpace:'nowrap'}}> &#8377; {parseFloat((((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))-(this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : ((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100)))*(info.fld_taxpercent/100)).toFixed(2)}</td>
     <td style={{padding: '5px',whiteSpace:'nowrap'}}> &#8377; {parseFloat((((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))-(this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : ((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100)))+((((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))-(this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : ((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100)))*(info.fld_taxpercent/100))).toFixed(2)}</td>
     
@@ -351,7 +367,12 @@ class VendorOrderView extends React.Component
                                 </td>
                                 
                               </tr>
-                           
+                              {/* <tr style={{width:'100%',display:'table'}}>
+                              <td  style={{textAlign: 'right', padding: '1%'}}><span style={{fontWeight: 'bold'}}>
+                               Offer Discount</span></td><td style={{textAlign: 'right', paddingRight: '1%',width:'50%'}}> &#8377; {this.state.CartData.length > 0 ? parseFloat(this.state.CartData.map(info => (this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : parseFloat(((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100).toFixed(2))).reduce((prev, next) => parseFloat(prev) + parseFloat(next))).toFixed(2) : 0}
+                                </td>
+                                
+                              </tr> */}
                               <tr style={{width:'100%',display:'table'}}>
                               <td  style={{textAlign: 'right', padding: '1%'}}><span style={{fontWeight: 'bold'}}>
                                Shipping Charge</span></td><td style={{textAlign: 'right', paddingRight: '1%',width:'50%'}}> &#8377; {parseFloat(this.state.MainOrder.fld_shippingcharges).toFixed(2)}
@@ -389,7 +410,14 @@ Total Discount on Order {this.state.MainOrder.fld_offercode == '' ? '('+this.sta
                               </tr>
 
                            
-                             
+                              {/* <tr style={{width:'100%',display:'table'}}>
+                          <td  style={{paddingTop: '1%', paddingBottom: '1%', textAlign: 'center'}}>Have a Question? Call us on 
+                          +91 90244 22444 or Email us at wecare@beatmysugar.com</td>
+                        </tr>
+                        <tr class="success" style={{width:'100%',display:'table'}}>
+                        <td style={{paddingTop: '1%', paddingBottom: '1%', textAlign: 'center',background : '#f7f7f7'}}>Visit
+                             us at <a href="https://www.beatmysugar.com/" style={{fontWeight:'600'}}>www.beatmysugar.com</a></td>
+                        </tr> */}
                           </td>
                         </tr>
  

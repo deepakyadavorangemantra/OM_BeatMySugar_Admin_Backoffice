@@ -78,15 +78,21 @@ class VerifyOrderView extends React.Component
  
  },"GetOrderDetail").then((results1) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results1.json().then(obj1 => {
 
  
    if(results1.status == 200 || results1.status==201){
 
+    // console.log(obj1.data)
+    // this.setState({
+    //     CartData : obj1.data
+    // })
 
     var dt = []
     for(var i =0 ;i<Object.keys(obj1.data).length;i++){
 
+        // console.log(obj1.data[i].fld_productid)
         if(obj1.data[i].fld_category == 'Food'){
 
             PostApiCall.postRequest({
@@ -96,11 +102,13 @@ class VerifyOrderView extends React.Component
          
          },"GetFoodOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null)
         
             dt.push(obj2.data[0])
               this.setState({
@@ -120,12 +128,14 @@ class VerifyOrderView extends React.Component
          
          },"GetFootwearOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
      
+            // dt.push(obj2.data[0])
               this.setState({
         CartData : dt
     })
@@ -143,6 +153,7 @@ class VerifyOrderView extends React.Component
          
          },"GetSocksOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
@@ -166,7 +177,16 @@ class VerifyOrderView extends React.Component
 }))
 
 
+// GetApiCall.getRequest("GetVendorData").then(resultdes =>
+//   resultdes.json().then(objcategory =>{
 
+//       this.setState({
+//           VendorData:objcategory.data,
+//       })
+
+//   }))
+
+//   vend = new Array(this.state.CartData.length)
       
     }
 
@@ -187,6 +207,7 @@ OnVerifyOrder(){
 
 },"VerifyOrders").then((results2) => 
 
+// const objs = JSON.parse(result._bodyText)
 results2.json().then(obj2 => {
 
 
@@ -218,6 +239,7 @@ OnVerifyOrderToCustomer(){
 
 },"VerifyOrders").then((results2) => 
 
+// const objs = JSON.parse(result._bodyText)
 results2.json().then(obj => {
 
 
@@ -236,11 +258,13 @@ var infData = []
     var c = 0
     var c1 = 0
 
+    // console.log(obj.data[0])
 
 
 
     for(var j=0;j<obj.data[0].OrderDet.split('#').length;j++){
 
+        // console.log(obj.data[i].OrderDet.split('#')[j])
 
         if(obj.data[0].OrderDet.split('#')[j].split('^')[2] == 'Food'){
 
@@ -253,11 +277,13 @@ var infData = []
          
          },"GetFoodOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data)
            
             infData.push(obj2.data[0])
             this.setState({
@@ -266,6 +292,8 @@ var infData = []
             c1 = c1 +1
 
             if(c1== obj.data[0].OrderDet.split('#').length){
+                // Notiflix.Loading.Remove()
+                // console.log('nidhi')
                 this.SendMailers()
             }
 
@@ -283,11 +311,13 @@ var infData = []
          
          },"GetFootwearOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data)
            
             infData.push(obj2.data[0])
             this.setState({
@@ -296,6 +326,8 @@ var infData = []
             c1 = c1 +1
 
             if(c1== obj.data[0].OrderDet.split('#').length){
+                // Notiflix.Loading.Remove()
+                // console.log('nidhi')
                 this.SendMailers()
             }
            }
@@ -313,11 +345,13 @@ var infData = []
          
          },"GetSocksOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data)
            
             infData.push(obj2.data[0])
             this.setState({
@@ -326,6 +360,8 @@ var infData = []
             c1 = c1 +1
 
             if(c1== obj.data[0].OrderDet.split('#').length){
+                // Notiflix.Loading.Remove()
+                // console.log('nidhi')
                 this.SendMailers()
             }
            }
@@ -359,6 +395,8 @@ var infData = []
 
 
 SendMailers(){
+  //   console.log(this.state.OrderData)
+  //   console.log(this.state.ProdData)
 
   fetch(
       "https://www.instaalerts.zone/SendSMS/sendmsg.php?uname=globaltrendz&pass=abc321&send=RIGHTC&dest=" +
@@ -410,6 +448,7 @@ SendMailers(){
           "CustomerOrderMailer"
         ).then((results2) => 
                    
+        // const objs = JSON.parse(result._bodyText)
         results2.json().then(obj2 => {
      
       
@@ -465,7 +504,7 @@ SendMailers(){
          Haryana - 121 001. INDIA.</p>
                                    <tr rowspan="8" className="success" style={{display:'table',width:'100%',  backgroundColor: '#f7f7f7'}}>
                                 <td colspan="8" style={{textAlign: 'right', paddingRight: '1%', fontWeight: 'bold', fontSize: '20px',}}>
-                                   Cutomer Order Form</td></tr></td>
+                                   Customer Order Form</td></tr></td>
                         </tr>
          
                               
@@ -513,12 +552,15 @@ SendMailers(){
 
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold',width:'20%'}}> 
               Product</span></td>
+              {/* <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}> 
+              Brand</span></td> */}
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Quantity</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Base Value</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Offer Discount*</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Net Value</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST Rate</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST Amount</span></td>
+              {/* <td style={{paddingTop: '1%', paddingBottom: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST Amount</span></td> */}
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Total Amount(INR)</span></td>
               </tr>
         
@@ -534,6 +576,7 @@ SendMailers(){
     <td style={{width:'8%',padding: '5px'}}> &#8377;{this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : parseFloat(((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100).toFixed(2)}</td>
     <td style={{width:'8%',padding: '5px',whiteSpace:'nowrap'}}>&#8377; {parseFloat((((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))-(this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : ((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100)))).toFixed(2)}</td>
     <td style={{width:'8%',padding: '5px',whiteSpace:'nowrap'}}>{info.fld_taxpercent}%</td>
+     {/* <td></td> */}
     <td style={{padding: '5px',whiteSpace:'nowrap'}}> &#8377; {parseFloat((((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))-(this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : ((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100)))*(info.fld_taxpercent/100)).toFixed(2)}</td>
     <td style={{padding: '5px',whiteSpace:'nowrap'}}> &#8377; {parseFloat((((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))-(this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : ((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100)))+((((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100))-(this.state.MainOrder.fld_offerpercent == '' || this.state.MainOrder.fld_offerpercent == null ? 0 : ((info.fld_price*info.fld_quantity)/(1+(info.fld_taxpercent/100)))*this.state.MainOrder.fld_offerpercent/100)))*(info.fld_taxpercent/100))).toFixed(2)}</td>
     
@@ -612,7 +655,43 @@ Total Discount on Order {this.state.MainOrder.fld_offercode == '' ? '('+this.sta
                               </tr>
 
                             
-                             
+                              {/* <tr style={{width:'100%',display:'table'}}>
+                              <td  style={{textAlign: 'right', padding: '1%'}}><span style={{fontWeight: 'bold'}}>
+                              Select Vendor to assign Shipping & COD Charges</span></td><td style={{textAlign: 'right', paddingRight: '1%',width:'50%'}}>
+
+                              <select type="text" className="form-control" 
+                onChange={(text)=>{
+
+                  this.setState({
+                    ExtraChargeVendor : text.target.value
+                  })
+                 
+                }}
+                 >
+                   <option value={0}>Select Vendor</option>
+                {this.state.VendorSelectedData.map(
+                  company => (
+                    <option
+                    key={company.label}
+                    value={company.value}>
+                      {company.label}
+                    </option>
+                  )
+                )}
+               
+            </select>
+                                </td>
+                                
+                              </tr>
+                               */}
+                              {/* <tr style={{width:'100%',display:'table'}}>
+                          <td  style={{paddingTop: '1%', paddingBottom: '1%', textAlign: 'center'}}>Have a Question? Call us on 
+                          +91 90244 22444 or Email us at wecare@beatmysugar.com</td>
+                        </tr>
+                        <tr className="success" style={{width:'100%',display:'table'}}>
+                        <td style={{paddingTop: '1%', paddingBottom: '1%', textAlign: 'center',background : '#f7f7f7'}}>Visit
+                             us at <a href="https://www.beatmysugar.com/" style={{fontWeight:'600'}}>www.beatmysugar.com</a></td>
+                        </tr> */}
                           </td>
                         </tr>
          

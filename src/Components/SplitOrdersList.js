@@ -32,6 +32,7 @@ class SplitOrdersList extends Component {
           GetApiCall.getRequest("GetSplitOrders").then(resultdes =>
               resultdes.json().then(obj => {
              
+            //   console.log(obj.data)
               
                 this.setState({
                   OrderData : obj.data
@@ -72,7 +73,32 @@ class SplitOrdersList extends Component {
                         </div>
                     </div> 
 
-                    
+                    {/* <div class="row">
+                   <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                                                       <div class="col text-right">
+                                   
+                                         <ReactHTMLTableToExcel  
+
+                                                className="btn btn-primary" id="btn-new-event"
+
+                                                table="basic-datatable"  
+
+                                                filename="ReportExcel"  
+
+                                                sheet="Sheet"  
+
+                                                buttonText="Export to Excel" />  
+                                    
+                                                                       </div>
+                                </div>
+                            </div>
+                        </div> 
+                     </div>
+                
+                </div> */}
                     
                     
                     
@@ -138,6 +164,7 @@ class SplitOrdersList extends Component {
                                 <span  >
                                 <Edit3/>
                                     </span>
+                                    {/* &nbsp;&nbsp;<Trash2/> */}
                                     </div> &nbsp;&nbsp;
                                      </td>
                                   

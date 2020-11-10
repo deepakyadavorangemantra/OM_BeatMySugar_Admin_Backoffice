@@ -292,6 +292,7 @@ class ViewFootwearVariant extends Component {
         if(VariantData.VariantImage != null){
             for(var i = 0; i < VariantData.VariantImage.split('#').length ; i++){
 
+                // console.log(VariantData.VariantImage.split('#')[i])
                 if(i == 0){
 
                     this.setState({
@@ -301,6 +302,7 @@ class ViewFootwearVariant extends Component {
 
                     cn = cn +1
 
+                    // console.log((VariantData.VariantImage.split('#')[i].split('-').pop()).split('.')[0])
 
 
                     qua1[((VariantData.VariantImage.split('#')[i].split('-').pop()).split('.')[0])-1].image = VariantData.VariantImage.split('#')[i]
@@ -331,6 +333,7 @@ class ViewFootwearVariant extends Component {
 
             GetApiCall.getRequest("GetFootwearColorData").then(resultdes =>
                 resultdes.json().then(objcategory =>{
+                    // this.props.setcolor(objcategory.data[0].value)
                     this.setState({
                         ColorData:objcategory.data,
                     })
@@ -340,6 +343,7 @@ class ViewFootwearVariant extends Component {
 
                 GetApiCall.getRequest("GetFootwearSizeData").then(resultdes =>
                     resultdes.json().then(objcategory =>{
+                        // this.props.setfootwearitemsize(objcategory.data[0].value)
                         this.setState({
                             SizeData:objcategory.data,
                         })
@@ -347,6 +351,8 @@ class ViewFootwearVariant extends Component {
         
                     }))
 
+        // this.props.setfootwearpackweightunit(this.state.PackageMeasuretData[0].value)
+        // this.props.setfootwearpackunit(this.state.PackageMeasureUnitData[0].value)
 
 
         var login=localStorage.getItem('LoginDetail');
@@ -358,10 +364,12 @@ class ViewFootwearVariant extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -680,12 +688,19 @@ class ViewFootwearVariant extends Component {
         if((this.props.setfootweardiscount(discountprice.target.value))){
             this.props.setfootweardiscountprice(discountprice.target.value)
 
+            // if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
             this.props.setfootweardiscount(parseFloat(((this.props.footcredential.Price-discountprice.target.value)/this.props.footcredential.Price)*100).toFixed(2))
+            // }else
+            // {
+            // this.props.setfootweardiscount(parseFloat(((this.state.VendorSellingPrice-discountprice.target.value)/this.state.VendorSellingPrice)*100).toFixed(2))
+
+            // }
 
             var cusbasepr = parseFloat(discountprice.target.value/(1+(this.state.MasterData.fld_gstpercent/100))).toFixed(2)
 
             var invoiceamt = parseFloat(cusbasepr*(this.state.MasterData.fld_gstpercent/100)).toFixed(2)
 
+            // console.log(parseFloat(cusbasepr*(this.state.MasterData.TcsPercent/100)).toFixed(2))
             this.setState({
                 CustomerBasePrice : cusbasepr,
                 InvoiceGstAmount : invoiceamt,
@@ -836,6 +851,7 @@ class ViewFootwearVariant extends Component {
         var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+  // console.log(this.state.imagedata != '')
   if(this.state.ImageCoverData != ''){
 
     
@@ -856,6 +872,7 @@ class ViewFootwearVariant extends Component {
     })
     ).then(res => {
    
+      // console.log(obj.data[0])
 
       PostApiCall.postRequest({
 
@@ -867,6 +884,7 @@ class ViewFootwearVariant extends Component {
  
      },"AddFootwearVariantImage").then((results1) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results1.json().then(obj1 => {
  
      
@@ -893,10 +911,12 @@ class ViewFootwearVariant extends Component {
  
      },"AddFootwearVariantImage").then((results1) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results1.json().then(obj1 => {
  
      
        if(results1.status == 200 || results1.status==201){
+  // console.log('in no cover')
   this.OnAddProductImages(obj)
        }
 }))
@@ -915,12 +935,14 @@ class ViewFootwearVariant extends Component {
       
         for(var i =0 ; i <this.state.Photos.length;i++){
       
+          // console.log(this.state.Photos)
         
       
           if(this.state.Photos[i].value != ''){
       
             const form1 = new FormData();
       
+            // console.log(this.state.Photos[i].data)
          
         form1.append('file', this.state.Photos[i].data);
         form1.append('foldername' , 'Footwear')
@@ -937,6 +959,7 @@ class ViewFootwearVariant extends Component {
         status: image1.status
         })
         ).then(res1 => {
+        // console.log(res.data)
       
       
           PostApiCall.postRequest({
@@ -949,6 +972,7 @@ class ViewFootwearVariant extends Component {
       
          },"AddFootwearVariantImage").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
       
          
@@ -984,6 +1008,7 @@ class ViewFootwearVariant extends Component {
               
                  },"DeleteFootwearVariantImage").then((results2) => 
                  
+                   // const objs = JSON.parse(result._bodyText)
                    results2.json().then(obj2 => {
               
                  
@@ -1018,6 +1043,7 @@ class ViewFootwearVariant extends Component {
               
                  },"AddFootwearVariantImage").then((results2) => 
                  
+                   // const objs = JSON.parse(result._bodyText)
                    results2.json().then(obj2 => {
               
                  
@@ -1057,6 +1083,7 @@ class ViewFootwearVariant extends Component {
   var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+//   for(var j =0 ; j<this.state.VendorPricing.length;j++){
 
     PostApiCall.postRequest({
 
@@ -1074,19 +1101,25 @@ class ViewFootwearVariant extends Component {
 
    },"AddFootwearVariantVendorPricing").then((results3) => 
    
+     // const objs = JSON.parse(result._bodyText)
      results3.json().then(obj3 => {
 
    
      if(results3.status == 200 || results3.status==201){
 
+    //   count1 = count1 + 1;
+
+    //   if(count1 == this.state.VendorPricing.length){
     
         Notiflix.Loading.Remove()
         this.props.setclearfootwearitem()
         Notiflix.Notify.Success('Footwear variant updated successfully.')
         window.location.href = '/footwearvariantlist'
       }
+    //  }
   
     }))
+    // }
 
     }
 
@@ -1131,6 +1164,7 @@ class ViewFootwearVariant extends Component {
                      updatedon : moment().format('lll'),
                           },"UpdateFootwearVariant").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
              
                  
@@ -1186,6 +1220,7 @@ class ViewFootwearVariant extends Component {
           
               },"UpdateFootwearVariantApprovalStatus").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {
     
                 if(results.status == 200 || results.status==201){
@@ -1205,6 +1240,7 @@ class ViewFootwearVariant extends Component {
                   },
                   {
                     label: 'No',
+                    // onClick: () => alert('Click No')
                   }
                 ]
               });
@@ -1219,6 +1255,8 @@ class ViewFootwearVariant extends Component {
             if(this.state.Sku != ''){
                 if(this.state.MarginOn != ''){
                     if(this.state.VendorSellingPrice != 0){
+            //   if(this.state.MarginPercent != ''){
+               
                 var dt = this.state.VendorPricing.filter((value)=> value.Name == this.state.Name)
     
                 if(dt == '')
@@ -1259,6 +1297,10 @@ class ViewFootwearVariant extends Component {
                     
     
                   
+            //   }else
+            //   {
+            //     Notiflix.Notify.Failure('Please enter margin percent.');
+            //   }
             }else
             {
               Notiflix.Notify.Failure('Please enter vendor selling price.');
@@ -1324,6 +1366,8 @@ class ViewFootwearVariant extends Component {
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Footwear Variant Details</button>
                                                 </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
                   
                                     </div>
                                 </div>
@@ -1391,7 +1435,17 @@ class ViewFootwearVariant extends Component {
                                                                 }
                                                             }}
                                                             class="wizardlist nav-link">SEO Details</a></li>
-                                                
+                                                 {/* <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
+
+                                                                if (this.state.Page6 == 'Done') {
+                                                                    this.setState({
+                                                                        PageTitle: '6',
+                                                                        Page6: 'Done',
+    
+                                                                    })
+                                                                }
+                                                            }}
+                                                                class="wizardlist nav-link">Vendor Pricing</a></li> */}
                                                     
                                                                 <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
@@ -1421,7 +1475,14 @@ class ViewFootwearVariant extends Component {
                                                                 </div>
                                                                 <div class="toast-body">
                                                                     <div class="row">
-                                                                        
+                                                                        {/* <div class="col-md-6">
+                                                                            <div class="form-group mb-3">
+                                                                                <label for="validationCustom01">Item SKU [BMS]<span className="mandatory">*</span></label>
+                                                                                <input type="text" class="form-control" 
+                                                                                value={this.props.footcredential.ItemSkuBms}
+                                                                                onChange={this.onChangeSku.bind(this)} />
+                                                                            </div>
+                                                                        </div> */}
                                                                         <div class="col-md-6">
                                                                             <div class="form-group mb-3">
                                                                                 <label for="validationCustom01">Variant Name (160 Character)<span className="mandatory">*</span></label>
@@ -1482,7 +1543,13 @@ class ViewFootwearVariant extends Component {
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                        
+                                                                        //  onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                        onClick={this.nextlabel.bind(this)} >Next</button>
                                                                     </div>
                                                                 </div>
@@ -1622,7 +1689,13 @@ class ViewFootwearVariant extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                        
+                                                                        //    onClick={()=>{
+                                                                            
+                                                                        //      this.setState({
+                                                                        //          PageTitle : '3',
+                                                                        //          Page2 : 'Done'
+                                                                        //      })
+                                                                        //    }}
                                                                      onClick={this.nextlabel2.bind(this)} >Next</button>
                                                                         </div>
                                                                     </div>
@@ -1691,9 +1764,11 @@ class ViewFootwearVariant extends Component {
                                                                           disabled={!this.state.IsVisible}
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -1969,7 +2044,13 @@ class ViewFootwearVariant extends Component {
                                                                              }}
                                                                          >Previous</button>
                                                                          <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                        
+                                                                         // onClick={()=>{
+                                                    
+                                                                         //     this.setState({
+                                                                         //         PageTitle : '4',
+                                                                         //         Page3 : 'Done'
+                                                                         //     })
+                                                                         //   }}
                                                                            onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                      </div>
                                                                  </div>
@@ -2003,6 +2084,7 @@ class ViewFootwearVariant extends Component {
                                                         <div class="col-md-9 ">
                                                         <label for="sw-arrows-first-name" >Product Image<span className="mandatory">*</span></label>
         
+                                                        {/* <div class="form-group"> */}
                                                          <div class="div1" class='row'>
                                                          {this.state.Photos.map((photo,index)=>(  
                                                               <div style={{    marginLeft: '1%',    marginRight: '2%'}}>   
@@ -2028,16 +2110,21 @@ class ViewFootwearVariant extends Component {
                                                                         <input id="photo-upload" 
                                                                            disabled={!this.state.IsVisible}
                                                                         type="file" onChange={(e)=>{
+                                                                  //  e.preventDefault();
+                                                                  //  console.log(e.target.files[0])
                                                                    if(e.target.files[0] != undefined){
                                                                      if(e.target.files[0].size < 300000){
                                                                       var arr1 = [...this.state.Photos]
                                                                  const reader = new FileReader();
                                                                    const file = e.target.files[0];
                                                                    reader.onload = (e) => {
+                                                                    // console.log(e.target.result)
+                                                                    // this.setState({image: e.target.result});
                                                                     arr1[index].image =  e.target.result
                                                                     arr1[index].value =  e.target.result
                                                                     arr1[index].data =  file
                                                                     
+                                                                    // this.props.setstaffimage(e.target.result);
                                                                     this.setState({
                                                                       Photos : arr1,
                                                                       imageCount : this.state.imageCount + 1
@@ -2055,6 +2142,7 @@ class ViewFootwearVariant extends Component {
                                                                
                                                            </div>
                                                             ))}
+                                                                 {/* </div> */}
                                                          </div>
                                                         </div>
                                                             
@@ -2083,7 +2171,13 @@ class ViewFootwearVariant extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                           
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                              onClick={this.nextlabel4.bind(this)} >Next</button>
                                                                         </div>
                                                                     </div>
@@ -2152,7 +2246,13 @@ class ViewFootwearVariant extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                            
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                              onClick={this.nextlabel5.bind(this)} >Next</button>
                                                                         </div>
                                                                     </div>
@@ -2212,9 +2312,11 @@ class ViewFootwearVariant extends Component {
                                                                             disabled={!this.state.IsVisible}
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -2473,7 +2575,13 @@ class ViewFootwearVariant extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                            
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel6.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -2536,7 +2644,18 @@ class ViewFootwearVariant extends Component {
                                                                     }}/> No
                                                             </label> 
                                                         </div>
-                                                     
+                                                       {/* <div class="col-md-12">
+                                                            <div class="form-group mb-3">
+                                                                <label for="validationCustom01">Approval<span className="mandatory">*</span></label>
+                                                                <select type="text" class="form-control" 
+                                                                value={this.props.footcredential.Approval}
+                                                                onChange={this.onChangeApprove.bind(this)}>
+                                                                <option>Yes</option>
+                                                                <option>No</option>
+                                                                
+                                                            </select>
+                                                            </div>
+                                                                </div>*/}
                                                         
                                                             </div>
                                                             
@@ -2561,7 +2680,13 @@ class ViewFootwearVariant extends Component {
                                                                         >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
                                                                            disabled={!this.state.IsVisible}
-                                                                        
+                                                                        // onClick={()=>{
+                                                   
+                                                                        //     this.setState({
+                                                                        //         PageTitle : '5',
+                                                                        //         Page5 : 'Done'
+                                                                        //     })
+                                                                        //   }}
                                                                           onClick={this.Savefootwearvariant.bind(this)}>Update Footwear Variant</button>
                                                                     </div>
                                                                 </div>

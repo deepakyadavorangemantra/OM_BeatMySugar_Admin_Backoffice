@@ -150,8 +150,11 @@ class StaffView extends Component {
   
           var det = localStorage.getItem('StaffDetails')
           var StaffData = JSON.parse(det)
+            //    console.log(StaffData)
   
+            // console.log(StaffData.fld_permanentaddress)
          
+          // this.props.setuserphoto(UserData.fld_photo)
           this.setState({
                    Staffid:StaffData.fld_staffid,
                    Status:StaffData.fld_status,
@@ -188,6 +191,7 @@ class StaffView extends Component {
           this.props.setpermanentstate(StaffData.fld_permanentstate)
           this.props.setpermanentcity(StaffData.fld_permanentcity)
           this.props.setpermanentpincode(StaffData.fld_permanentpincode)
+        //   this.props.setstatus(StaffData.fld_status)
           this.props.setaadharcard(StaffData.fld_adhaar)
           this.props.setpancard(StaffData.fld_pan)
           this.props.setdrivinglicenses(StaffData.fld_drivinglicense)
@@ -211,10 +215,12 @@ class StaffView extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -243,6 +249,7 @@ class StaffView extends Component {
 
           GetApiCall.getRequest("GetDesignation").then(resultdes =>
             resultdes.json().then(objdesignation => {
+            //  this.props.setdesignation(objdesignation.data[0].value);
            
               this.setState({
                 Designationdata : objdesignation.data,
@@ -252,6 +259,7 @@ class StaffView extends Component {
 
             GetApiCall.getRequest("GetDepartment").then(resultdes =>
                 resultdes.json().then(objdepartment => {
+                //  this.props.setdepartment(objdepartment.data[0].value);
                   this.setState({
                     Departmentdata : objdepartment.data,
                     
@@ -260,6 +268,7 @@ class StaffView extends Component {
 
                 GetApiCall.getRequest("GetUserType").then(resultdes =>
                     resultdes.json().then(objuser => {
+                    //  this.props.setusertype(objuser.data[0].value);
                       this.setState({
                         Userdata : objuser.data,
                         
@@ -290,6 +299,7 @@ class StaffView extends Component {
             
                           },"GetState").then((results) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(objstate => {
                       
                           
@@ -300,7 +310,9 @@ class StaffView extends Component {
                                 
                                     this.setState({
                                         StateId : objstate.data.filter(value=>value.label == StaffData.fld_presentstate)[0].value,
+                                        // StatePermanentId : objstate.data[0].value,
                                         StateData : objstate.data,
+                                        // StatePermanentData : objstate.data
                                     })
                                   }
             
@@ -310,6 +322,7 @@ class StaffView extends Component {
                     
                                   },"GetState").then((resultsper) => 
                                   
+                                    // const objs = JSON.parse(result._bodyText)
                                     resultsper.json().then(objstateper => {
                               
                                   
@@ -319,6 +332,7 @@ class StaffView extends Component {
                                 
                                             this.setState({
                                                 StatePermanentId : objstateper.data.filter(value=>value.label == StaffData.fld_permanentstate)[0].value,
+                                                // StateData : objstate.data,
                                                 StatePermanentData : objstateper.data
                                             })
                                           }
@@ -330,6 +344,7 @@ class StaffView extends Component {
                     
                                   },"GetCity").then((resultscity) => 
                                   
+                                    // const objs = JSON.parse(result._bodyText)
                                     resultscity.json().then(objcity => {
                               
                                   
@@ -340,7 +355,9 @@ class StaffView extends Component {
                                         
                                             this.setState({
                                                 CityId : objcity.data.filter(value=>value.label == StaffData.fld_presentcity)[0].value,
+                                                // CityPermanentId : objcity.data[0].value,
                                                 CityData : objcity.data,
+                                                // CityPermanentData : objcity.data
                                             })
                                           }
 
@@ -350,6 +367,7 @@ class StaffView extends Component {
                             
                                           },"GetCity").then((resultscityper) => 
                                           
+                                            // const objs = JSON.parse(result._bodyText)
                                             resultscityper.json().then(objcityper => {
                                       
                                           
@@ -358,7 +376,9 @@ class StaffView extends Component {
                                                 if(objcityper.data.length != 0 ){
                                         
                                                     this.setState({
+                                                        // CityId : objcity.data[0].value,
                                                         CityPermanentId : objcityper.data.filter(value=>value.label == StaffData.fld_permanentcity)[0].value,
+                                                        // CityData : objcity.data,
                                                         CityPermanentData : objcityper.data
                                                     })
                                                   }
@@ -571,6 +591,7 @@ class StaffView extends Component {
 
 
       onChangeBlood(bloodgroup){
+        // console.log(bloodgroup.target.value)
          this.props.setbloodgroup(bloodgroup.target.value)
      }
      onChangeChronic(chronicdisease){
@@ -644,6 +665,7 @@ class StaffView extends Component {
      }
 
      onChangeCountry(country){
+        // console.log(this.state.CountryData[country.target.value - 1].label)
         this.setState({
             CountryId : country.target.value
           })
@@ -702,6 +724,7 @@ class StaffView extends Component {
      }
     
      onChangeState(state){
+        //  this.props.setstate(state.target.value)
          this.setState({
             StateId: state.target.value
           })
@@ -722,6 +745,7 @@ class StaffView extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -733,6 +757,7 @@ class StaffView extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -740,6 +765,7 @@ class StaffView extends Component {
      }
 
      onChangeCity(city){
+        // this.props.setcity(city.target.value)
         this.setState({
             CityId : city.target.value
           })
@@ -805,6 +831,7 @@ class StaffView extends Component {
     }
 
      onChangePermanentAddress(permanentaddress){
+        //  console.log(permanentaddress.target.value)
         this.props.setpermanentaddress(permanentaddress.target.value)
      }
 
@@ -870,6 +897,7 @@ class StaffView extends Component {
 
      }
      onChangePermanentState(state){
+         //  this.props.setstate(state.target.value)
          this.setState({
             StatePermanentId: state.target.value
           })
@@ -890,6 +918,7 @@ class StaffView extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -901,6 +930,7 @@ class StaffView extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -977,6 +1007,7 @@ class StaffView extends Component {
 
     savestaff(){
         if(this.state.Status!=''){
+                    // console.log(this.props.staffcredentials)
                    
                this.setState({
                         PageTitle : '7',
@@ -1025,8 +1056,10 @@ class StaffView extends Component {
      status : this.state.Status,
      updatedon : moment().format('lll'),
      updatedby : details[0].fld_staffid,
+    //  password : this.props.staffcredentials.Password,
                },"UpdateStaff").then((results) => 
               
+                 // const objs = JSON.parse(result._bodyText)
                  results.json().then(obj => {
           
               
@@ -1410,6 +1443,12 @@ class StaffView extends Component {
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                        //  onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
                                                                         onClick={this.nextlabel.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -1486,6 +1525,13 @@ class StaffView extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                     onClick={this.nextlabel2.bind(this)}
                                                                        >Next</button>
                                                                         </div>
@@ -1562,6 +1608,13 @@ class StaffView extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                        onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1661,6 +1714,13 @@ class StaffView extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel4.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1783,6 +1843,13 @@ class StaffView extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel5.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1952,6 +2019,13 @@ class StaffView extends Component {
                                                                             }}
                                                                         >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                        // onClick={()=>{
+                                                   
+                                                                        //     this.setState({
+                                                                        //         PageTitle : '6',
+                                                                        //         Page5 : 'Done'
+                                                                        //     })
+                                                                        //   }}
                                                                           onClick={this.nextlabel6.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -2019,6 +2093,13 @@ class StaffView extends Component {
                                                                     >Previous</button>
                                                                     <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
                                                                     disabled={!this.state.IsVisible}
+                                                                    // onClick={()=>{
+                                               
+                                                                    //     this.setState({
+                                                                    //         PageTitle : '6',
+                                                                    //         Page6 : 'Done'
+                                                                    //     })
+                                                                    //   }}
                                                                      onClick={this.savestaff.bind(this)} >Update</button>
                                                                 </div>
                                                             </div>

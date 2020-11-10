@@ -38,6 +38,7 @@ class SocksVariant extends Component {
             MasterId : MasterData.fld_id,
             MasterData : MasterData 
         })
+        // console.log(MasterData)
 
         PostApiCall.postRequest({
 
@@ -46,6 +47,7 @@ class SocksVariant extends Component {
      
          },"GetSocksVariantList").then((results1) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results1.json().then(obj => {
      
          
@@ -55,6 +57,7 @@ class SocksVariant extends Component {
                 VariantData : obj.data
             })
 
+            // Notiflix.Loading.Remove()
 
            }
         }))
@@ -69,10 +72,12 @@ class SocksVariant extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){

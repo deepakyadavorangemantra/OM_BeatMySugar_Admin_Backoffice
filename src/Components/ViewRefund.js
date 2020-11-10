@@ -63,6 +63,7 @@ class ViewInsurance extends Component {
      
      },"GetFoodOrderDetail").then((results2) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results2.json().then(obj2 => {
     
      
@@ -87,11 +88,13 @@ this.setState({
      
      },"GetFootwearOrderDetail").then((results2) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results2.json().then(obj2 => {
     
      
        if(results2.status == 200 || results2.status==201){
 
+        // console.log(obj2.data[0])
  
 this.setState({
     ProductName : obj2.data[0].fld_prodname
@@ -111,6 +114,7 @@ this.setState({
      
      },"GetSocksOrderDetail").then((results2) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results2.json().then(obj2 => {
     
      
@@ -142,6 +146,7 @@ OnClickCancel(){
  
  },"UpdateReturnStatus").then((results2) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results2.json().then(obj2 => {
 
  
@@ -150,6 +155,10 @@ OnClickCancel(){
     Notiflix.Loading.Remove()
     Notiflix.Notify.Success('Return request has been cancelled.')
     window.location.href = '/returnmanagementlist'
+   }else
+   {
+    Notiflix.Loading.Remove()
+    Notiflix.Notify.Failure(obj2.data)
    }
 }
    ))
@@ -169,6 +178,7 @@ OnClickRefund(){
  
  },"UpdateReturnStatus").then((results2) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results2.json().then(obj2 => {
 
  
@@ -177,6 +187,10 @@ OnClickRefund(){
     Notiflix.Loading.Remove()
     Notiflix.Notify.Success('Return request has been initiated.')
     window.location.href = '/returnmanagementlist'
+   }else
+   {
+    Notiflix.Loading.Remove()
+    Notiflix.Notify.Failure(obj2.data)
    }
 }
    ))
@@ -198,6 +212,7 @@ OnClickReplace(){
  
  },"UpdateReturnStatus").then((results2) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results2.json().then(obj2 => {
 
  
@@ -206,6 +221,10 @@ OnClickReplace(){
     Notiflix.Loading.Remove()
     Notiflix.Notify.Success('Item has been initiated for replacement.')
     window.location.href = '/returnmanagementlist'
+   }else
+   {
+    Notiflix.Loading.Remove()
+    Notiflix.Notify.Failure(obj2.data)
    }
 }
    ))

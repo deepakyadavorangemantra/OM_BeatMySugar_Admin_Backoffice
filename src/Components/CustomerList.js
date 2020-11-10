@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet'
-import {Edit3,Trash2,Monitor} from 'react-feather';
+import {Edit3,Trash2,Monitor, Eye} from 'react-feather';
 import GetApiCall from '../GetApi';
 import Notiflix from "notiflix";
 import moment from 'moment';
@@ -25,7 +25,7 @@ class CustomerList extends Component {
               GetApiCall.getRequest("GetUserInfoData").then(resultdes =>
                   resultdes.json().then(obj => {
                  
-                  
+                //   console.log(obj.data)
                     this.setState({
                         CustomerData: obj.data
                     })
@@ -35,7 +35,8 @@ class CustomerList extends Component {
                   }))
         
         }
-         
+
+
      
     render(){
         return(
@@ -61,7 +62,23 @@ class CustomerList extends Component {
                     </div> 
 
                     <div class="row">
-                  
+                   {/* <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                                                       <div class="col text-right">
+                                       <a href='/addfootwear'>
+                                       <button 
+                                       
+                                       class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
+                                               class="uil-plus mr-1"></i>Add New Footwear Item</button>
+                                  
+                                       </a>
+                                                                       </div>
+                                </div>
+                            </div>
+                        </div> 
+                     </div>*/}
                 
                 </div>
                     
@@ -80,6 +97,7 @@ class CustomerList extends Component {
                                         <th>Gender</th>
                                         <th>Date of Birth</th>
                                         <th style={{display:'block!important'}}>Registered On</th>
+                                        <th>Action</th> 
                                        
                                        
                                        
@@ -112,7 +130,13 @@ class CustomerList extends Component {
                                             <td>{data.fld_gender}</td>
                                         <td>{moment(data.fld_dob).format('ll')}</td>
                                         <td>{moment(data.fld_updatedon).format('ll')}</td>
-                                        
+                                        <td><Eye
+                                        onClick={()=>{
+                                    
+                                            localStorage.setItem('CustomersDetails',JSON.stringify(data))
+                                            window.location.href ='/viewcustomers'
+                                        }}
+                                        /></td>
 
                                             </tr>
 

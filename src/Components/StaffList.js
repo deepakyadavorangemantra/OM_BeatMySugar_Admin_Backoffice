@@ -5,6 +5,7 @@ import Notiflix from "notiflix";
 import GetApiCall from '../GetApi';
 import moment from 'moment';
 import PostApiCall from '../Api';
+import Modal from 'react-responsive-modal';
 
 class StaffList extends Component {
     constructor(props){
@@ -13,6 +14,16 @@ class StaffList extends Component {
            StaffData:[],
 
            AddAccess : false,
+           open:false,
+
+           isNewPasswordVisible : false,
+           isConPasswordVisible : false,
+
+
+           NewPassword : '',
+           ConfirmPassword : '',
+
+           EmpDetails : []
            
         }
 
@@ -28,12 +39,14 @@ class StaffList extends Component {
           GetApiCall.getRequest("GetStaff").then(resultdes =>
               resultdes.json().then(obj => {
              
+              // console.log(obj.data)
               
                 this.setState({
                   StaffData : obj.data
                 })
   
   
+                // Notiflix.Loading.Remove();
               }))
 
 
@@ -47,10 +60,12 @@ class StaffList extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -78,11 +93,161 @@ class StaffList extends Component {
     
     }
         
+
+    UpdatePasswordClicked(){
+        if(this.state.NewPassword != ''){
+            if(this.state.ConfirmPassword != ''){
+                if(this.state.ConfirmPassword == this.state.NewPassword){
+
+                    Notiflix.Loading.Dots('');
+
+                    PostApiCall.postRequest({
+  
+                        email : this.state.EmpDetails.fld_email,
+                        updatedon : moment().format('lll'),
+                        updatedby : 0,
+                        password : this.state.NewPassword
+                    
+                      },"ChangePasswordByAdmin").then((resultssub) => 
+                      
+                        // const objs = JSON.parse(result._bodyText)
+                        resultssub.json().then(objsub => {  
+                        if(resultssub.status == 200 || resultssub.status==201){
+
+                            Notiflix.Loading.Remove();
+
+                            window.location.reload()
+
+                        }
+                    }))
+
+                }    else{
+                    Notiflix.Notify.Failure('New password & confirm password donot match.')
+                }
+            }    else{
+                Notiflix.Notify.Failure('Please re-type new password.')
+            }
+        } else{
+                Notiflix.Notify.Failure('Please enter new password.'); 
+            }
+    }
      
     render(){
         return(
            <div>
           
+
+          <Modal class="modal-content"  
+    open={this.state.open}
+    
+    onClose={()=>{
+      this.setState({open : false})
+    }}
+     center>
+
+    <div class="modal-content modelcontent2">
+      <div class="modal-header">
+        <h4 class="modal-title">Reset Password</h4>
+      </div>
+      <div class="modal-body">
+
+<div class="row" style={{margin : '0px'}}>
+<div class="col-md-6">
+            <div class="form-group mb-3">
+                <label for="validationCustom01">Employee Id<span class="mandatory">*</span></label>
+                <input  class="form-control"
+                disabled
+                 value = {this.state.EmpDetails.fld_empid}
+             
+                ></input>
+      
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label for="validationCustom01">Name<span class="mandatory">*</span></label>
+                <input  class="form-control"
+                disabled
+                 value = {this.state.EmpDetails.fld_name}
+             
+                ></input>
+      
+            </div>
+        </div>
+</div>
+   
+     
+            <div class="col-md-12">
+            <div class="form-group mb-3">
+                <label for="validationCustom01">New Password<span class="mandatory">*</span></label>
+                <input type={this.state.isNewPasswordVisible ? 'text' : "password"} class="form-control"
+                 value = {this.state.NewPassword}
+                onChange = {(text)=>{
+                    this.setState({
+                        NewPassword : text.target.value
+                    })
+                }}
+                ></input>
+                  <span class="login-icon-change-pass">                       
+                                                            {/* <i class="icon-dual" data-feather="lock"></i>*/}
+                                                             <i style={{color : this.state.isNewPasswordVisible ? '#060a4a' : ''}} dangerouslySetInnerHTML={{__html:window.feather.icons.eye.toSvg()}} 
+                                                             onClick={()=>{
+                                                                 this.setState({
+                                                                     isNewPasswordVisible : !this.state.isNewPasswordVisible
+                                                                 })
+                                                             }}
+
+                                                            
+                                                             /> 
+                                                        </span>
+            </div>
+        </div>
+     
+        <div class="col-md-12">
+            <div class="form-group mb-3">
+                <label for="validationCustom01">Confirm Password<span class="mandatory">*</span></label>
+                <input type={this.state.isConPasswordVisible ? 'text' : "password"} class="form-control"
+                 value = {this.state.ConfirmPassword}
+                 onChange = {(text)=>{
+                    this.setState({
+                       ConfirmPassword: text.target.value
+                    })
+                }}
+                ></input>
+                                <span class="login-icon-change-pass">
+                                                            {/* <i class="icon-dual" data-feather="lock"></i>*/}
+                                                             <i style={{color : this.state.isConPasswordVisible ? '#507dc0' : ''}} dangerouslySetInnerHTML={{__html:window.feather.icons.eye.toSvg()}} 
+                                                             onClick={()=>{
+                                                                 this.setState({
+                                                                     isConPasswordVisible : !this.state.isConPasswordVisible
+                                                                 })
+                                                             }}
+
+                                                            
+                                                             /> 
+                                                        </span>
+            </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-primary" type="submit" style={{float:'right'}}  onClick={()=>{
+        this.setState({
+            open : false
+        })
+    }}>Close</button>
+     
+      <button class="btn btn-primary" type="submit" style={{float:'right'}}
+      onClick = {this.UpdatePasswordClicked.bind(this)}
+     >Update</button>
+        <span>
+
+        </span>
+      </div>
+ 
+</div>
+    </Modal>
+
                      
             <div class="content-page">
             
@@ -137,9 +302,11 @@ class StaffList extends Component {
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
+                                        {/* <th>User Type</th> */}
                                         
                                         <th>Status</th>
                                         <th>Assign Rights</th>
+                                        <th>Reset Password</th>
                                         <th>Action</th>
                                      
                                        
@@ -167,6 +334,7 @@ class StaffList extends Component {
                                     <td>{data.fld_name}</td>
                                     <td>{data.fld_email}</td>
                                     <td>{data.fld_mobile}</td>
+                                    {/* <td>{data.fld_usertype}</td> */}
                                     <td style={{color:data.fld_status == 'Active' ? 'green' : 'red'}}><b>{data.fld_status}</b></td>
                                   
 
@@ -180,7 +348,23 @@ class StaffList extends Component {
                                     class="btn btn-primary" id="btn-new-event" data-toggle="modal">Assign Rights</button>
                                
                                    
-                                          </td>                  
+                                          </td>        
+
+
+                                          <td>
+                                     
+                                     <button  style={{display : this.state.AddAccess ? '' : 'none'}}
+                                      onClick={()=>{
+                                        this.setState({
+                                            EmpDetails : data,
+                                            open : true
+                                        })
+                                     }}
+                                     class="btn btn-primary" id="btn-new-event" data-toggle="modal">Reset Password</button>
+                                
+                                    
+                                           </td> 
+
 
                                     <td> <div class="align-self-center tableact" style={{    textAlign: 'center'}}
                                     onClick={()=>{
@@ -192,6 +376,7 @@ class StaffList extends Component {
                                 <span  >
                                 <Edit3/>
                                     </span>
+                                    {/* &nbsp;&nbsp;<Trash2/> */}
                                     </div> &nbsp;&nbsp;
                                      </td>
                                   

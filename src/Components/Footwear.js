@@ -161,6 +161,7 @@ class Footwear extends Component {
                             
                           })
 
+                        //   Notiflix.Loading.Remove()
                         }))
 
 
@@ -169,6 +170,7 @@ class Footwear extends Component {
                   
                                   this.setState({
                                     CountryOrigindata : obj.data ,
+                                    // CountryOfOrigin : FoodData.fld_countryoforigin == null || FoodData.fld_countryoforigin == '' ? 'India' : FoodData.fld_countryoforigin
                                    
                                   })
 
@@ -186,10 +188,12 @@ class Footwear extends Component {
                         
                           },"GetUserSubMenuAccessRights").then((resultssub) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             resultssub.json().then(objsub => {  
                             if(resultssub.status == 200 || resultssub.status==201){
                 
                            var filteredRights = objsub.data;
+                                // console.log(filteredRights)
                         
                                 var con = 0
                                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -372,6 +376,7 @@ class Footwear extends Component {
                         },"AddFootwearItemMaster").then((results) => 
                             
                         
+                       //    const objs = JSON.parse(result._bodyText)
                           results.json().then(obj => {
                     
                         
@@ -598,6 +603,7 @@ class Footwear extends Component {
                                                                             <label for="sw-arrows-first-name" >Country of Origin <span className="mandatory">*</span></label>
                                                                             
                                                                             <select class="form-control custom-select"
+                                                                            //  disabled={!this.state.IsVisible}
                                                                             value={this.state.CountryOfOrigin}
                                                                             onChange={(text)=>{
 
@@ -633,7 +639,13 @@ class Footwear extends Component {
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                       
+                                                                        //  onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                        onClick={this.nextlabel.bind(this)} >Next</button>
                                                                     </div>
                                                                 </div>
@@ -690,6 +702,13 @@ class Footwear extends Component {
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                        //    onClick={()=>{
+                                                                            
+                                                                        //      this.setState({
+                                                                        //          PageTitle : '3',
+                                                                        //          Page2 : 'Done'
+                                                                        //      })
+                                                                        //    }}
                                                                      onClick={this.nextlabel2.bind(this)} >Next</button>
                                                                         </div>
                                                                     </div>
@@ -793,6 +812,13 @@ class Footwear extends Component {
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                             onClick={this.Savefootwear.bind(this)}>Add Footwear Item</button>
                                                                         </div>
                                                                     </div>

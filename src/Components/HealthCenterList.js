@@ -27,12 +27,14 @@ class HealthCenterList extends Component {
               GetApiCall.getRequest("GetHealthCenterList").then(resultdes =>
                   resultdes.json().then(obj => {
                  
+                  // console.log(obj.data)
                   
                     this.setState({
                         DocData : obj.data
                     })
       
       
+                    // Notiflix.Loading.Remove();
                   }))
 
                   var login=localStorage.getItem('LoginDetail');
@@ -44,10 +46,12 @@ class HealthCenterList extends Component {
                   
                     },"GetUserSubMenuAccessRights").then((resultssub) => 
                     
+                      // const objs = JSON.parse(result._bodyText)
                       resultssub.json().then(objsub => {  
                       if(resultssub.status == 200 || resultssub.status==201){
           
                      var filteredRights = objsub.data;
+                          // console.log(filteredRights)
                   
                           var con = 0
                           for(var i = 0 ; i< filteredRights.length ;i++){
@@ -185,6 +189,7 @@ class HealthCenterList extends Component {
                                     <span  >
                                     <Edit3/>
                                         </span>
+                                        {/* &nbsp;&nbsp;<Trash2/> */}
                                         </div> &nbsp;&nbsp;
                                         </td>
 

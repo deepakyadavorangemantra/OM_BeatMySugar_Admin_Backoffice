@@ -37,7 +37,23 @@ class OrderList extends Component {
                     </div> 
 
                     <div class="row">
-                   
+                   {/* <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                                                       <div class="col text-right">
+                                       <a href='/addfootwear'>
+                                       <button 
+                                       
+                                       class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
+                                               class="uil-plus mr-1"></i>Add New Footwear Item</button>
+                                  
+                                       </a>
+                                                                       </div>
+                                </div>
+                            </div>
+                        </div> 
+                     </div>*/}
                 
                 </div>
                     

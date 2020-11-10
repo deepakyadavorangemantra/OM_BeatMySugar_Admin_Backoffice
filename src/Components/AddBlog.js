@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import GetApiCall from '../GetApi';
 import PostApiCall from '../Api';
 import moment from 'moment';
+// import * from '@ckeditor/ckeditor5-editor-inline/src/col'
 
 const ImgUpload = ({
     onChange,
@@ -92,6 +93,7 @@ class AddBlog extends Component {
           GetApiCall.getRequest("GetArticleCategory").then(resultdes =>
               resultdes.json().then(obj => {
                 this.props.setCategory(obj.data[0].value)
+              // console.log(obj.data)
                 this.setState({
                    CategoryData : obj.data
                 })
@@ -102,6 +104,7 @@ class AddBlog extends Component {
               GetApiCall.getRequest("GetArticleSubCategory").then(resultdes =>
                 resultdes.json().then(obj => {
                
+                // console.log(obj.data)
                 
                   this.setState({
                      SubCategoryData : obj.data
@@ -111,6 +114,7 @@ class AddBlog extends Component {
                 GetApiCall.getRequest("GetBlogContributors").then(resultdes =>
                     resultdes.json().then(obj => {
                    
+                    // console.log(obj.data)
                     
                       this.setState({
                          ContributorsData : obj.data
@@ -120,6 +124,7 @@ class AddBlog extends Component {
               GetApiCall.getRequest("GetArticleTags").then(resultdes =>
                 resultdes.json().then(obj => {
                
+                // console.log(obj.data)
                 
                   this.setState({
                     TagData : obj.data
@@ -333,6 +338,7 @@ class AddBlog extends Component {
                 updatedon : moment().format('lll'),
                      },"AddArticleTagMapping").then((results1) => 
             
+               // const objs = JSON.parse(result._bodyText)
                results1.json().then(obj1 => {
     
                if(results1.status == 200 || results1.status==201){
@@ -396,6 +402,7 @@ class AddBlog extends Component {
                      updatedon : moment().format('lll'),
                           },"AddArticle").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
              
                  
@@ -410,6 +417,7 @@ class AddBlog extends Component {
             Notiflix.Notify.Failure(obj.data)
         }
     }))
+            // console.log(this.state.Show == 'Yes' ?  'Show' : 'Dont Show')
         }else{
             Notiflix.Notify.Failure('Please select the name of person who wrote the article.')
         }

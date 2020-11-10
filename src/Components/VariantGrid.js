@@ -37,6 +37,7 @@ class VariantGrid extends Component {
                 MasterId : MasterData.fld_id,
                 MasterData : MasterData 
             })
+            // console.log(MasterData)
     
             PostApiCall.postRequest({
 
@@ -45,6 +46,7 @@ class VariantGrid extends Component {
          
              },"GetFoodVariantList").then((results1) => 
              
+               // const objs = JSON.parse(result._bodyText)
                results1.json().then(obj => {
          
              
@@ -54,6 +56,7 @@ class VariantGrid extends Component {
                     VariantData : obj.data
                 })
 
+                // Notiflix.Loading.Remove()
 
                }
             }))
@@ -68,10 +71,12 @@ class VariantGrid extends Component {
             
               },"GetUserSubMenuAccessRights").then((resultssub) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 resultssub.json().then(objsub => {  
                 if(resultssub.status == 200 || resultssub.status==201){
     
                var filteredRights = objsub.data;
+                    // console.log(filteredRights)
             
                     var con = 0
                     for(var i = 0 ; i< filteredRights.length ;i++){

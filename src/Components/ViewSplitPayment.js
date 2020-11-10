@@ -63,6 +63,8 @@ class SplitView extends React.Component
 
     var ordermain = JSON.parse(localStorage.getItem('SplitDetails'))
    
+    // console.log(ordermain)
+
     this.setState({
         MainOrder : ordermain
     })
@@ -74,15 +76,21 @@ class SplitView extends React.Component
  
  },"GetOrderDetail").then((results1) => 
  
+   // const objs = JSON.parse(result._bodyText)
    results1.json().then(obj1 => {
 
  
    if(results1.status == 200 || results1.status==201){
 
+    // console.log(obj1.data)
+    // this.setState({
+    //     CartData : obj1.data
+    // })
 
     var dt = []
     for(var i =0 ;i<Object.keys(obj1.data).length;i++){
 
+        // console.log(obj1.data[i].fld_productid)
         if(obj1.data[i].fld_category == 'Food'){
 
             PostApiCall.postRequest({
@@ -92,11 +100,13 @@ class SplitView extends React.Component
          
          },"GetFoodOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null)
             if(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null && obj2.data[0].fld_shipvendorid != 0){
 
               this.setState({
@@ -122,11 +132,13 @@ class SplitView extends React.Component
          
          },"GetFootwearOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
            if(results2.status == 200 || results2.status==201){
 
+            // console.log(obj2.data[0])
             if(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null && obj2.data[0].fld_shipvendorid != 0){
 
               this.setState({
@@ -152,6 +164,7 @@ class SplitView extends React.Component
          
          },"GetSocksOrderDetail").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
         
          
@@ -182,7 +195,16 @@ class SplitView extends React.Component
 }))
 
 
+// GetApiCall.getRequest("GetVendorData").then(resultdes =>
+//   resultdes.json().then(objcategory =>{
 
+//       this.setState({
+//           VendorData:objcategory.data,
+//       })
+
+//   }))
+
+//   vend = new Array(this.state.CartData.length)
       
     }
 
@@ -257,7 +279,9 @@ for(var i = 0 ;i<grouped.length ;i++){
 
 
 
+console.log(net)
 
+// console.log(grouped[i])
 
 
 var ship =  grouped[i][0].fld_vendorid == this.state.ExtraChargeVendor ? this.state.MainOrder.fld_shippingcharges : 0 
@@ -305,6 +329,7 @@ var grp =grouped[i]
  
  },"AddVendorOrder").then((results) => 
  
+ // const objs = JSON.parse(result._bodyText)
  results.json().then(obj => {
  
  
@@ -390,6 +415,7 @@ var grp =grouped[i]
     
     },"AddVendorOrderDetail").then((results1) => 
     
+      // const objs = JSON.parse(result._bodyText)
       results1.json().then(obj1 => {
     
     
@@ -403,6 +429,7 @@ var grp =grouped[i]
           Notiflix.Loading.Remove()
     
           Notiflix.Notify.Info('Order has been assigned to vendors.')
+          // window.location.href = '/neworders' 
         
         }
     
@@ -461,6 +488,7 @@ else
 
         var vendorData = []
         var cn = 0
+        // console.log(this.state.SelectedProduct)
 
         for(var i =0 ;i<this.state.SelectedProduct.length;i++){
 
@@ -474,12 +502,14 @@ else
        
        },"GetFoodVendorDataAssign").then((results2) => 
        
+         // const objs = JSON.parse(result._bodyText)
          results2.json().then(obj2 => {
       
        
          if(results2.status == 200 || results2.status==201){
 
 
+          // console.log(obj2.data)
           vendorData.push(obj2.data[0])
 
           this.setState({
@@ -522,6 +552,7 @@ else
        
        },"GetFootwearVendorDataAssign").then((results2) => 
        
+         // const objs = JSON.parse(result._bodyText)
          results2.json().then(obj2 => {
       
        
@@ -566,6 +597,7 @@ else
        
        },"GetSocksVendorDataAssign").then((results2) => 
        
+         // const objs = JSON.parse(result._bodyText)
          results2.json().then(obj2 => {
       
        
@@ -607,6 +639,9 @@ else
        
         }
 
+        // this.setState({
+        //   open : true
+        // })
 
       }else
       {
@@ -617,7 +652,223 @@ else
     }
 
 
+    handleAssignPlace(){
+      if(this.state.SelectedVendor != ''){
+
+        // console.log(this.state.PlacedCount+this.state.SelectedProduct.length)
+   
+        if(this.state.PlacedCount+this.state.SelectedProduct.length == this.state.CartData.length){
+
+
+     
+          if(this.state.ShipAssignedTo != ''){
+            this.FinalAssign()
+            // console.log('can assign')
+          }else
+          {
+            Notiflix.Notify.Failure('Please select vendor to assign shipping & cod charges.')
+          }
+   
+
+
+        }else
+        {
+
+          this.FinalAssign()
+          // console.log('no issue')
+
+        }
+
+
+
+      }else
+      {
+        Notiflix.Notify.Failure('Please select vendor to assign order.')
+      }
+    }
+
+
+    FinalAssign(){
+
+
+      Notiflix.Loading.Dots('');
+
+      var sum= 0 
+
+      for(var i = 0;i<this.state.SelectedProduct.length;i++){
+
+        sum = sum + this.state.SelectedProduct[i].fld_quantity*this.state.SelectedProduct[i].fld_price
+
+      }
+
+      var shipcharge = ((this.state.ShipAssignedTo != '' ? parseFloat(this.state.MainOrder.fld_shippingcharges).toFixed() : parseFloat(0).toFixed()))
   
+      var codcharge = ((this.state.ShipAssignedTo != '' ? parseFloat(this.state.MainOrder.fld_coddeliverycharges).toFixed() : parseFloat(0).toFixed()))
+
+      
+      var net = 0
+      if(this.state.MainOrder.fld_offerpercent != null ) {
+       net = parseInt(shipcharge)  +
+        parseInt(codcharge) +
+        sum -  sum*(parseFloat((this.state.MainOrder.fld_offerpercent)).toFixed())/100
+      }else
+      { 
+       net = parseInt(shipcharge)  +
+        parseInt(codcharge) +
+        sum
+    
+      }
+
+      PostApiCall.postRequest({
+
+        offerid : this.state.MainOrder.fld_offerid,
+        orderid : this.state.MainOrder.fld_orderid,
+        offeramount :  sum*(parseFloat((this.state.MainOrder.fld_offerpercent)).toFixed())/100,
+        shippingcharges : this.state.ShipAssignedTo != '' ? this.state.MainOrder.fld_shippingcharges : 0 ,
+        coddeliverycharges : this.state.ShipAssignedTo != '' ? this.state.MainOrder.fld_coddeliverycharges : 0,
+        orderdate : moment().format('ll'),
+        ordervalue : sum,
+        paymentmode : this.state.MainOrder.fld_paymentmode,
+        netcost : net,
+        numofitems : this.state.SelectedProduct.length,
+        customerid : this.state.MainOrder.fld_customerid,
+        billingaddress : this.state.MainOrder.fld_billingaddress,
+        deliveryaddress : this.state.MainOrder.fld_deliveryaddress,
+        ordersource :this.state.MainOrder.fld_ordersource,
+        status : 'New Order',
+        updated_on : moment().format('ll'),
+        updated_by : this.state.MainOrder.fld_customerid,
+        staffid : this.state.MainOrder.fld_staffid,    
+        vendorid : this.state.SelectedVendor,
+        shipvendorid : this.state.ShipAssignedTo != '' ? this.state.SelectedVendor : 0,
+        shippingname : this.state.MainOrder.fld_shippingname,
+        shippingstreet : this.state.MainOrder.fld_shippingstreet,
+        shippinglandmark : this.state.MainOrder.fld_shippinglandmark,
+        shippingcountry : this.state.MainOrder.fld_shippingcountry,
+        shippingstate : this.state.MainOrder.fld_shippingstate,
+        shippingcity : this.state.MainOrder.fld_shippingcity,
+        shippingpincode : this.state.MainOrder.fld_shippingpincode,
+        shippingmobile : this.state.MainOrder.fld_shippingmobile,
+        billingname : this.state.MainOrder.fld_billingname,
+        billingstreet : this.state.MainOrder.fld_billingstreet,
+        billinglandmark : this.state.MainOrder.fld_billinglandmark,
+        billingcountry : this.state.MainOrder.fld_billingcountry,
+        billingstate : this.state.MainOrder.fld_billingstate,
+        billingcity : this.state.MainOrder.fld_billingcity,
+        billingpincode : this.state.MainOrder.fld_billingpincode,
+        billingmobile : this.state.MainOrder.fld_billingmobile
+     
+     },"AddVendorOrder").then((results) => 
+     
+     // const objs = JSON.parse(result._bodyText)
+     results.json().then(obj => {
+     
+     
+     if(results.status == 200 || results.status==201){
+    
+    
+      PostApiCall.postRequest({
+        ordernumber : (JSON.parse(JSON.stringify(obj.data[0]))).OrderNumber,
+        cusordernumber : this.state.MainOrder.fld_ordernumber,
+        offerid : this.state.MainOrder.fld_offerid,
+        orderid : this.state.MainOrder.fld_orderid,
+        offeramount : sum*(parseFloat((this.state.MainOrder.fld_offerpercent)).toFixed())/100,
+        shippingcharges : shipcharge,
+        coddeliverycharges : codcharge,
+        orderdate : moment().format('ll'),
+        ordervalue : sum,
+        paymentmode : this.state.MainOrder.fld_paymentmode,
+        netcost : net,
+        numofitems : this.state.SelectedProduct.length,
+        customerid : this.state.MainOrder.fld_customerid,
+        billingaddress : this.state.MainOrder.fld_billingaddress,
+        deliveryaddress : this.state.MainOrder.fld_deliveryaddress,
+        ordersource :this.state.MainOrder.fld_ordersource,
+        status : 'New Order',
+        updated_on : moment().format('ll'),
+        updated_by : this.state.MainOrder.fld_customerid,
+        staffid : this.state.MainOrder.fld_staffid,    
+        vendoremail :  (JSON.parse(JSON.stringify(obj.data[0]))).VendorEmail,
+        vendorname : (JSON.parse(JSON.stringify(obj.data[0]))).VendorName,
+        vendoraddress : (JSON.parse(JSON.stringify(obj.data[0]))).VendorAddress,
+        vendorlandmark : (JSON.parse(JSON.stringify(obj.data[0]))).VendorLandmark,
+        vendorcountry :  (JSON.parse(JSON.stringify(obj.data[0]))).VendorCountry,
+        vendorstate :  (JSON.parse(JSON.stringify(obj.data[0]))).VendorState,
+        vendorcity :  (JSON.parse(JSON.stringify(obj.data[0]))).VendorCity,
+        vendorpincode :  (JSON.parse(JSON.stringify(obj.data[0]))).VendorPincode,
+    
+        shippingname : this.state.MainOrder.fld_shippingname,
+        shippingstreet : this.state.MainOrder.fld_shippingstreet,
+        shippinglandmark : this.state.MainOrder.fld_shippinglandmark,
+        shippingcountry : this.state.MainOrder.fld_shippingcountry,
+        shippingstate : this.state.MainOrder.fld_shippingstate,
+        shippingcity : this.state.MainOrder.fld_shippingcity,
+        shippingpincode : this.state.MainOrder.fld_shippingpincode,
+        shippingmobile : this.state.MainOrder.fld_shippingmobile,
+        billingname : this.state.MainOrder.fld_billingname,
+        billingstreet : this.state.MainOrder.fld_billingstreet,
+        billinglandmark : this.state.MainOrder.fld_billinglandmark,
+        billingcountry : this.state.MainOrder.fld_billingcountry,
+        billingstate : this.state.MainOrder.fld_billingstate,
+        billingcity : this.state.MainOrder.fld_billingcity,
+        billingpincode : this.state.MainOrder.fld_billingpincode,
+        billingmobile : this.state.MainOrder.fld_billingmobile,
+       orderdata : this.state.SelectedProduct
+        
+        },"VendorOrderMailer")
+    
+    
+ 
+        var cn =0 
+        for(var j =0 ;j<this.state.SelectedProduct.length;j++){
+  
+
+            PostApiCall.postRequest({
+        
+                vendororderid : JSON.parse(JSON.stringify(obj.data[0])).OrderId,
+                category : this.state.SelectedProduct[j].fld_category,
+                productid : this.state.SelectedProduct[j].fld_productid,
+                price : this.state.SelectedProduct[j].fld_price,
+                tax : this.state.SelectedProduct[j].fld_taxpercent,
+                quantity : this.state.SelectedProduct[j].fld_quantity,
+                updated_on : moment().format('lll'),
+                updated_by : this.state.MainOrder.fld_customerid,
+                status : 'New Order',
+                vendorid : this.state.SelectedVendor,
+                orderdetailid : this.state.SelectedProduct[j].fld_orderdetailid,
+                orderid : this.state.SelectedProduct[j].fld_orderid,
+                shipvendorid : this.state.ShipAssignedTo != '' ? this.state.SelectedVendor : 0,
+        
+        },"AddVendorOrderDetail").then((results1) => 
+        
+          // const objs = JSON.parse(result._bodyText)
+          results1.json().then(obj1 => {
+        
+        
+          if(results1.status == 200 || results1.status==201){
+        
+            cn = cn +1
+
+            if(cn == this.state.SelectedProduct.length){
+
+              Notiflix.Loading.Remove()
+    
+              Notiflix.Notify.Info('Order has been assigned to vendors.')
+              window.location.reload()
+
+            }
+        
+          }
+        }))
+        
+      
+    
+        }
+     
+    }
+  }))
+
+  }
 
     render()
     {
@@ -661,7 +912,7 @@ else
          Haryana - 121 001. INDIA.</p>
                                    <tr rowspan="8" class="success" style={{display:'table',width:'100%',  backgroundColor: '#f7f7f7'}}>
                                 <td colspan="8" style={{textAlign: 'right', paddingRight: '1%', fontWeight: 'bold', fontSize: '20px',}}>
-                                   Cutomer Order Form</td></tr></td>
+                                   Customer Order Form</td></tr></td>
                         </tr>
          
                               
@@ -715,6 +966,7 @@ else
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Net Weight</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Rate</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST %</span></td>
+              {/* <td style={{paddingTop: '1%', paddingBottom: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>GST Amount</span></td> */}
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Total (INR)</span></td>
               <td style={{padding: '1%',textAlign:'center'}}><span style={{fontWeight: 'bold'}}>Select Product & Assign Vendor</span></td>
               </tr>
@@ -731,6 +983,7 @@ else
     <td style={{width:'8%',padding: '5px'}}> {info.fld_productweight != undefined ? info.fld_productweight+" "+info.fld_productunit : '-'}</td>
     <td style={{width:'8%',padding: '5px',whiteSpace:'nowrap'}}>&#8377; {parseFloat(info.fld_price).toFixed(2)}</td>
     <td style={{width:'8%',padding: '5px',whiteSpace:'nowrap'}}>{info.fld_taxpercent}%</td>
+     {/* <td></td> */}
     <td style={{padding: '5px',whiteSpace:'nowrap'}}> &#8377; {parseFloat(info.fld_quantity*info.fld_price).toFixed(2)}</td>
      <td style={{width:'30%',padding: '5px'}}>
 
@@ -848,6 +1101,43 @@ else
                               </tr>
 
                             
+                              {/* <tr style={{width:'100%',display:'table'}}>
+                              <td  style={{textAlign: 'right', padding: '1%'}}><span style={{fontWeight: 'bold'}}>
+                              Select Vendor to assign Shipping & COD Charges</span></td><td style={{textAlign: 'right', paddingRight: '1%',width:'50%'}}>
+
+                              <select type="text" class="form-control" 
+                onChange={(text)=>{
+
+                  this.setState({
+                    ExtraChargeVendor : text.target.value
+                  })
+                 
+                }}
+                 >
+                   <option value={0}>Select Vendor</option>
+                {this.state.VendorSelectedData.map(
+                  company => (
+                    <option
+                    key={company.label}
+                    value={company.value}>
+                      {company.label}
+                    </option>
+                  )
+                )}
+               
+            </select>
+                                </td>
+                                
+                              </tr>
+                               */}
+                              {/* <tr style={{width:'100%',display:'table'}}>
+                          <td  style={{paddingTop: '1%', paddingBottom: '1%', textAlign: 'center'}}>Have a Question? Call us on 
+                          +91 90244 22444 or Email us at wecare@beatmysugar.com</td>
+                        </tr>
+                        <tr class="success" style={{width:'100%',display:'table'}}>
+                        <td style={{paddingTop: '1%', paddingBottom: '1%', textAlign: 'center',background : '#f7f7f7'}}>Visit
+                             us at <a href="https://www.beatmysugar.com/" style={{fontWeight:'600'}}>www.beatmysugar.com</a></td>
+                        </tr> */}
                           </td>
                         </tr>
          
@@ -968,6 +1258,7 @@ cellpadding="0">
             <div class="form-group mb-3">
 
                 <input type="checkbox"
+                // disabled={this.state.ShipAssignedTo != this.state.SelectedVendor && this.state.ShipAssignedTo != '' ? true : false}
                 checked={this.state.ShipAssignedTo == '' ? false : true}
               onChange={()=>{
                 if(this.state.ShipAssignedTo == ''){

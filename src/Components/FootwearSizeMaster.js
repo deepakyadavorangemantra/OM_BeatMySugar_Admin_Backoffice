@@ -31,6 +31,7 @@ class FootwearSizeMaster extends Component {
                     
                 FootwareSData : obj.data
               })
+              // console.log(obj.data)
                Notiflix.Loading.Remove()
             }))
     }
@@ -360,6 +361,7 @@ class FootwearSizeMaster extends Component {
                                         
                                             },"DeleteFootwareSizeMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -377,6 +379,7 @@ class FootwearSizeMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

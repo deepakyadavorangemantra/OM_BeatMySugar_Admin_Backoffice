@@ -124,6 +124,7 @@ class Doctors extends Component {
       
            var arr =[]
            const date2 = new Date();
+               // console.log(Math.abs(date2.getUTCFullYear() - 1930))
                arr.push({label : 'Select Year',value:'Select Year'})
            for(var i = 0 ; i <= Math.abs(date2.getUTCFullYear() - 1950) ;i++){
       
@@ -150,6 +151,7 @@ class Doctors extends Component {
                   })
                 }))
 
+        // Notiflix.Loading.Remove()
 
         var login=localStorage.getItem('LoginDetail');
         var details=JSON.parse(login)
@@ -160,10 +162,12 @@ class Doctors extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -217,6 +221,7 @@ class Doctors extends Component {
         var days = m.diff(d2, 'days');
       
         return years+" years "+months+" months"
+        // {years: years, months: months, days: days};
        }
 
       handleTitleChange = event =>{
@@ -238,6 +243,7 @@ class Doctors extends Component {
     StartDateOfPractice = event =>{
         this.props.setStartDateOfPractice(event.target.value)
   
+        // this.props.setOverallExperience(this.monthDiff(new Date(),new Date(event.target.value)))
     }
 
     handleStartDateOfPracticeChange = event =>{
@@ -343,12 +349,14 @@ class Doctors extends Component {
           if(this.props.Doc.DoctorName != ''){
               if(this.props.Doc.MedicalRegistrationId != ''){
                       if(this.props.Doc.StartDateOfPractice != ''){
+                        //   if(this.props.Doc.StartDateOfDiabetesPractice != ''){
                             if(this.state.Specialization.length > 0){
                             this.setState({
                                 PageTitle: '2',
                                 Page1: 'Done'
                             })
                         }else{Notiflix.Notify.Failure('Please select specialisation.')}
+                        //   }else{Notiflix.Notify.Failure('Please select start date of diabetes practice.')}
                       }else{Notiflix.Notify.Failure('Please select start date of practice')}
               }else{Notiflix.Notify.Failure('Please enter doctor'+"'"+'s medical registration ID.')}
           }else{Notiflix.Notify.Failure('Please enter doctor'+"'"+'s name.')}
@@ -360,6 +368,7 @@ class Doctors extends Component {
 
     handleExperienceChange = () =>{
                                     
+        // if(this.props.Doc.OverallExperience != ''){
             if(this.state.QualificationInfo.length >0 ){       
                                 this.setState({
                                 PageTitle : '3',
@@ -367,18 +376,23 @@ class Doctors extends Component {
                                 })
     
             }else{Notiflix.Notify.Failure('Add atleast one qualification.')}
+        // }else{Notiflix.Notify.Failure('Please enter Title.')}
             
           
     }
 
     handleQualification = () =>{
 
+            // if(this.state.CertificateData.length >0 ){   
                     this.setState({
                         PageTitle : '4',
                         Page3 : 'Done'
                     }) 
 
     
+                // }else{Notiflix.Notify.Failure('Add atleast one medical certificate.')}
+        //     }else{Notiflix.Notify.Failure('Please enter Institute.')}
+        // } else{Notiflix.Notify.Failure('Please enter Qualification.')}                                             
     }
 
 
@@ -406,6 +420,7 @@ class Doctors extends Component {
                                 })
                                 ).then(res => {
                           
+                                //  console.log(i)
 
                                  cert.push(res.data.Message.split(',')[2].split('=')[1].trim())
                           
@@ -415,6 +430,7 @@ class Doctors extends Component {
             
                                             this.UpdateCertificatePdf(cert,data,obj)
 
+                                            // Notiflix.Loading.Remove()
                     
                                         }
                                    
@@ -458,6 +474,7 @@ class Doctors extends Component {
 
                 this.OnConsentSubmit(obj)
 
+                // Notiflix.Loading.Remove()
 
             }
          }
@@ -520,6 +537,7 @@ class Doctors extends Component {
                             updatedon : moment().format('lll'),
                                   },"AddDoctorQualificationMapping").then((results) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(objs => {
                      
                          
@@ -556,6 +574,7 @@ class Doctors extends Component {
                 updatedon : moment().format('lll'),
                       },"AddDoctorSpecialisationMapping").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(objs => {
          
              
@@ -599,6 +618,7 @@ class Doctors extends Component {
                 updatedon : moment().format('lll'),
                       },"AddDoctorCertificateMapping").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj1 => {
          
              
@@ -768,6 +788,7 @@ class Doctors extends Component {
                              updatedon : moment().format('lll'),
                                   },"AddDoctor").then((results) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(obj => {
                      
                          
@@ -870,6 +891,10 @@ class Doctors extends Component {
                     CertificateData: arr2
                   })
                      
+                    // this.setState({
+                    //     Certificate : '',
+                    //   CertData: '',
+                    // })
                 }
                 else
                 {
@@ -1407,6 +1432,8 @@ class Doctors extends Component {
                                                                                         reader.onloadend = () => {
                                                                                           
                                                                                           this.setState({
+                                                                                            // file: file,
+                                                                                            // imagePreviewUrl: reader.result
                                                                                             CertData : file,
                                                                                             Certificate : file.name
                                                                                           });
@@ -1446,6 +1473,8 @@ class Doctors extends Component {
                                             }}>
                                                 <tr>
                                                     <th style={{borderRight : '1px solid #fff'}}>Certificate Name</th>
+                                                    {/* <th style={{borderRight : '1px solid #fff'}}>Institute</th>
+                                                    <th style={{borderRight : '1px solid #fff'}}>Completion Year</th> */}
                                                     <th>Action</th>
                                                    
                                                 </tr>
@@ -1847,7 +1876,23 @@ class Doctors extends Component {
                                                          </select> 
                                                     </div>
                                                 </div>
-                                              
+                                                {/* <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label for="validationCustom01">Approved<span className="mandatory">*</span></label><br/>
+                                                    <select type="text" class="form-control" 
+                                                    value = {this.props.Doc.Approval}
+                                                    onChange = {this.handleApprovalChange}
+                                                    required >
+                                                   {this.state.FlagData.map(title => (
+                           
+                                                        <option key={title.value} value={title.value}>
+                                                            {title.label}
+                                                        </option>
+                                                        ))}
+                                                    
+                                                </select>
+                                                    </div>
+                                            </div> */}
                                                        
                                                         </div>
                                                         

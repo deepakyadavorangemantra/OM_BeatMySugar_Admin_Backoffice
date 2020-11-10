@@ -57,7 +57,9 @@ const ImgUploadCover =({
    
       <input id="photo-upload" type="file" onChange={onChange}/> 
 
-      
+      {/* <XSquare class='product-img'
+       onClick={onCancel}
+       ></XSquare> */}
     </label>
 
 
@@ -188,10 +190,12 @@ class ViewBookVariant extends Component {
         var VariantData = JSON.parse(vardt)
 
 
+        // console.log(VariantData)
 
 
         this.props.setbooktype(VariantData.fld_typeid)
         this.props.setbooklanguage(VariantData.fld_languageid)
+        // this.props.setbooksize(VariantData.fld_)
         this.props.setbookweight(VariantData.fld_packageweight)
         this.props.setbookprice(VariantData.fld_price)
         this.props.setbookdiscount(VariantData.fld_discountpercent)
@@ -247,6 +251,7 @@ class ViewBookVariant extends Component {
         if(VariantData.VariantImage != null){
             for(var i = 0; i < VariantData.VariantImage.split('#').length ; i++){
 
+                // console.log(VariantData.VariantImage.split('#')[i])
                 if(i == 0){
 
                     this.setState({
@@ -256,6 +261,7 @@ class ViewBookVariant extends Component {
 
                     cn = cn +1
 
+                    // console.log((VariantData.VariantImage.split('#')[i].split('-').pop()).split('.')[0])
 
 
                     qua1[((VariantData.VariantImage.split('#')[i].split('-').pop()).split('.')[0])-1].image = VariantData.VariantImage.split('#')[i]
@@ -278,6 +284,7 @@ class ViewBookVariant extends Component {
 
         GetApiCall.getRequest("GetBookLanguageData").then(resultdes =>
             resultdes.json().then(objcategory =>{
+                // this.props.setbooklanguage(objcategory.data[0].value)
                 this.setState({
                     LanguageData:objcategory.data,
                 })
@@ -287,6 +294,7 @@ class ViewBookVariant extends Component {
 
             GetApiCall.getRequest("GetBookTypeData").then(resultdes =>
                 resultdes.json().then(objcategory =>{
+                    // this.props.setbooktype(objcategory.data[0].value)
                     this.setState({
                         TypeData:objcategory.data,
                     })
@@ -299,6 +307,7 @@ class ViewBookVariant extends Component {
                         this.setState({
                             VendorData:objcategory.data,
                         })
+                        // Notiflix.Loading.Remove()
         
                     }))
 
@@ -312,10 +321,12 @@ class ViewBookVariant extends Component {
                     
                       },"GetUserSubMenuAccessRights").then((resultssub) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         resultssub.json().then(objsub => {  
                         if(resultssub.status == 200 || resultssub.status==201){
             
                        var filteredRights = objsub.data;
+                            // console.log(filteredRights)
                     
                             var con = 0
                             for(var i = 0 ; i< filteredRights.length ;i++){
@@ -347,6 +358,8 @@ class ViewBookVariant extends Component {
             
                     }))
   
+                    // this.props.setbookspackweightunit(this.state.PackageMeasuretData[0].value)
+                    // this.props.setbookspackunit(this.state.PackageMeasureUnitData[0].value)
         
     
 
@@ -397,6 +410,7 @@ class ViewBookVariant extends Component {
      
       
       nextlabel(){
+        //  if(this.props.bookcredential.BookSKU!=''){
      
         
                     this.setState({
@@ -404,6 +418,9 @@ class ViewBookVariant extends Component {
                         Page1: 'Done'
                     })
     
+        //          } else{
+        //     Notiflix.Notify.Failure('Please enter item SKU of BeatMySugar.')
+        //  }
       }
 
 
@@ -667,6 +684,7 @@ onChangeMeta(metadescription){
        
     }
     nextlabel6(){
+        // console.log(this.state.VendorPricing)
         if(this.state.VendorPricing.length > 0){
 
                     this.setState({
@@ -690,6 +708,7 @@ onChangeMeta(metadescription){
         var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
+  // console.log(this.state.imagedata != '')
   if(this.state.ImageCoverData != ''){
 
     
@@ -710,6 +729,7 @@ onChangeMeta(metadescription){
     })
     ).then(res => {
    
+      // console.log(obj.data[0])
 
       PostApiCall.postRequest({
 
@@ -721,6 +741,7 @@ onChangeMeta(metadescription){
  
      },"AddBookVariantImage").then((results1) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results1.json().then(obj1 => {
  
      
@@ -747,10 +768,12 @@ onChangeMeta(metadescription){
  
      },"AddBookVariantImage").then((results1) => 
      
+       // const objs = JSON.parse(result._bodyText)
        results1.json().then(obj1 => {
  
      
        if(results1.status == 200 || results1.status==201){
+  // console.log('in no cover')
   this.OnAddProductImages(obj)
        }
 }))
@@ -769,12 +792,15 @@ onChangeMeta(metadescription){
       
         for(var i =0 ; i <this.state.Photos.length;i++){
       
+          // console.log(this.state.Photos)
         
       
           if(this.state.Photos[i].value != ''){
       
             const form1 = new FormData();
       
+            // console.log(this.state.Photos[i].data)
+         
         form1.append('file', this.state.Photos[i].data);
         form1.append('foldername' , 'Book')
         form1.append('filename' , this.state.SKU+'-'+(JSON.parse(JSON.stringify(obj.data[0]))).VariantId+'-'+(i+1))
@@ -790,6 +816,7 @@ onChangeMeta(metadescription){
         status: image1.status
         })
         ).then(res1 => {
+        // console.log(res.data)
       
       
           PostApiCall.postRequest({
@@ -802,6 +829,7 @@ onChangeMeta(metadescription){
       
          },"AddBookVariantImage").then((results2) => 
          
+           // const objs = JSON.parse(result._bodyText)
            results2.json().then(obj2 => {
       
          
@@ -837,6 +865,7 @@ onChangeMeta(metadescription){
               
                  },"DeleteBookVariantImage").then((results2) => 
                  
+                   // const objs = JSON.parse(result._bodyText)
                    results2.json().then(obj2 => {
               
                  
@@ -871,6 +900,7 @@ onChangeMeta(metadescription){
               
                  },"AddBookVariantImage").then((results2) => 
                  
+                   // const objs = JSON.parse(result._bodyText)
                    results2.json().then(obj2 => {
               
                  
@@ -926,6 +956,7 @@ onChangeMeta(metadescription){
 
    },"AddBookVariantVendorPricing").then((results3) => 
    
+     // const objs = JSON.parse(result._bodyText)
      results3.json().then(obj3 => {
 
    
@@ -987,6 +1018,7 @@ onChangeMeta(metadescription){
                          updatedon : moment().format('lll'),
                               },"UpdateBookVariant").then((results) => 
                      
+                        // const objs = JSON.parse(result._bodyText)
                         results.json().then(obj => {
                  
                      
@@ -1022,6 +1054,7 @@ onChangeMeta(metadescription){
             if(this.state.Sku != ''){
                 if(this.state.MarginOn != ''){
                     if(this.state.VendorSellingPrice != 0){
+            //   if(this.state.MarginPercent != ''){
                
                 var dt = this.state.VendorPricing.filter((value)=> value.Name == this.state.Name)
     
@@ -1063,6 +1096,10 @@ onChangeMeta(metadescription){
                     
     
                   
+            //   }else
+            //   {
+            //     Notiflix.Notify.Failure('Please enter margin percent.');
+            //   }
             }else
             {
               Notiflix.Notify.Failure('Please enter vendor selling price.');
@@ -1109,6 +1146,7 @@ onChangeMeta(metadescription){
           
               },"UpdateBookVariantApprovalStatus").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {
     
                 if(results.status == 200 || results.status==201){
@@ -1126,6 +1164,7 @@ onChangeMeta(metadescription){
                   },
                   {
                     label: 'No',
+                    // onClick: () => alert('Click No')
                   }
                 ]
               });
@@ -1182,6 +1221,8 @@ onChangeMeta(metadescription){
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Book Variant Details</button>
                                                 </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
                   
                                     </div>
                                 </div>
@@ -1290,7 +1331,14 @@ onChangeMeta(metadescription){
                                                             <div class="toast-body">
                                                                 <div class="row">
                                                                    
-                                                                 
+                                                                   {/* <div class="col-md-6">
+                                                                        <div class="form-group mb-3">
+                                                                            <label for="validationCustom01">Item SKU[BMS]<span className="mandatory">*</span></label>
+                                                                            <input type="text" class="form-control"
+                                                                            value={this.props.bookcredential.BookSKU}
+                                                                            onChange={this.onChangeSKU.bind(this)}  />
+                                                                        </div>
+                                                                    </div> */}
                                                                     <div class="col-md-6">
                                                                         <div class="form-group mb-3">
                                                                             <label for="validationCustom01">Book Type<span className="mandatory">*</span></label>
@@ -1338,6 +1386,13 @@ onChangeMeta(metadescription){
 
                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                        // onClick={() => {
+
+                                                                        //     this.setState({
+                                                                        //         PageTitle: '2',
+                                                                        //         Page1: 'Done'
+                                                                        //     })
+                                                                        // }}
                                                                        onClick={this.nextlabel.bind(this)} >Next</button>
                                                                     </div>
                                                                 </div>
@@ -1475,6 +1530,13 @@ onChangeMeta(metadescription){
                                                                           }}
                                                                        >Previous</button>
                                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                    //    onClick={()=>{
+                                                                         
+                                                                    //      this.setState({
+                                                                    //          PageTitle : '3',
+                                                                    //          Page2 : 'Done'
+                                                                    //      })
+                                                                    //    }}
                                                                        onClick={this.nextlabel2.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1547,6 +1609,13 @@ onChangeMeta(metadescription){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1577,6 +1646,7 @@ onChangeMeta(metadescription){
                                                         <div class="col-md-9 ">
                                                         <label for="sw-arrows-first-name" >Product Image<span className="mandatory">*</span></label>
         
+                                                        {/* <div class="form-group"> */}
                                                          <div class="div1" class='row'>
                                                          {this.state.Photos.map((photo,index)=>(  
                                                               <div style={{    marginLeft: '1%',    marginRight: '2%'}}>   
@@ -1602,16 +1672,21 @@ onChangeMeta(metadescription){
                                                                         <input id="photo-upload" 
                                                                          disabled={!this.state.IsVisible}
                                                                         type="file" onChange={(e)=>{
+                                                                  //  e.preventDefault();
+                                                                  //  console.log(e.target.files[0])
                                                                    if(e.target.files[0] != undefined){
                                                                      if(e.target.files[0].size < 300000){
                                                                       var arr2 = [...this.state.Photos]
                                                                  const reader = new FileReader();
                                                                    const file = e.target.files[0];
                                                                    reader.onload = (e) => {
+                                                                    // console.log(e.target.result)
+                                                                    // this.setState({image: e.target.result});
                                                                     arr2[index].image =  e.target.result
                                                                     arr2[index].value =  e.target.result
                                                                     arr2[index].data =  file
                                                                     
+                                                                    // this.props.setstaffimage(e.target.result);
                                                                     this.setState({
                                                                       Photos : arr2,
                                                                       imageCount : this.state.imageCount + 1
@@ -1629,6 +1704,7 @@ onChangeMeta(metadescription){
                                                                
                                                            </div>
                                                             ))}
+                                                                 {/* </div> */}
                                                          </div>
                                                         </div>
                                                           
@@ -1657,6 +1733,13 @@ onChangeMeta(metadescription){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel4.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1725,6 +1808,13 @@ onChangeMeta(metadescription){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel5.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -1784,9 +1874,11 @@ onChangeMeta(metadescription){
                                                                           disabled={!this.state.IsVisible}
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
                                                                                   Sku : text.target.value
                                                                               })
+                                                                            // }
 
                                                                           }}></input>
                                                                     </div>
@@ -2047,6 +2139,13 @@ onChangeMeta(metadescription){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                              onClick={this.nextlabel6.bind(this)} >Next</button>
                                                                         </div>
                                                                     </div>
@@ -2107,7 +2206,18 @@ onChangeMeta(metadescription){
                                                                     }}/> No
                                                             </label> 
                                                         </div>
-                                                     
+                                                      {/* <div class="col-md-12">
+                                                            <div class="form-group mb-3">
+                                                                <label for="validationCustom01">Approval<span className="mandatory">*</span></label>
+                                                                <select type="text" class="form-control" 
+                                                                value={this.props.bookcredential.Approval}
+                                                                onChange={this.onChangeApprove.bind(this)}>
+                                                                <option>Yes</option>
+                                                                <option>No</option>
+                                                                
+                                                            </select>
+                                                            </div>
+                                                                            </div>*/}
                                                         
                                                             </div>
                                                             
@@ -2132,6 +2242,13 @@ onChangeMeta(metadescription){
                                                                         >Previous</button>
                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left"
                                                                          disabled={!this.state.IsVisible}
+                                                                        //  onClick={()=>{
+                                                   
+                                                                        //     this.setState({
+                                                                        //         PageTitle : '5',
+                                                                        //         Page5 : 'Done'
+                                                                        //     })
+                                                                        //   }}
                                                                           onClick={this.Savebookvariant.bind(this)}>Update Book Variant</button>
                                                                     </div>
                                                                 </div>

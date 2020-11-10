@@ -60,6 +60,7 @@ class Login extends React.Component {
                      actiondate :moment().format('lll')
                   },"AuthenticateStaff").then((results) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
               
                   
@@ -92,6 +93,49 @@ class Login extends React.Component {
 
     }
 
+
+    ForgotPasswordClicked(){
+console.log('clicked')
+        if(this.props.loginCredentials.Username!=''){
+            if(this.state.EmailRegex.test(this.props.loginCredentials.Username)){
+                Notiflix.Loading.Dots('');
+
+                PostApiCall.postRequest({
+  
+                    email : this.props.loginCredentials.Username,
+                    updatedby :1,
+                    updatedon :moment().format('lll')
+                  },"ForgotPasswordStaff").then((results) => 
+                  
+                    // const objs = JSON.parse(result._bodyText)
+                    results.json().then(obj => {
+              
+                  
+                    if(results.status == 200 || results.status==201){
+                        
+                      
+                         Notiflix.Loading.Remove()
+                        Notiflix.Report.Info('Password Sent','Your new password has been sent to your email address, Kindly login via new password.','Ok')
+                    }
+                    else{
+                        Notiflix.Loading.Remove()
+                        Notiflix.Notify.Failure(obj.data)
+                    }
+                }
+                    )
+                  )
+                  
+        
+        }
+        else{
+            Notiflix.Notify.Failure('Please enter valid email address.');
+        }
+        }else
+        {
+            Notiflix.Notify.Failure('Please enter your email address.');
+        }
+
+    }
     render(){
         return(
             <div className="App">
@@ -135,7 +179,12 @@ class Login extends React.Component {
 
                                         <div class="form-group mt-4">
                                             <label class="form-control-label">Password</label>
-                                            <a href="pages-recoverpw.html" class="float-right text-muted text-unline-dashed ml-1">Forgot your password?</a>
+
+                                            <a 
+                                            style={{cursor : 'pointer'}}
+                                            onClick={this.ForgotPasswordClicked.bind(this)}
+
+                                            class="float-right text-muted text-unline-dashed ml-1">Forgot your password?</a>
                                             <div class="input-group input-group-merge">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">

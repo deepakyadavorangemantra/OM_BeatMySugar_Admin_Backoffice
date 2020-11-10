@@ -35,6 +35,8 @@ class Food extends Component {
             Page4 : 'Pending',
             Page5 : 'Pending',
             Page6 : 'Pending',
+        //       FilterData:[{'label':'Mithai','value' : 'Mithai'},{'label':'Sour','value' : 'Sour'},{'label':'Mango','value' : 'Mango'},{'label':'Grapes','value' : 'Grapes'}
+        // ],
         DecimalRegex : /^(\d*\.?\d{0,2}|\.\d{0,9})$/,
         NumRegex: /^[0-9]*$/,
         AlphaNumericRegex : /^[a-zA-Z0-9]*$/,
@@ -131,6 +133,7 @@ class Food extends Component {
                     }))
                     GetApiCall.getRequest("GetFoodFlavourData").then(resultdes =>
                      resultdes.json().then(objflavour =>{
+                        //  this.props.setfooditemflavor(objflavour.data[0].value);
                             this.setState({
                                 Flavourdata:objflavour.data,
                             })
@@ -141,6 +144,7 @@ class Food extends Component {
                                 this.setState({
                                     GSTData:objGst.data,
                                 })
+                                // Notiflix.Loading.Remove()
                             }))
                             GetApiCall.getRequest("GetCompany").then(resultdes =>
                                 resultdes.json().then(objcompany =>{
@@ -159,6 +163,7 @@ class Food extends Component {
                           
                                           this.setState({
                                             CountryOrigindata : obj.data ,
+                                            // CountryOfOrigin : FoodData.fld_countryoforigin == null || FoodData.fld_countryoforigin == '' ? 'India' : FoodData.fld_countryoforigin
                                            
                                           })
 
@@ -176,10 +181,12 @@ class Food extends Component {
                   
                     },"GetUserSubMenuAccessRights").then((resultssub) => 
                     
+                      // const objs = JSON.parse(result._bodyText)
                       resultssub.json().then(objsub => {  
                       if(resultssub.status == 200 || resultssub.status==201){
           
                      var filteredRights = objsub.data;
+                          // console.log(filteredRights)
                   
                           var con = 0
                           for(var i = 0 ; i< filteredRights.length ;i++){
@@ -217,6 +224,7 @@ class Food extends Component {
          this.props.setfoodcompany(companyname.target.value)
       }
       onChangeManufact(manufactureName){
+        //   console.log(manufactureName.target.value)
          this.props.setfoodmanufacture(manufactureName.target.value)
       }
       onchangemark(marketername){
@@ -355,6 +363,7 @@ SaveProduct(){
                   if(this.props.foodcredential.HSNCode!=''){
                     if(this.state.AddAccess){
                            
+                        // console.log(this.props.foodcredential)
                      
                         var login=localStorage.getItem('LoginDetail');
                          var details=JSON.parse(login)
@@ -385,6 +394,7 @@ SaveProduct(){
                       
                           },"AddFoodItemMaster").then((results) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(obj => {
                       
                           
@@ -401,6 +411,7 @@ SaveProduct(){
                                      
                                    },"AddFoodItemMaster_FilterMapping").then((results) => 
                                    
+                                     // const objs = JSON.parse(result._bodyText)
                                      results.json().then(obj => {
                                
                                    
@@ -646,6 +657,7 @@ SaveProduct(){
                                                                             <label for="sw-arrows-first-name" >Country of Origin <span className="mandatory">*</span></label>
                                                                             
                                                                             <select class="form-control custom-select"
+                                                                            //  disabled={!this.state.IsVisible}
                                                                             value={this.state.CountryOfOrigin}
                                                                             onChange={(text)=>{
 
@@ -685,6 +697,13 @@ SaveProduct(){
         
                                                                                 <button className="btn btn-secondary sw-btn-prev btn-radius-right" disabled={true}  >Previous</button>
                                                                                 <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                                // onClick={() => {
+        
+                                                                                //     this.setState({
+                                                                                //         PageTitle: '2',
+                                                                                //         Page1: 'Done'
+                                                                                //     })
+                                                                                // }}
                                                                                 onClick={this.nextlabel.bind(this)}>Next</button>
                                                                             </div>
                                                                         </div>
@@ -750,6 +769,13 @@ SaveProduct(){
                                                                       }}
                                                                    >Previous</button>
                                                                    <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                //    onClick={()=>{
+                                                                     
+                                                                //      this.setState({
+                                                                //          PageTitle : '3',
+                                                                //          Page2 : 'Done'
+                                                                //      })
+                                                                //    }}
                                                                    onClick={this.nextlabel2.bind(this)}>Next</button>
                                                                     </div>
                                                                 </div>
@@ -806,6 +832,13 @@ SaveProduct(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            // onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '4',
+                                                                            //         Page3 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.nextlabel3.bind(this)}>Next</button>
                                                                         </div>
                                                                     </div>
@@ -911,6 +944,13 @@ SaveProduct(){
                                                                                 }}
                                                                             >Previous</button>
                                                                             <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                            //  onClick={()=>{
+                                                       
+                                                                            //     this.setState({
+                                                                            //         PageTitle : '5',
+                                                                            //         Page4 : 'Done'
+                                                                            //     })
+                                                                            //   }}
                                                                               onClick={this.SaveProduct.bind(this)}>Add Food Item</button>
                                                                         </div>
                                                                     </div>

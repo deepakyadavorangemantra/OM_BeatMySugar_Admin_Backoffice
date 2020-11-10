@@ -132,6 +132,7 @@ class DoctorView extends Component {
            var det = localStorage.getItem('DoctorDetails')
            var DocData = JSON.parse(det)
 
+        //    console.log(DocData.Specialisation)
 
            new Promise( ( resolve, reject ) => {
             setTimeout( resolve, 1000 );
@@ -231,6 +232,7 @@ class DoctorView extends Component {
       
            var arr1 =[]
            const date2 = new Date();
+               // console.log(Math.abs(date2.getUTCFullYear() - 1930))
                arr1.push({label : 'Select Year',value:'Select Year'})
            for(var i = 0 ; i <= Math.abs(date2.getUTCFullYear() - 1950) ;i++){
       
@@ -257,6 +259,7 @@ class DoctorView extends Component {
                   })
                 }))
 
+        // Notiflix.Loading.Remove()
 
 
         var login=localStorage.getItem('LoginDetail');
@@ -268,10 +271,12 @@ class DoctorView extends Component {
         
           },"GetUserSubMenuAccessRights").then((resultssub) => 
           
+            // const objs = JSON.parse(result._bodyText)
             resultssub.json().then(objsub => {  
             if(resultssub.status == 200 || resultssub.status==201){
 
            var filteredRights = objsub.data;
+                // console.log(filteredRights)
         
                 var con = 0
                 for(var i = 0 ; i< filteredRights.length ;i++){
@@ -354,6 +359,7 @@ class DoctorView extends Component {
     StartDateOfPractice = event =>{
         this.props.setStartDateOfPractice(event.target.value)
   
+        // this.props.setOverallExperience(this.monthDiff(new Date(),new Date(event.target.value)))
     }
 
     handleStartDateOfPracticeChange = event =>{
@@ -460,12 +466,14 @@ class DoctorView extends Component {
           if(this.props.Doc.DoctorName != ''){
               if(this.props.Doc.MedicalRegistrationId != ''){
                       if(this.props.Doc.StartDateOfPractice != ''){
+                        //   if(this.props.Doc.StartDateOfDiabetesPractice != ''){
                             if(this.state.Specialization.length > 0){
                             this.setState({
                                 PageTitle: '2',
                                 Page1: 'Done'
                             })
                         }else{Notiflix.Notify.Failure('Please select specialisation.')}
+                        //   }else{Notiflix.Notify.Failure('Please select start date of diabetes practice.')}
                       }else{Notiflix.Notify.Failure('Please select start date of practice')}
               }else{Notiflix.Notify.Failure('Please enter doctor'+"'"+'s medical registration ID.')}
           }else{Notiflix.Notify.Failure('Please enter doctor'+"'"+'s name.')}
@@ -477,6 +485,7 @@ class DoctorView extends Component {
 
     handleExperienceChange = () =>{
                                     
+        // if(this.props.Doc.OverallExperience != ''){
             if(this.state.QualificationInfo.length >0 ){       
                                 this.setState({
                                 PageTitle : '3',
@@ -484,17 +493,22 @@ class DoctorView extends Component {
                                 })
     
             }else{Notiflix.Notify.Failure('Add atleast one qualification.')}
+        // }else{Notiflix.Notify.Failure('Please enter Title.')}
             
           
     }
 
     handleQualification = () =>{
 
+            // if(this.state.CertificateData.length >0 ){   
                     this.setState({
                         PageTitle : '4',
                         Page3 : 'Done'
                     })
     
+                // }else{Notiflix.Notify.Failure('Add atleast one medical certificate.')}
+        //     }else{Notiflix.Notify.Failure('Please enter Institute.')}
+        // } else{Notiflix.Notify.Failure('Please enter Qualification.')}                                             
     }
 
 
@@ -522,6 +536,7 @@ class DoctorView extends Component {
                                 })
                                 ).then(res => {
                           
+                                //  console.log(i)
 
                                  cert.push(res.data.Message.split(',')[2].split('=')[1].trim())
                           
@@ -531,6 +546,7 @@ class DoctorView extends Component {
             
                                             this.UpdateCertificatePdf(cert,data,obj)
 
+                                            // Notiflix.Loading.Remove()
                     
                                         }
                                    
@@ -574,6 +590,7 @@ class DoctorView extends Component {
 
                 this.OnConsentSubmit(obj)
 
+                // Notiflix.Loading.Remove()
 
             }
          }
@@ -617,6 +634,7 @@ class DoctorView extends Component {
 
     OnQualificationSubmit(obj){
 
+        // console.log(this.state.QualificationInfo)
 
         var login=localStorage.getItem('LoginDetail');
                     var details=JSON.parse(login)
@@ -639,6 +657,7 @@ class DoctorView extends Component {
                             updatedon : moment().format('lll'),
                                   },"AddDoctorQualificationMapping").then((results) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(objs => {
                      
                          
@@ -675,6 +694,7 @@ class DoctorView extends Component {
                 updatedon : moment().format('lll'),
                       },"AddDoctorSpecialisationMapping").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(objs => {
          
              
@@ -707,6 +727,7 @@ class DoctorView extends Component {
                 certificate : this.state.DeletedCertificate[i]
                       },"DeleteDoctorCertificate").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj1 => {
          
                 if(results.status == 200 || results.status==201){
@@ -716,6 +737,7 @@ class DoctorView extends Component {
                     {
 
                         this.OnFilterCertificate(obj)
+                        // this.OnCertificateSubmit(obj)
                     }
 
                 }
@@ -725,6 +747,7 @@ class DoctorView extends Component {
         }
     }
     else{
+        // this.OnCertificateSubmit(obj)
         this.OnFilterCertificate(obj)
     }
 
@@ -733,6 +756,7 @@ class DoctorView extends Component {
     OnFilterCertificate(obj){
 
         var dt = [...this.state.CertificateData]
+        // console.log(dt)
         var count = 0
         for(var i = 0 ;i < this.state.CertificateData.length;i++)
         { 
@@ -742,6 +766,7 @@ class DoctorView extends Component {
               
                 count = count + 1
                 
+                // dt.splice(i,1)
                 dt[i] = false
                
                
@@ -757,6 +782,7 @@ class DoctorView extends Component {
                 CertificateData : dt.filter(Boolean)
             })
             
+            // console.log(dt.filter(Boolean))
             this.OnCertificateSubmit(obj)
         }
 
@@ -789,6 +815,7 @@ class DoctorView extends Component {
                 updatedon : moment().format('lll'),
                       },"AddDoctorCertificateMapping").then((results) => 
              
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj1 => {
          
              
@@ -982,6 +1009,7 @@ else{
                              updatedon : moment().format('lll'),
                                   },"UpdateDoctor").then((results) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results.json().then(obj => {
                      
                          
@@ -1078,6 +1106,10 @@ else{
                     CertificateData: arr2
                   })
                      
+                    // this.setState({
+                    //     Certificate : '',
+                    //   CertData: '',
+                    // })
                 }
                 else
                 {
@@ -1118,6 +1150,7 @@ else{
           
               },"UpdateDoctorApprovalStatus").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {
     
                 if(results.status == 200 || results.status==201){
@@ -1135,6 +1168,7 @@ else{
                   },
                   {
                     label: 'No',
+                    // onClick: () => alert('Click No')
                   }
                 ]
               });
@@ -1190,6 +1224,8 @@ else{
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Doctor Details</button>
                                                 </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
                   
                                     </div>
                                 </div>
@@ -1753,6 +1789,8 @@ else{
                                             }}>
                                                 <tr>
                                                     <th style={{borderRight : '1px solid #fff'}}>Certificate Name</th>
+                                                    {/* <th style={{borderRight : '1px solid #fff'}}>Institute</th>
+                                                    <th style={{borderRight : '1px solid #fff'}}>Completion Year</th> */}
                                                     <th>Action</th>
                                                    
                                                 </tr>

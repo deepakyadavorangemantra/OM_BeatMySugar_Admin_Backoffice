@@ -396,6 +396,7 @@ class BooksCategoryMaster extends Component {
                                         
                                             },"DeleteBookCategoryMaster").then((results) => 
                                             
+                                              // const objs = JSON.parse(result._bodyText)
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
@@ -413,6 +414,7 @@ class BooksCategoryMaster extends Component {
                                                 },
                                                 {
                                                   label: 'No',
+                                                  // onClick: () => alert('Click No')
                                                 }
                                               ]
                                             });

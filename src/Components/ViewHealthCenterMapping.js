@@ -78,6 +78,7 @@ class ViewHealthCenterMapping extends Component {
         var det = localStorage.getItem('MapDetails')
         var DocData = JSON.parse(det)
 
+        // console.log(DocData)
         this.setState({
             Data : DocData
         })
@@ -125,6 +126,7 @@ class ViewHealthCenterMapping extends Component {
                                 this.setState({
                                     TimingInfo : artm
                                 })
+                                // console.log(artm)
                             }
 
 
@@ -142,11 +144,13 @@ class ViewHealthCenterMapping extends Component {
         GetApiCall.getRequest("GetHealthCenterData").then(resultdes =>
             resultdes.json().then(obj => {
            
+            // console.log(obj.data)
             
               this.setState({
                   CenterData : obj.data
               })
 
+            //   Notiflix.Loading.Remove();
             }))
 
 
@@ -160,10 +164,12 @@ class ViewHealthCenterMapping extends Component {
             
               },"GetUserSubMenuAccessRights").then((resultssub) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 resultssub.json().then(objsub => {  
                 if(resultssub.status == 200 || resultssub.status==201){
     
                var filteredRights = objsub.data;
+                    // console.log(filteredRights)
             
                     var con = 0
                     for(var i = 0 ; i< filteredRights.length ;i++){
@@ -208,6 +214,7 @@ class ViewHealthCenterMapping extends Component {
             for(var i =0 ; i<time.length;i++){
                 if(time[i].open == undefined || time[i].close == undefined){
 
+                    // Notiflix.Notify.Failure('Please select opening & closing timings for health center.')
                     cn = 1
                 }
 
@@ -216,6 +223,11 @@ class ViewHealthCenterMapping extends Component {
                 Notiflix.Notify.Failure('Please select opening & closing timings for health center for seleted days.')
             }else
             {
+        //       this.setState({
+        //           FinalTime : time,
+        //     PageTitle : '5',
+        //     Page4 : 'Done'
+        // })
           
         this.setState({
             PageTitle : '2',
@@ -237,6 +249,7 @@ class ViewHealthCenterMapping extends Component {
                             healthcenterid : this.state.CenterName,
                                   },"DeleteHealthCenterDietitianMapping").then((results1) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results1.json().then(objs => {
                      
                          
@@ -262,6 +275,7 @@ class ViewHealthCenterMapping extends Component {
                                 updatedon : moment().format('lll'),
                                       },"AddHealthCenterDietitianMapping").then((results) => 
                              
+                                // const objs = JSON.parse(result._bodyText)
                                 results.json().then(objs => {
                          
                              
@@ -287,6 +301,7 @@ class ViewHealthCenterMapping extends Component {
                     {
 
                        
+                        // console.log(this.state.time)
                         Notiflix.Loading.Dots('');
 
 
@@ -296,6 +311,7 @@ class ViewHealthCenterMapping extends Component {
                             healthcenterid : this.state.CenterName,
                                   },"DeleteHealthCenterDoctorMapping").then((results1) => 
                          
+                            // const objs = JSON.parse(result._bodyText)
                             results1.json().then(objs => {
                      
                          
@@ -319,6 +335,7 @@ class ViewHealthCenterMapping extends Component {
                                 updatedon : moment().format('lll'),
                                       },"AddHealthCenterDoctorMapping").then((results) => 
                              
+                                // const objs = JSON.parse(result._bodyText)
                                 results.json().then(objs => {
                          
                              
@@ -395,6 +412,8 @@ class ViewHealthCenterMapping extends Component {
                                         class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
                                                 class="uil-edit mr-1"></i>Edit Mapping Details</button>
                                                 </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
                   
                                     </div>
                                 </div>
@@ -614,8 +633,10 @@ class ViewHealthCenterMapping extends Component {
                                                 <td>{data.day}</td>
                                                 <td> <TimePicker
                                                 disabled={!data.edit}
+                                                // value={this.state.TimingInfo[index].open}
                                                 value={this.state.TimingInfo[index].open == undefined ? '' : moment(this.state.TimingInfo[index].open)}
                                                         showSecond={false}
+                                                        // format={format}
                                                         use12Hours
                                                         inputReadOnly
                                                         onChange ={(value)=>{
@@ -623,6 +644,7 @@ class ViewHealthCenterMapping extends Component {
                                                        
                                                             var arr = [...this.state.TimingInfo]
 
+                                                            // console.log(arr[index].day)
                                                             arr[index].open = value 
                                                       
                                                             this.setState({
@@ -637,6 +659,7 @@ class ViewHealthCenterMapping extends Component {
                                                  disabled={!data.edit}
                                                  value={this.state.TimingInfo[index].close == undefined ? '' : moment(this.state.TimingInfo[index].close)}
                                                 showSecond={false}
+                                                // format={format}
                                                 use12Hours
                                                 inputReadOnly
                                                 onChange ={(value)=>{
@@ -666,16 +689,21 @@ class ViewHealthCenterMapping extends Component {
                                                          disabled={!data.edit}
                                                         value={this.state.TimingInfo[index].open1 == undefined ? '' : moment(this.state.TimingInfo[index].open1)}
                                                      showSecond={false}
+                                                    //  format={format}
                                                      use12Hours
+                                                    //  inputReadOnly
                                                      onChange ={(value)=>{
                                                        
                                                         var arr = [...this.state.TimingInfo]
 
+                                                        // console.log(value >= arr[index].open)
 
                                                         if(value >= arr[index].open && value <= arr[index].close){
                                                             Notiflix.Notify.Failure('Time slot already booked for the day.')
                                                         }else
                                                         {
+                                                            // console.log(value && value.format(format))
+                                                            // console.log(arr[index].open1)
                                                             arr[index].open1 = value 
                                                    
                                                             this.setState({
@@ -695,6 +723,7 @@ class ViewHealthCenterMapping extends Component {
                                 
                                                      disabled={!data.edit}
                                                   showSecond={false}
+                                                //   format={format}
                                                   use12Hours
                                                   inputReadOnly
                                                   onChange ={(value)=>{

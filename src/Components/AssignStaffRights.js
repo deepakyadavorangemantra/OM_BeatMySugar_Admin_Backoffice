@@ -39,12 +39,14 @@ class AssignStaffRights extends React.Component {
               })
 
 
+            //   Notiflix.Loading.Remove();
             }))
 
 
             var user=localStorage.getItem('AssignUserRightsData');
             var details=JSON.parse(user)
 
+            // console.log(details)
                    this.setState({
                 UserData : details
               })
@@ -55,9 +57,11 @@ class AssignStaffRights extends React.Component {
             
               },"GetUserMenuList").then((results) => 
               
+                // const objs = JSON.parse(result._bodyText)
                 results.json().then(obj => {  
                 if(results.status == 200 || results.status==201){
             
+                    // console.log(obj.data)
                     this.setState({
                         MenuRights : obj.data
                     })
@@ -69,9 +73,11 @@ class AssignStaffRights extends React.Component {
                     
                       },"GetUserSubMenuList").then((resultssub) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         resultssub.json().then(objsub => {  
                         if(resultssub.status == 200 || resultssub.status==201){
 
+                            // console.log(objsub.data)
 
                             var data = []
                             var arr = new Array(Object.keys(obj.data).length).fill([])
@@ -84,6 +90,7 @@ class AssignStaffRights extends React.Component {
             
                                         data.push(objsub.data[j])
                                         arr[i] = data
+                                        // console.log(arr)
                                         this.setState({
                                             SubMenuRights : arr
                                         })
@@ -94,6 +101,7 @@ class AssignStaffRights extends React.Component {
             
                                 }
                                 if(i == Object.keys(obj.data).length - 1){
+                                    // localStorage.setItem('SubMenuRights',JSON.stringify(arr))
                                     Notiflix.Loading.Remove()
                                 }
             
@@ -111,6 +119,8 @@ class AssignStaffRights extends React.Component {
 
 
     OnUpdateRights(){
+        // console.log(this.state.MenuRights)
+        // console.log(this.state.SubMenuRights)
         Notiflix.Loading.Dots('');
         var count = 0
 
@@ -123,6 +133,7 @@ class AssignStaffRights extends React.Component {
             
               },"UpdateMenuRights").then((resultssub) => 
                       
+              // const objs = JSON.parse(result._bodyText)
               resultssub.json().then(objsub => {  
               if(resultssub.status == 200 || resultssub.status==201){
               }
@@ -133,6 +144,7 @@ class AssignStaffRights extends React.Component {
 
             for(var j = 0; j< this.state.SubMenuRights[i].length ;j++){
 
+                // console.log(this.state.SubMenuRights[i][j])
                   PostApiCall.postRequest({
   
                 submenurightid : this.state.SubMenuRights[i][j].fld_submenurightid,
@@ -141,6 +153,7 @@ class AssignStaffRights extends React.Component {
               },"UpdateSubMenuRights")
               .then((resultssub) => 
                       
+                        // const objs = JSON.parse(result._bodyText)
                         resultssub.json().then(objsub => {  
                         if(resultssub.status == 200 || resultssub.status==201){
 
@@ -246,6 +259,7 @@ class AssignStaffRights extends React.Component {
                
                         
                         <div className="col-lg-9" style={{paddingLeft: '0px'}}>
+                            {/* <div className="col-12"> */}
                                 <div className="card">
                                     <div className="card-body">
 
@@ -274,13 +288,39 @@ class AssignStaffRights extends React.Component {
                                            
                                     <tbody >
                                  
-                                       
+                                        {/* <tr>
+                                                    <td>Michael Bruce</td>
+                                                    <td>Javascript Developer</td>
+                                                    <td>Singapore</td>
+                                                    <td>29</td>
+                                                    <td>2011/06/27</td>
+                                                    <td>$183,000</td>
+                                                    <td>2011/01/25</td>
+                                                    <td>$112,000</td>
+                                                </tr> 
+
+                                             <tr>
+                                                    <td>x</td>
+                                                    <td>User Support</td>
+                                                    <td>New York</td>
+                                                    <td>27</td>
+                                                    <td>2011/01/25</td>
+                                                    <td>$112,000</td>
+                                                    <td>2011/01/25</td>
+                                                    <td>$112,000</td>
+                                          </tr> */}
                                          {this.state.MenuListData.map((data,index)=>(
                                            
                                            
                                        
                                                 <tr key={index}>
-                                                     
+                                                      {/* <Helmet>
+                                                  
+                                            <script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
+                                            <script src="/assets/js/pages/datatables.init.js"></script>
+                                            <script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
+                                       
+                                            </Helmet> */}
                                                 <td><span><input 
                                                 onChange={()=>{
                                                     var arr =[...this.state.MenuRights]
@@ -319,14 +359,17 @@ class AssignStaffRights extends React.Component {
                                                     var ar1 = [...this.state.SubMenuRights]
                                                     var arr =[...this.state.SubMenuRights[index]]
 
+                                                    // console.log(arr)
                                                     for(var k = 0 ; k<arr.length;k++){
 
                                                       
+                                                            // console.log(arr[k])
 
                                                             if(arr[k] != undefined){
                                                                 arr[k].fld_access = arr[k].fld_access == 1 ? 0 : 1
                                                                 
                                                                 ar1[index] = arr
+                                                                // console.log(arr)
                                                                 this.setState({
                                                                     SubMenuRights : ar1
                                                                 })
@@ -352,11 +395,13 @@ class AssignStaffRights extends React.Component {
                                                     for(var k = 1 ; k<arr.length;k++){
 
                                                       
+                                                        // console.log(arr[k])
 
                                                         if(arr[k] != undefined){
                                                             arr[k].fld_access = arr[k].fld_access == 1 ? 0 : 1
                                                             
                                                             ar1[index] = arr
+                                                            // console.log(arr)
                                                             this.setState({
                                                                 SubMenuRights : ar1
                                                             })
@@ -367,7 +412,18 @@ class AssignStaffRights extends React.Component {
                                                    
 
                                                 }
-                                                   
+                                                    // if(arr[1] != undefined){
+                                                    //     arr[1].fld_access = arr[1].fld_access == 1 ? 0 : 1
+
+                                                    //     if(arr[6] != undefined){
+                                                    //         arr[6].fld_access = arr[1].fld_access
+                                                    //     }
+                                                    //     ar1[index] = arr
+
+                                                    //     this.setState({
+                                                    //         SubMenuRights : ar1
+                                                    //     })
+                                                    // }
                                                  
                                                 }}
                                                 checked={this.state.SubMenuRights[index] == undefined ? false : this.state.SubMenuRights[index][1] == undefined ? false :this.state.SubMenuRights[index][1].fld_access ==1 ? true : false}
@@ -382,11 +438,13 @@ class AssignStaffRights extends React.Component {
                                                 for(var k = 2 ; k<arr.length;k++){
 
                                                       
+                                                    // console.log(arr[k])
 
                                                     if(arr[k] != undefined){
                                                         arr[k].fld_access = arr[k].fld_access == 1 ? 0 : 1
                                                         
                                                         ar1[index] = arr
+                                                        // console.log(arr)
                                                         this.setState({
                                                             SubMenuRights : ar1
                                                         })
@@ -397,7 +455,13 @@ class AssignStaffRights extends React.Component {
                                                
 
                                             }
-                                                
+                                                // if(arr[2] != undefined){
+                                                //     arr[2].fld_access = arr[2].fld_access == 1 ? 0 : 1
+                                                //     ar1[index] = arr
+                                                //     this.setState({
+                                                //         SubMenuRights : ar1
+                                                //     })
+                                                // }
                                              
                                             }}
                                                 checked={this.state.SubMenuRights[index] == undefined ? false : this.state.SubMenuRights[index][2] == undefined ? false :this.state.SubMenuRights[index][2].fld_access ==1 ? true : false}
@@ -412,11 +476,13 @@ class AssignStaffRights extends React.Component {
                                                     for(var k = 3 ; k<arr.length;k++){
 
                                                       
+                                                        // console.log(arr[k])
     
                                                         if(arr[k] != undefined){
                                                             arr[k].fld_access = arr[k].fld_access == 1 ? 0 : 1
                                                             
                                                             ar1[index] = arr
+                                                            // console.log(arr)
                                                             this.setState({
                                                                 SubMenuRights : ar1
                                                             })
@@ -427,7 +493,13 @@ class AssignStaffRights extends React.Component {
                                                    
     
                                                 }
-                                                    
+                                                    // if(arr[3] != undefined){
+                                                    //     arr[3].fld_access = arr[3].fld_access == 1 ? 0 : 1
+                                                    //     ar1[index] = arr
+                                                    //     this.setState({
+                                                    //         SubMenuRights : ar1
+                                                    //     })
+                                                    // }
                                                  
                                                 }}
                                                 checked={this.state.SubMenuRights[index] == undefined ? false : this.state.SubMenuRights[index][3] == undefined ? false :this.state.SubMenuRights[index][3].fld_access ==1 ? true : false}
@@ -444,11 +516,13 @@ class AssignStaffRights extends React.Component {
                                                     for(var k = 4 ; k<arr.length;k++){
 
                                                       
+                                                        // console.log(arr[k])
     
                                                         if(arr[k] != undefined){
                                                             arr[k].fld_access = arr[k].fld_access == 1 ? 0 : 1
                                                             
                                                             ar1[index] = arr
+                                                            // console.log(arr)
                                                             this.setState({
                                                                 SubMenuRights : ar1
                                                             })
@@ -460,7 +534,13 @@ class AssignStaffRights extends React.Component {
     
                                                 }
 
-                                                   
+                                                    // if(arr[4] != undefined){
+                                                    //     arr[4].fld_access = arr[4].fld_access == 1 ? 0 : 1
+                                                    //     ar1[index] = arr
+                                                    //     this.setState({
+                                                    //         SubMenuRights : ar1
+                                                    //     })
+                                                    // }
                                                  
                                                 }}
                                                 checked={this.state.SubMenuRights[index] == undefined ? false : this.state.SubMenuRights[index][4] == undefined ? false :this.state.SubMenuRights[index][4].fld_access ==1 ? true : false}
@@ -501,6 +581,7 @@ class AssignStaffRights extends React.Component {
                         </div>
                      </div>
                 </div>
+             {/* </div> */}
            
         </div>
 

@@ -92,6 +92,7 @@ class BlogView extends Component {
           var det = localStorage.getItem('ArticleDetails')
           var ArticleData = JSON.parse(det)
 
+        //   console.log(ArticleData)
 
           new Promise( ( resolve, reject ) => {
             setTimeout( resolve, 1000 );
@@ -116,6 +117,7 @@ class BlogView extends Component {
                     this.props.setArticalTitle(ArticleData.fld_title)
                     this.props.setWrittenByWhome(ArticleData.fld_writtenbyid)
                     this.props.setReviewedBy(ArticleData.fld_reviewedbyid)
+                    // this.props.setShowOnWebsite()
 
                     var tg = []
                     if(ArticleData.Tags != null &&  ArticleData.Tags.length > 0){
@@ -143,6 +145,7 @@ class BlogView extends Component {
               GetApiCall.getRequest("GetArticleSubCategory").then(resultdes =>
                 resultdes.json().then(obj => {
                
+                // console.log(obj.data)
                 
                   this.setState({
                      SubCategoryData : obj.data
@@ -152,6 +155,7 @@ class BlogView extends Component {
                 GetApiCall.getRequest("GetBlogContributors").then(resultdes =>
                     resultdes.json().then(obj => {
                    
+                    // console.log(obj.data)
                     
                       this.setState({
                          ContributorsData : obj.data
@@ -161,6 +165,7 @@ class BlogView extends Component {
               GetApiCall.getRequest("GetArticleTags").then(resultdes =>
                 resultdes.json().then(obj => {
                
+                // console.log(obj.data)
                 
                   this.setState({
                     TagData : obj.data
@@ -385,6 +390,7 @@ class BlogView extends Component {
                 updatedon : moment().format('lll'),
                      },"AddArticleTagMapping").then((results1) => 
             
+               // const objs = JSON.parse(result._bodyText)
                results1.json().then(obj1 => {
     
                if(results1.status == 200 || results1.status==201){
@@ -449,6 +455,7 @@ class BlogView extends Component {
                      updatedon : moment().format('lll'),
                           },"UpdateArticle").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
              
                  
@@ -463,6 +470,7 @@ class BlogView extends Component {
             Notiflix.Notify.Failure('Article with title already present.')
         }
     }))
+            // console.log(this.state.Show == 'Yes' ?  'Show' : 'Dont Show')
         }else{
             Notiflix.Notify.Failure('Please select the name of person who wrote the article.')
         }

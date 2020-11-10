@@ -28,12 +28,14 @@ class Insurance extends Component {
                GetApiCall.getRequest("GetInsurance").then(resultdes =>
                    resultdes.json().then(obj => {
                   
+                   // console.log(obj.data)
                    
                      this.setState({
                         InsuranceData : obj.data
                      })
        
        
+                     // Notiflix.Loading.Remove();
                    }))
                  } 
     
@@ -65,7 +67,23 @@ class Insurance extends Component {
                     </div> 
 
                     <div class="row">
-                  
+                   {/* <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                                                       <div class="col text-right">
+                                       <a href='/addfootwear'>
+                                       <button 
+                                       
+                                       class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
+                                               class="uil-plus mr-1"></i>Add New Footwear Item</button>
+                                  
+                                       </a>
+                                                                       </div>
+                                </div>
+                            </div>
+                        </div> 
+                     </div>*/}
                 
                 </div>
                     
@@ -126,6 +144,7 @@ class Insurance extends Component {
                                 <span  >
                                 <Edit3/>
                                     </span>
+                                    {/* &nbsp;&nbsp;<Trash2/> */}
                                     </div> &nbsp;&nbsp;
                                     </td>
                                         

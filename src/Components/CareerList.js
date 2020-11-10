@@ -24,6 +24,7 @@ class CareerList extends Component {
               GetApiCall.getRequest("GetCareer").then(resultdes =>
                   resultdes.json().then(obj => {
                  
+                //   console.log(obj.data)
                   
                     this.setState({
                         CareerData: obj.data
@@ -140,6 +141,7 @@ class CareerList extends Component {
                                 <span  >
                                 <Edit3/>
                                     </span>
+                                    {/* &nbsp;&nbsp;<Trash2/> */}
                                     </div> &nbsp;&nbsp;
                                     </td>
 

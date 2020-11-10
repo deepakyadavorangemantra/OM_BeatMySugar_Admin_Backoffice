@@ -69,6 +69,7 @@ class Viewsellwithus extends Component {
 
       var det = localStorage.getItem('SellDetails')
       var SellData = JSON.parse(det)
+      // console.log(SellData)
       var ps = []
       for(var i = 0 ; i < SellData.fld_services.split(', ').length ; i++){
 
@@ -121,6 +122,7 @@ class Viewsellwithus extends Component {
 
           },"GetState").then((results) => 
           
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(objstate => {
       
           
@@ -143,6 +145,7 @@ class Viewsellwithus extends Component {
     
                   },"GetCity").then((resultscity) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     resultscity.json().then(objcity => {
               
                   
@@ -176,11 +179,13 @@ onChangeCompany(company){
     this.props.setSellCompanyName(company.target.value)
 }
 onChangeAddress(address){
+    //  console.log(address.target.value)
  this.props.setSellAddress(address.target.value)
    
 }
 
 onChangeCountry(country){
+    // this.props.setvendorcountry(country.target.value)
     this.setState({
         CountryId : country.target.value
       })
@@ -258,6 +263,7 @@ onChangeState(state){
         },
         "GetCity"
       ).then(results =>
+        // const objs = JSON.parse(result._bodyText)
         results.json().then(obj => {
           if (results.status == 200 || results.status == 201) {
 
@@ -269,6 +275,7 @@ onChangeState(state){
         })
     }
     Notiflix.Loading.Remove()        
+    // this.props.cityData(obj.data)
             
           }
         })
@@ -324,6 +331,7 @@ onChangeWorking(working){
    
    UpdateSellWithUS(){
 
+    //  console.log(this.props.SellCredentials)
     if(this.props.SellCredentials.CompanyName!=''){
         if(this.props.SellCredentials.Address!=''){
             if(this.props.SellCredentials.Country!=''){
@@ -342,7 +350,64 @@ onChangeWorking(working){
                                                        if(this.props.SellCredentials.CurrentlyWorking!=''){
                                                          if(this.props.SellCredentials.About!=''){
                                                             
-                                                            
+                                                            // Notiflix.Loading.Dots('');
+                                                            //   var producttype= ''
+
+                                                            // for(var i =0 ;i<this.state.ProductService.length ;i++){
+                                           
+                                                            //    if(i == 0)
+                                                            //    {
+                                                            //        producttype = this.state.ProductService[i].value
+                                                            //    }else{
+                                                            //     producttype = producttype  + ', '+this.state.ProductService[i].value
+                                                            //    }
+                                           
+                                                            // }
+                                           
+
+                                                            // PostApiCall.postRequest({
+                                                            //      companyname :this.props.SellCredentials.CompanyName,
+                                                            //      address :this.props.SellCredentials.Address,
+                                                            //      country : this.props.SellCredentials.Country,
+                                                            //      state : this.props.SellCredentials.State,
+                                                            //      city : this.props.SellCredentials.City,
+                                                            //      pincode : this.props.SellCredentials.Pincode,
+                                                            //      title :this.props.SellCredentials.Title,
+                                                            //      personname : this.props.SellCredentials.Name,
+                                                            //      persondesignation : this.props.SellCredentials.Designation,
+                                                            //      email : this.props.SellCredentials.Email,
+                                                            //      mobile : this.props.SellCredentials.Mobile,
+                                                            //      services : producttype,
+                                                            //      workingwith : this.props.SellCredentials.CurrentlyWorking,
+                                                            //      aboutbusiness : this.props.SellCredentials.About,
+                                                            //      updatedby : 0,
+                                                            //      updatedon : moment().format('lll'),
+                                                                 
+                                                           
+                                                            //    },"AddSellWithUs").then((results) => 
+                                                                   
+                                                               
+                                                            //   //    const objs = JSON.parse(result._bodyText)
+                                                            //      results.json().then(obj => {
+                                                           
+                                                               
+                                                            //      if(results.status == 200 || results.status==201){
+                                                            //       this.props.setclearsell()
+                                                       
+                                                            //       Notiflix.Loading.Remove()
+                                                       
+                                                            //       Notiflix.Notify.Success('SellWithUS successfully added.')
+                                                            //       window.location.href = '/sellwithus'
+                                                                  
+                                                       
+                                                            //   }
+                                                            //   else{
+                                                            //       Notiflix.Loading.Remove()
+                                                            //       Notiflix.Notify.Failure('Something went Wrong.')
+                                                            //     } 
+                                                            //   }
+                                                            //      )
+                                                            //    )
                                                        
 
                                                          }
@@ -773,7 +838,13 @@ onChangeWorking(working){
                                                        <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
                                                        disabled={!this.state.IsVisible}
                                                        onClick={this.UpdateSellWithUS.bind(this)}
-                                                    
+                                                    //    {() => {
+
+                                                    //        this.setState({
+                                                    //            PageTitle: '1',
+                                                    //            Page1: 'Done'
+                                                    //        })
+                                                    //    }}
                                                       >Submit</button>
                                                    </div>
                                                </div>

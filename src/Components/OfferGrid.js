@@ -111,7 +111,22 @@ class OfferGrid extends Component {
                             
                             
                                 <tbody>
-                                   
+                                    {/* <tr>
+                                        <td>Test data By Arun</td>
+                                        <td>test</td>
+                                        <td>test</td>
+                                        <td>test</td>
+                                        <td>8979218769</td>
+                                        <td></td>
+                                        <td></td>                                   
+                                        <td> <div class="align-self-center tableact" style={{    textAlign: 'center'}}
+                                         >
+                                        <span  >
+                                        <Edit3/>
+                                            </span>
+                                    </div>
+                                    </td>
+                                    </tr> */}
 
                             {this.state.OfferData.map((data,index)=>(
                                            <tr key={index}>
@@ -141,6 +156,7 @@ class OfferGrid extends Component {
                                        <span  >
                                        <Edit3/>
                                            </span>
+                                           {/* &nbsp;&nbsp;<Trash2/> */}
                                            </div> &nbsp;&nbsp;
                                             </td>
                                          

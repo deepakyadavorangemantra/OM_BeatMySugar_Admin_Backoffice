@@ -136,6 +136,7 @@ class AddContributors extends Component {
     
                   },"GetState").then((results) => 
                   
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(objstate => {
               
                   
@@ -143,7 +144,9 @@ class AddContributors extends Component {
     
     
                         if(objstate.data.length != 0 ){
+                            // this.props.setStateAc(objstate.data[0].label)
                              this.setState({
+                                // StateId : objstate.data[0].value,
                                 StateData : objstate.data,
                               
                             })
@@ -156,6 +159,7 @@ class AddContributors extends Component {
             
                           },"GetCity").then((resultscity) => 
                           
+                            // const objs = JSON.parse(result._bodyText)
                             resultscity.json().then(objcity => {
                       
                           
@@ -163,7 +167,9 @@ class AddContributors extends Component {
             
             
                                 if(objcity.data.length != 0 ){
+                                    // this.props.setCity(objcity.data[0].label)
                                     this.setState({
+                                        // CityId : objcity.data[0].value,
                                         CityData : objcity.data,
                                        
                                     })
@@ -212,6 +218,7 @@ class AddContributors extends Component {
     }
 
     handleCountryChange = event =>{
+        // this.props.setCountry(event.target.value)
         this.setState({
             CountryId : event.target.value
           })
@@ -272,6 +279,7 @@ class AddContributors extends Component {
     }
 
     handleStateChange = event =>{
+        // this.props.setStateAc(event.target.value)
         this.setState({
             StateId: event.target.value
           })
@@ -292,6 +300,7 @@ class AddContributors extends Component {
             },
             "GetCity"
           ).then(results =>
+            // const objs = JSON.parse(result._bodyText)
             results.json().then(obj => {
               if (results.status == 200 || results.status == 201) {
 
@@ -303,6 +312,7 @@ class AddContributors extends Component {
             })
         }
         Notiflix.Loading.Remove()        
+        // this.props.cityData(obj.data)
                 
               }
             })
@@ -310,6 +320,7 @@ class AddContributors extends Component {
     }
 
     handleCityChange = event =>{
+        // this.props.setCity(event.target.value)
         this.setState({
             CityId : event.target.value
           })
@@ -356,7 +367,10 @@ class AddContributors extends Component {
                         if(this.state.ProfileData!=''){
                             if(((this.state.ShortDescription.replace( /(<([^>]+)>)/ig, '').trim()).length) <= 2500) {
                           
-                    
+                    // this.setState({
+                    //     PageTitle: '3',
+                    //     Page2: 'Done'
+                    // })
                         this.setState({
                             PageTitle: '2',
                             Page1: 'Done'
@@ -478,6 +492,7 @@ class AddContributors extends Component {
                      updatedon : moment().format('lll'),
                           },"AddContributor").then((results) => 
                  
+                    // const objs = JSON.parse(result._bodyText)
                     results.json().then(obj => {
              
                  

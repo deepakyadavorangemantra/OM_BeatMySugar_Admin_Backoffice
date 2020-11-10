@@ -29,12 +29,14 @@ class BooksGrid extends Component {
               GetApiCall.getRequest("GetBookItemMaster").then(resultdes =>
                   resultdes.json().then(obj => {
                  
+                  // console.log(obj.data)
                   
                     this.setState({
                       BookData : obj.data
                     })
       
       
+                    // Notiflix.Loading.Remove();
                   }))
 
                   var login=localStorage.getItem('LoginDetail');
@@ -46,10 +48,12 @@ class BooksGrid extends Component {
                   
                     },"GetUserSubMenuAccessRights").then((resultssub) => 
                     
+                      // const objs = JSON.parse(result._bodyText)
                       resultssub.json().then(objsub => {  
                       if(resultssub.status == 200 || resultssub.status==201){
           
                      var filteredRights = objsub.data;
+                          // console.log(filteredRights)
                   
                           var con = 0
                           for(var i = 0 ; i< filteredRights.length ;i++){
@@ -193,6 +197,7 @@ class BooksGrid extends Component {
                                 <span  >
                                 <Edit3/>
                                     </span>
+                                    {/* &nbsp;&nbsp;<Trash2/> */}
                                     </div> &nbsp;&nbsp;
                                      </td>
                                   
