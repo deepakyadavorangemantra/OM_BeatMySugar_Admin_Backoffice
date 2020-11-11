@@ -44,6 +44,7 @@ class QuestionListView extends Component {
             <thead>
                 <tr>
                     <th>Question </th>
+                    <th>Options</th>
                     <th>Status</th>
                     <th>Updated On</th>
                     <th>Action</th>
@@ -67,6 +68,11 @@ class QuestionListView extends Component {
                 
                     </Helmet> : ''}
                         <td>{data.fld_questiontext}</td>
+                        <td>{data.options.length > 0 ? 
+                            data.options.map((option,index)=>(
+                        
+                                <tr > { (index+1)+'. '+option.fld_optiontext }</tr>))
+                            :'' }</td>
                         <td style={{color:data.fld_status == '1' ? 'green' : 'red'}}><b>{data.fld_status == true? 'Active' : 'Inactive'}</b></td>
                         <td>{moment(data.fld_updatedon).format('ll')}</td>
                         <td className="tableact"
@@ -80,7 +86,7 @@ class QuestionListView extends Component {
                             {
                                 label: 'Yes',
                                 onClick: () => {
-                                    // this.props.removeQuestionData( data.fld_id);
+                                    this.props.removeQuestionData( data.fld_id);
                                 }
                             },
                             {
@@ -97,11 +103,7 @@ class QuestionListView extends Component {
                             }}
                             
                             ></Edit3>
-                            <Edit style={{marginLeft: '10px'}}
-                            onClick={()=>{
-                                this.props.editOption(data);
-                            }}>Option
-                            </Edit>
+                           
                         </span>
                         </td>
                         

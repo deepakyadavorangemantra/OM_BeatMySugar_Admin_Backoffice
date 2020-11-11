@@ -295,15 +295,16 @@ class ChapterInfoDetails extends Component {
         Notiflix.Loading.Dots('Please wait...');
         var login=localStorage.getItem('LoginDetail');
         var details=JSON.parse(login)
-        PostApiCall.postRequest ({
-
+        PostApiCall.postRequest ({ question : {
             chapterid : this.state.chapterEditData.fld_chapterid,
             questiontext : question_data.Question,
             orderno : question_data.orderno,
             createdon  : moment().format('lll'),
             createdby : details[0].fld_staffid,
-            status : question_data.status
-            },"AddQuestion").then((resultTopic) =>
+            status : question_data.status,
+            },
+            options : question_data.options,
+            },"AddQuestionWithOption").then((resultTopic) =>
             resultTopic.json().then(objArticleSub => {
                 if(resultTopic.status == 200 || resultTopic.status == 201){
                     // this.props.setClearArticleSubCategory()
@@ -323,7 +324,7 @@ class ChapterInfoDetails extends Component {
         Notiflix.Loading.Dots('Please wait...');
         var login=localStorage.getItem('LoginDetail');
         var details=JSON.parse(login)
-        PostApiCall.postRequest ({
+        PostApiCall.postRequest ({ question : {
             questionid: question_data.id,      
             chapterid : this.state.chapterEditData.fld_chapterid,
             questiontext : question_data.Question,
@@ -331,7 +332,10 @@ class ChapterInfoDetails extends Component {
             createdon  : moment().format('lll'),
             createdby : details[0].fld_staffid,
             status : question_data.status
-            },"UpdateQuestion").then((resultTopic) =>
+        },
+        options : question_data.options,
+            
+            },"UpdateQuestionWithOption").then((resultTopic) =>
             resultTopic.json().then(objArticleSub => {
                 if(resultTopic.status == 200 || resultTopic.status == 201){
                     // this.props.setClearArticleSubCategory()
@@ -345,6 +349,40 @@ class ChapterInfoDetails extends Component {
                 }
             })
         )
+    }
+
+    removeQuestionData =(ques_id)=>{
+
+        Notiflix.Loading.Dots('');
+
+        PostApiCall.postRequest({
+
+            questionid :ques_id,
+        
+
+        },"DeleteQuestion").then((results) => 
+        
+            results.json().then(obj => {
+
+            if(results.status == 200 || results.status==201){
+                let QuestionList =this.state.QuestionList
+                    QuestionList.map((Question, index)=>{
+                    if(ques_id === Question.fld_id){
+                        QuestionList.splice(index,1);
+                    }
+                });
+
+                this.setState({ QuestionList : QuestionList});
+
+                Notiflix.Loading.Remove()
+                Notiflix.Notify.Success('Question successfully deleted.')
+                
+            }else
+            {
+                Notiflix.Loading.Remove()
+                Notiflix.Notify.Failure('Something went wrong, try again later.')
+            }
+        }))
     }
 
     render(){
@@ -443,7 +481,9 @@ class ChapterInfoDetails extends Component {
                                     <QuestionListView 
                                         QuestionList ={this.state.QuestionList} 
                                         editQuestion = { (data)=>{ this.setState({ questionEditData : data, show_add_question : true}) }}
-                                        editOption = { (data)=> { this.setState({ questionEditData : data, show_add_option : true}) }}/> 
+                                        editOption = { (data)=> { this.setState({ questionEditData : data, show_add_option : true}) }}
+                                        removeQuestionData = { this.removeQuestionData }
+                                        /> 
                                 </div>
                             </div>
                         </div> : ''}
