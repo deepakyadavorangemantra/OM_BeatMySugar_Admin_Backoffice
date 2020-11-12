@@ -16,7 +16,6 @@ const QuestionForm =(props)=>{
 
     useEffect( ()=>{
         if(props.questionEditData !== ''){
-            debugger
             SetPageTitle("Update Chapter's Question")
             SetQuestionid( props.questionEditData ? props.questionEditData.fld_id : '');            
             SetQuestion(props.questionEditData ? props.questionEditData.fld_questiontext : '');
@@ -34,6 +33,12 @@ const QuestionForm =(props)=>{
             flag = false;
             Notiflix.Notify.Failure('Please enter chapter Question.')
         }
+
+        if(optionList.length==0){
+            flag = false;
+            Notiflix.Notify.Failure('Please add option first!.')
+        }
+            
         return flag;
       }
 
@@ -79,8 +84,13 @@ const QuestionForm =(props)=>{
                                 Notiflix.Loading.Remove();
                                 Notiflix.Notify.Success('Option successfully added.')
                                 optionList.push(objArticleSub.data[0]);
+                                let questionEditData = props.questionEditData;
+                                questionEditData.options = optionList;
+                                props.updateQuestionListOptions( questionEditData);
                                 SetOption({ fld_optiontext:'', fld_iscorrect:false });
                                 SetOptionList(optionList);
+                                
+
                             }else
                             {
                             Notiflix.Loading.Remove();
@@ -123,6 +133,7 @@ const QuestionForm =(props)=>{
         }
 
         function removeOption( option_id){
+            if(option_id){
             Notiflix.Loading.Dots('');
 
             PostApiCall.postRequest({
@@ -140,11 +151,15 @@ const QuestionForm =(props)=>{
                             optionList.splice(index,1);
                         }
                     });
-                    SetOption({ fld_optiontext:'', fld_iscorrect:false });
-                    SetOptionList(optionList);
 
-                    Notiflix.Loading.Remove()
-                    Notiflix.Notify.Success('Option successfully deleted.')
+                    let questionEditData = props.questionEditData;
+                        questionEditData.options = optionList;
+                        props.updateQuestionListOptions( questionEditData);
+                        SetOption({ fld_optiontext:'', fld_iscorrect:false });
+                        SetOptionList(optionList);
+
+                        Notiflix.Loading.Remove()
+                        Notiflix.Notify.Success('Option successfully deleted.')
                     
                 }else
                 {
@@ -152,6 +167,13 @@ const QuestionForm =(props)=>{
                     Notiflix.Notify.Failure('Something went wrong, try again later.')
                 }
             }))
+        }else{
+            let option_index = optionList.findIndex( item=> item.fld_optiontext === option.fld_optiontext );
+
+            optionList.splice(option_index, 1);
+            SetOption({ fld_optiontext:'', fld_iscorrect:false });
+            SetOptionList(optionList);
+            }
         }
 
         function updateOption(){
@@ -174,8 +196,12 @@ const QuestionForm =(props)=>{
                             resultTopic.json().then(objArticleSub => {
                                 if(resultTopic.status == 200 || resultTopic.status == 201){
                                     Notiflix.Loading.Remove();
-                                    Notiflix.Notify.Success('Option successfully added.')
+                                    Notiflix.Notify.Success('Option successfully update.')
+                                    let option_index = optionList.findIndex( item=> item.fld_id === objArticleSub.data[0].fld_id );
                                     optionList[option_index] = (objArticleSub.data[0]);
+                                    let questionEditData = props.questionEditData;
+                                    questionEditData.options = optionList;
+                                    props.updateQuestionListOptions( questionEditData);
                                     SetOption({ fld_optiontext:'', fld_iscorrect:false });
                                     SetOptionList(optionList);
                                 }else
@@ -242,8 +268,11 @@ const QuestionForm =(props)=>{
                                 <label for="validationCustom01">Option<span className="mandatory">*</span></label>
                                 <input type="text" class="form-control"  value={option.fld_optiontext} onChange={(e)=>{ handleOptionChange( e.target.value )  }} />
                             </div>
-                            <div className="col-md-4">
-                            <button className="btn btn-primary" type="submit" style={{float:'left', marginTop: '28px'}} onClick={ option.fld_id ? updateOption : AddOptions}> {option.fld_id ? 'Update': <span><i className="uil-plus mr-1"></i>Add Opton</span>}  </button>
+                            <div className="col-md-4">  {/*  onClick={ option.fld_id ? updateOption : AddOptions  }} */}
+                            {option.fld_id ?
+                            <button className="btn btn-primary" style={{float:'left', marginTop: '28px', marginRight:'10px'}} onClick={()=>{ SetOption({ fld_optiontext:'', fld_iscorrect:false }) } } ><span>Cancle</span> </button>:''}
+                            <button className="btn btn-primary" style={{float:'left', marginTop: '28px'}} onClick={ option.fld_id ? updateOption : AddOptions  } > {option.fld_id ? 'Update': <span><i className="uil-plus mr-1"></i>Add Opton</span>}  </button>
+                            
                             </div>
                         </div>
 

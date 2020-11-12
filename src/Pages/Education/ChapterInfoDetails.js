@@ -222,10 +222,14 @@ class ChapterInfoDetails extends Component {
             },"UpdateTopic").then((resultTopic) =>
             resultTopic.json().then(objArticleSub => {
                 if(resultTopic.status == 200 || resultTopic.status == 201){
-                    // this.props.setClearArticleSubCategory()
+
+                    let TopicsList = this.state.TopicsList;
+                    let findIndex = this.state.TopicsList.findIndex(item => item.fld_id == objArticleSub.data[0].fld_id);
+                    TopicsList[findIndex] = objArticleSub.data[0];
+                    this.setState( { TopicsList : TopicsList, topicEditData: '', show_add_topic: false } );
                     Notiflix.Loading.Remove();
                     Notiflix.Notify.Success('Topic successfully updated.')
-                    // window.location.reload()
+                    
                 }else
                 {
                     Notiflix.Loading.Remove();
@@ -256,7 +260,12 @@ class ChapterInfoDetails extends Component {
                     // this.props.setClearArticleSubCategory()
                     Notiflix.Loading.Remove();
                     Notiflix.Notify.Success('Topic successfully added.')
-                    window.location.reload()
+                    let TopicsList = this.state.TopicsList;
+                    TopicsList.push( objArticleSub.data[0]);
+                    // let findIndex = this.state.TopicsList.findIndex(item => item.fld_id == questionEditData.fld_id);
+                    // TopicsList[findIndex] = questionEditData;
+                    this.setState( { TopicsList : TopicsList, show_add_topic : false } );
+                    
                 }else
                 {
                     Notiflix.Loading.Remove();
@@ -310,7 +319,10 @@ class ChapterInfoDetails extends Component {
                     // this.props.setClearArticleSubCategory()
                     Notiflix.Loading.Remove();
                     Notiflix.Notify.Success('Question successfully added.')
-                    window.location.reload()
+                    let questionEditData = objArticleSub.data.question;
+                        questionEditData.options = objArticleSub.data.options;
+                        this.setState({ show_add_question : false, questionEditData:'' });
+                        this.addQuestionListOptions(questionEditData);
                 }else
                 {
                     Notiflix.Loading.Remove();
@@ -341,7 +353,10 @@ class ChapterInfoDetails extends Component {
                     // this.props.setClearArticleSubCategory()
                     Notiflix.Loading.Remove();
                     Notiflix.Notify.Success('Question successfully update.')
-                    window.location.reload()
+                    let questionEditData = objArticleSub.data.question[0];
+                        questionEditData.options = objArticleSub.data.options;
+                        this.setState({ show_add_question : false , questionEditData:''});
+                    this.updateQuestionListOptions(questionEditData);
                 }else
                 {
                     Notiflix.Loading.Remove();
@@ -383,6 +398,19 @@ class ChapterInfoDetails extends Component {
                 Notiflix.Notify.Failure('Something went wrong, try again later.')
             }
         }))
+    }
+
+    updateQuestionListOptions=( questionEditData)=>{
+        let QuestionList = this.state.QuestionList;
+        let findIndex = this.state.QuestionList.findIndex(item => item.fld_id == questionEditData.fld_id);
+        QuestionList[findIndex] = questionEditData;
+        this.setState( { QuestionList : QuestionList } );
+    }
+
+    addQuestionListOptions=(questionEditData)=>{
+        let QuestionList = this.state.QuestionList;
+        QuestionList.push(questionEditData);
+        this.setState( { QuestionList : QuestionList } );
     }
 
     render(){
@@ -464,6 +492,7 @@ class ChapterInfoDetails extends Component {
                                             cancleQuestionBlock = {()=>{ this.setState({ show_add_question : false, questionEditData: '' })}}
                                             saveQuestionData={this.saveQuestionData}
                                             updateQuestionData={this.updateQuestionData}
+                                            updateQuestionListOptions = { this.updateQuestionListOptions }
                                             /><br/>
                                     </div>
                                     :  this.state.show_add_option === true ?

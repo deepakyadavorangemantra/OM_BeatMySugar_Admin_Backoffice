@@ -153,6 +153,7 @@ import EduQuestion from '../Pages/Education/Question';
 import EduTopics from '../Pages/Education/Topics';
 import EduReminders from '../Pages/Education/Reminders';
 import ChapterInfoDetails from '../Pages/Education/ChapterInfoDetails';
+import EduUsersFeedback from '../Pages/Education/UsersFeedback';
 
 class Sidenav extends React.Component {
 
@@ -163,6 +164,7 @@ class Sidenav extends React.Component {
             Menu : [],
             SubMenu : [],
             LoginDetails : [],
+            expandEducation: false,
             IconArr:[
                 <Home/>,
                 <User/>,
@@ -307,8 +309,8 @@ class Sidenav extends React.Component {
             <div className="sidebar-content">
                 {/*<!--- Sidemenu -->*/}
                 <div id="sidebar-menu" className="slimscroll-menu">
-                    <ul className="metismenu" id="menu-bar">
-             
+                    <ul className="metismenu  mm-active" id="menu-bar">
+                    
                     {this.state.Menu.map((menu,index)=>(
                                     
                                     <li key={index}>
@@ -499,28 +501,28 @@ class Sidenav extends React.Component {
                                <span style={{paddingLeft:'3px'}}>Verify Order </span>
                            </a>
                        </li> */}
-                       <li>
-                            <Link to='/edu-chapter' >
-                                <BookOpen/>
-                                <span style={{paddingLeft:'3px'}}>Education Module</span>
-                            </Link>
-{/*                             
-                            <ul className="nav-second-level" aria-expanded="true">
-                                <li><Link to='/edu-dashboard'>Dashboard</Link></li>
-                                <li><Link to='/edu-chapter'>Chapter</Link></li>
-                                <li><Link to='/edu-topics'>Topics</Link></li>
-                                <li><Link to='/edu-question'>Question</Link></li>
-                                <li><Link to='/edu-congratulations'>Congratulations</Link></li>
-                                <li><Link to='/edu-reminders'>Reminders</Link></li>
-                            </ul> */}
-                        </li>
-                        <li>
-                            <Link to='/edu-congratulations' >
-                            <Gift/> 
-                                <span style={{paddingLeft:'3px'}}>Congratulations</span>
-                            </Link>
 
-                        </li>
+
+                        <li>
+                            <a onClick={()=>{ this.setState({ expandEducation : !this.state.expandEducation}) } } aria-expanded="true" class=" mm-active" >
+                                <Users/>
+                                <span> Education Module </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="nav-second-level mm-active " style={{ height : this.state.expandEducation=== true ?'131px !important':'140px', display: this.state.expandEducation=== true ? 'block':'none'}} >
+                                <li>
+                                    <Link to='/edu-chapter'>
+                                        Chapters
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/edu-congratulations'>Congratulations</Link>
+                                </li>
+                                <li>
+                                    <Link to='/edu-feedback'>Feedback</Link>
+                                </li>                          
+                            </ul>
+                        </li>                        
 
                        <li>
                        <a href='/bmssms'>
@@ -741,7 +743,8 @@ class Sidenav extends React.Component {
         <Route exact path='/edu-question' component={EduQuestion}></Route>
         <Route exact path='/edu-topics' component={EduTopics}></Route>
         <Route exact path='/edu-chapterInfo' component={ChapterInfoDetails}></Route>
-
+        <Route exact path='/edu-feedback' component={EduUsersFeedback}></Route>
+        
        </Switch>
       
         </Router>

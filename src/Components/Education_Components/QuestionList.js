@@ -70,8 +70,8 @@ class QuestionListView extends Component {
                         <td>{data.fld_questiontext}</td>
                         <td>{data.options.length > 0 ? 
                             data.options.map((option,index)=>(
-                        
-                                <tr > { (index+1)+'. '+option.fld_optiontext }</tr>))
+                                
+                                <tr style={{ color : option.fld_iscorrect == 1? 'green' : '' }}> { (index+1)+'. '+option.fld_optiontext }</tr>))
                             :'' }</td>
                         <td style={{color:data.fld_status == '1' ? 'green' : 'red'}}><b>{data.fld_status == true? 'Active' : 'Inactive'}</b></td>
                         <td>{moment(data.fld_updatedon).format('ll')}</td>
