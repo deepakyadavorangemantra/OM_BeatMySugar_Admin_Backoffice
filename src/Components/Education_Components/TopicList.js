@@ -4,8 +4,8 @@ import {Edit3,Trash2} from 'react-feather';
 import Modal from 'react-responsive-modal';
 import {connect} from 'react-redux';
 import Notiflix from "notiflix";
-import PostApiCall from '../../Api'
-import GetApiCall from '../../GetApi'
+import PostApiCall from '../../Api';
+import GetApiCall from '../../GetApi';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert'; // 
 import TopicModel from '../../Components/Education_Components/TopicModel';

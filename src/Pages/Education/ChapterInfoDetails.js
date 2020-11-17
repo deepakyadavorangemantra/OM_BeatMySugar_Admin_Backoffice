@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ChapterForm from '../../Components/Education_Components/ChapterForm';
-import TopicListView from '../../Components/Education_Components/TopicList';
+import TopicListView from '../../Components/Education_Components/TopicListDrag';
 import Notiflix from "notiflix";
 import moment from 'moment';
 import GetApiCall from '../../GetApi';
 import PostApiCall from '../../Api';
 import TopicForm from '../../Components/Education_Components/TopicEditor';
-import QuestionListView from '../../Components/Education_Components/QuestionList';
+import QuestionListView from '../../Components/Education_Components/QuestionListDrag';
 import QuestionForm from '../../Components/Education_Components/QuestionForm';
 import OptionForm from '../../Components/Education_Components/OptionForm';
 
@@ -210,13 +210,13 @@ class ChapterInfoDetails extends Component {
 
             PostApiCall.postRequest ({
 
-                 title : topicData.title,
-                 content: topicData.description,
-                 orderno: topicData.orderno,
-                 img_url :'',
-                 type :'',
-                 status : topicData.status,
-                 topicid : topicData.id,
+                title : topicData.title,
+                content: topicData.description,
+                orderno: topicData.orderno,
+                img_url :'',
+                type :'',
+                status : topicData.status,
+                topicid : topicData.id,
                 updatedby : details[0].fld_staffid,
                 updatedon : moment().format('lll')
             },"UpdateTopic").then((resultTopic) =>
@@ -413,10 +413,56 @@ class ChapterInfoDetails extends Component {
         this.setState( { QuestionList : QuestionList } );
     }
 
+    setQuestionListOrderChange=( questionList , changeOrderList)=>{
+        Notiflix.Loading.Dots('Please wait...');
+        var login=localStorage.getItem('LoginDetail');
+            var details=JSON.parse(login)
+
+            PostApiCall.postRequest ({
+
+                data : changeOrderList
+            },"UpdateQuestionOrder").then((resultTopic) =>
+            resultTopic.json().then(objArticleSub => {
+                if(resultTopic.status == 200 || resultTopic.status == 201){
+                    this.setState({ QuestionList : questionList });
+                    Notiflix.Loading.Remove();
+                    Notiflix.Notify.Success('Question successfully updated.')
+                    
+                }else
+                {
+                    Notiflix.Loading.Remove();
+                    Notiflix.Notify.Failure('Went something wrong!')
+                }
+            })
+        )
+    }
+    
+    setTopicsListOrderChange=( TopicsList, changeOrderList )=>{
+        Notiflix.Loading.Dots('Please wait...');
+        var login=localStorage.getItem('LoginDetail');
+            var details=JSON.parse(login)
+
+            PostApiCall.postRequest ({
+                data: changeOrderList
+            },"UpdateTopicOrder").then((resultTopic) =>
+            resultTopic.json().then(objArticleSub => {
+                if(resultTopic.status == 200 || resultTopic.status == 201){
+                    this.setState( { TopicsList : TopicsList} );
+                    Notiflix.Loading.Remove();
+                    Notiflix.Notify.Success('Topic successfully updated.')
+                    
+                }else
+                {
+                    Notiflix.Loading.Remove();
+                    Notiflix.Notify.Failure('Went something wrong!')
+                }
+            })
+        )
+    }
+
     render(){
         return(
             <div className="content-page">
-            
                 <div className="content">
                     <div className="container-fluid">
                         <div className="row page-title">
@@ -474,6 +520,7 @@ class ChapterInfoDetails extends Component {
                                         TopicsList ={this.state.TopicsList} 
                                         editTopic = { (data)=>{ this.setState({ topicEditData : data, show_add_topic : true}) }}
                                         removeTopicData={this.removeTopicData}
+                                        setTopicsListOrderChange={this.setTopicsListOrderChange}
                                         /> 
                                 </div>
                             </div>
@@ -512,6 +559,7 @@ class ChapterInfoDetails extends Component {
                                         editQuestion = { (data)=>{ this.setState({ questionEditData : data, show_add_question : true}) }}
                                         editOption = { (data)=> { this.setState({ questionEditData : data, show_add_option : true}) }}
                                         removeQuestionData = { this.removeQuestionData }
+                                        setQuestionListOrderChange = { this.setQuestionListOrderChange }
                                         /> 
                                 </div>
                             </div>

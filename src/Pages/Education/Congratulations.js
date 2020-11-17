@@ -226,10 +226,18 @@ class EduCongratulations extends Component {
                                               results.json().then(obj => {
                                   
                                               if(results.status == 200 || results.status==201){
-                                  
+                                                console.log(obj)
+                                                let CongratulationsData =this.state.CongratulationsData
+                                                CongratulationsData.map(( Congratulation, index)=>{
+                                                    if(data.fld_id === Congratulation.fld_id){
+                                                        CongratulationsData.splice(index,1);
+                                                    }
+                                                });
+
+                                                this.setState({ CongratulationsData : CongratulationsData});
                                                   Notiflix.Loading.Remove()
                                                   Notiflix.Notify.Success('Congratuation successfully deleted.')
-                                                  window.location.reload()
+                                                  
                                               }else
                                               {
                                                   Notiflix.Loading.Remove()

@@ -54,7 +54,7 @@ class QuestionListView extends Component {
         
             <tbody>
             {QuestionList.length == 0 ? 
-                <tr><td colSpan={5} style={{textAlign:'center'}}>No Topics Available this chapter</td></tr> : 
+                <tr><td colSpan={5} style={{textAlign:'center'}}>No Question Available this chapter</td></tr> : 
                 ''} 
             {QuestionList.map((data,index)=>(
                         
@@ -81,7 +81,7 @@ class QuestionListView extends Component {
                         onClick={()=>{
                         confirmAlert({
                             title: 'Confirm to Delete',
-                            message: 'Are you sure you want to delete topic.',
+                            message: 'Are you sure you want to delete question.',
                             buttons: [
                             {
                                 label: 'Yes',

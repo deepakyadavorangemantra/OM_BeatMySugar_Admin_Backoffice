@@ -154,6 +154,8 @@ import EduTopics from '../Pages/Education/Topics';
 import EduReminders from '../Pages/Education/Reminders';
 import ChapterInfoDetails from '../Pages/Education/ChapterInfoDetails';
 import EduUsersFeedback from '../Pages/Education/UsersFeedback';
+import GiftHamperDelivery from '../Pages/Education/GiftHamperDelivery';
+import SetAlert from '../Pages/Education/SetAlert';
 
 class Sidenav extends React.Component {
 
@@ -511,16 +513,23 @@ class Sidenav extends React.Component {
                             </a>
                             <ul class="nav-second-level mm-active " style={{ height : this.state.expandEducation=== true ?'131px !important':'140px', display: this.state.expandEducation=== true ? 'block':'none'}} >
                                 <li>
-                                    <Link to='/edu-chapter'>
-                                        Chapters
-                                    </Link>
+                                    <Link to='/edu-dashboard'>  Dashboard </Link>
+                                </li>
+                                <li>
+                                    <Link to='/edu-chapter'>  Chapters </Link>
                                 </li>
                                 <li>
                                     <Link to='/edu-congratulations'>Congratulations</Link>
                                 </li>
                                 <li>
                                     <Link to='/edu-feedback'>Feedback</Link>
-                                </li>                          
+                                </li>
+                                <li>
+                                    <Link to='/edu-gifthamperdelivery'>Gift Hamper</Link>
+                                </li>               
+                                <li>
+                                    <Link to='/edu-setalert'>SetAlert</Link>
+                                </li>        
                             </ul>
                         </li>                        
 
@@ -744,7 +753,11 @@ class Sidenav extends React.Component {
         <Route exact path='/edu-topics' component={EduTopics}></Route>
         <Route exact path='/edu-chapterInfo' component={ChapterInfoDetails}></Route>
         <Route exact path='/edu-feedback' component={EduUsersFeedback}></Route>
+        <Route exact path='/edu-gifthamperdelivery' component={GiftHamperDelivery}></Route>
+        <Route exact path='/edu-setalert' component={SetAlert}></Route>
+
         
+           
        </Switch>
       
         </Router>
