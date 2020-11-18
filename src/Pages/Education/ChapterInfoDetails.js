@@ -5,7 +5,7 @@ import Notiflix from "notiflix";
 import moment from 'moment';
 import GetApiCall from '../../GetApi';
 import PostApiCall from '../../Api';
-import TopicForm from '../../Components/Education_Components/TopicEditor';
+import TopicForm from '../../Components/Education_Components/TopicEditorNew';
 import QuestionListView from '../../Components/Education_Components/QuestionListDrag';
 import QuestionForm from '../../Components/Education_Components/QuestionForm';
 import OptionForm from '../../Components/Education_Components/OptionForm';
@@ -18,7 +18,7 @@ class ChapterInfoDetails extends Component {
             ImageApiUrl : 'https://images.beatmysugar.com/api/Image/SaveImage',
             chapterEditData : this.props.location.state ? this.props.location.state.chapterEditData ? this.props.location.state.chapterEditData : '':'',
             TopicsList : [],
-            show_add_topic : false,
+            show_add_topic : true,
             topicEditData : '',
             QuestionList : [],
             show_add_question : false,
@@ -243,14 +243,15 @@ class ChapterInfoDetails extends Component {
         Notiflix.Loading.Dots('Please wait...');
             var login=localStorage.getItem('LoginDetail');
             var details=JSON.parse(login)
+            debugger;
             PostApiCall.postRequest ({
-
                 chapterid : topicData.chapterid,
                 title : topicData.title,
                 content : topicData.description,
                 orderno : topicData.orderno,
                 img_url : '',
                 type : '',
+                contents : topicData.contents,
                 createdon  : moment().format('lll'),
                 createdby : details[0].fld_staffid,
                 status : topicData.status
@@ -288,10 +289,18 @@ class ChapterInfoDetails extends Component {
             results.json().then(obj => {
 
             if(results.status == 200 || results.status==201){
+                let TopicsList =this.state.TopicsList
+                    TopicsList.map((Topic, index)=>{
+                    if(fld_id === Topic.fld_id){
+                        TopicsList.splice(index,1);
+                    }
+                });
+                
+                this.setState({ TopicsList : TopicsList});
 
                 Notiflix.Loading.Remove()
                 Notiflix.Notify.Success('topic successfully deleted.')
-                window.location.reload()
+                
             }else
             {
                 Notiflix.Loading.Remove()

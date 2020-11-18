@@ -344,6 +344,14 @@ class EduChapter extends Component {
                   results.json().then(obj => {
       
                   if(results.status == 200 || results.status==201){
+                    // let ChapterData =this.state.ChapterData
+                    // ChapterData.map((Chapter, index)=>{
+                    //     if(chapterid === Chapter.fld_chapterid){
+                    //       ChapterData.splice(index,1);
+                    //     }
+                    // });
+
+                    // this.setState({ ChapterData : ChapterData});
       
                       Notiflix.Loading.Remove()
                       Notiflix.Notify.Success('Chapter successfully deleted.')
