@@ -6,7 +6,7 @@
 
 //  var urlString = "http://localhost:8080/BackofficeApi/";
 
-var urlString = "http://65.0.39.41:8080/BackofficeApi/";
+var urlString = "https://65.0.39.41:8080/BackofficeApi/";
 
 
 
