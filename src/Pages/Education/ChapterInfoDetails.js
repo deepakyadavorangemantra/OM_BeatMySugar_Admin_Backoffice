@@ -9,6 +9,7 @@ import TopicForm from '../../Components/Education_Components/TopicEditorNew';
 import QuestionListView from '../../Components/Education_Components/QuestionListDrag';
 import QuestionForm from '../../Components/Education_Components/QuestionForm';
 import OptionForm from '../../Components/Education_Components/OptionForm';
+// import TopicReactQuillTextEditor from '../../Components/Education_Components/TopicQuillTextEditor';
 
 class ChapterInfoDetails extends Component {
 
@@ -82,6 +83,12 @@ class ChapterInfoDetails extends Component {
             
             fetch(this.state.ImageApiUrl, {
             method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Headers' : '*',
+                'Content-Type': 'application/json',
+              },
             body: form
             }).then((image) => {
             

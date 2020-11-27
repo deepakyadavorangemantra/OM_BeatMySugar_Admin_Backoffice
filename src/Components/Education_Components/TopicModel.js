@@ -3,6 +3,7 @@ import Modal from 'react-responsive-modal';
 import Notiflix from "notiflix";
 import CKEditor from 'ckeditor4-react';
 import { Flag } from 'react-feather';
+// import TinyMCE from 'react-tinymce';
 
 const ImgUpload =({
     onChange,
@@ -154,6 +155,14 @@ const TopicModel =(props)=>{
                                             data={Description}
                                             onChange={(event)=>{  SetDescription(event.editor.getData())}}
                                     />
+                                    {/* <TinyMCE
+                                        content="<p>This is the initial content of the editor</p>"
+                                        config={{
+                                        plugins: 'autolink link image lists print preview',
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+                                        }}
+                                        onChange={(e)=>{  SetDescription(e.target.getContent())}}
+                                    /> */}
                                 </div>
                             </div>
                         

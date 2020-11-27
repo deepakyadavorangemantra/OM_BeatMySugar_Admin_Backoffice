@@ -6,6 +6,7 @@ import {Edit3,Trash2} from 'react-feather';
 import { confirmAlert } from 'react-confirm-alert'; // 
 import { connectAdvanced } from 'react-redux';
 import PostApiCall from '../../Api';
+import TopicReactQuillTextEditor from './TopicQuillTextEditor';
 
 const TopicForm =(props)=>{
 
@@ -67,7 +68,7 @@ const TopicForm =(props)=>{
 
       
     function handleChange( event, i) {
-        values[i].fld_content = event.editor.getData();
+        values[i].fld_content = event //event.editor.getData();
         setValues (values);
         setCheck(!check);
     }
@@ -154,44 +155,55 @@ const TopicForm =(props)=>{
                                 <div className="form-group mb-3">
                                     <label for="validationCustom01">Content <span className="mandatory">*</span></label>
                                     <div className="form-group mb-3">
+                                    
                                         {values.map((item, i) => 
                                             // <li>
-                                            <div style={{ display:'flex', marginTop:'10px'}} key={i}>
-                                                <label style={{ padding:'10px', fontWeight:'bold'}} for="validationCustom01">{item.fld_orderno}. </label>
-                                                <CKEditor
-                                                    config={{
-                                                    extraPlugins: "justify,font,colorbutton",
-                                                    }}                                
-                                                    data={item.fld_content||''}
-                                                    // onChange={(event)=>{  SetDescription(event.editor.getData())}}
-                                                    onChange={(e)=>handleChange(e, i)}
-                                                />
-                                            {/* <input type="text" value={el.description||''} onChange={(e)=>handleChange(e, i)} /> */}
-                                                <div style={{ padding:'10px', fontWeight:'bold'}}>
-                                                <Trash2
+                                            <div className="col-md-12">
+                                                <div style={{ display:'flex', marginTop:'10px'}} key={i}>
+                                                    <label style={{ padding:'10px', fontWeight:'bold'}} for="validationCustom01">{item.fld_orderno}. </label>
+                                                    <div style={{ padding:'10px', fontWeight:'bold', width : '90%'}}>
+                                                        <TopicReactQuillTextEditor 
+                                                            html={item.fld_content||''}
+                                                            onChange={(e)=>handleChange(e, i)}
+                                                        />
+                                                    </div>
                                                     
-                                                    onClick={()=>{
-                                                    confirmAlert({
-                                                        title: 'Confirm to Delete',
-                                                        message: 'Are you sure you want to delete content.',
-                                                        buttons: [
-                                                        {
-                                                            label: 'Yes',
-                                                            onClick: () => {
-                                                                removeContent(i)
-                                                                // this.props.removeTopicData( data.fld_id);
+
+                                                    {/* <CKEditor   
+                                                        config={{
+                                                        extraPlugins: "justify,font,colorbutton",
+                                                        }}                                
+                                                        data={item.fld_content||''}
+                                                        // onChange={(event)=>{  SetDescription(event.editor.getData())}}
+                                                        onChange={(e)=>handleChange(e, i)}
+                                                    /> */}
+                                                {/* <input type="text" value={el.description||''} onChange={(e)=>handleChange(e, i)} /> */}
+                                                    <div style={{ padding:'10px', fontWeight:'bold'}}>
+                                                    <Trash2
+                                                        
+                                                        onClick={()=>{
+                                                        confirmAlert({
+                                                            title: 'Confirm to Delete',
+                                                            message: 'Are you sure you want to delete content.',
+                                                            buttons: [
+                                                            {
+                                                                label: 'Yes',
+                                                                onClick: () => {
+                                                                    removeContent(i)
+                                                                    // this.props.removeTopicData( data.fld_id);
+                                                                }
+                                                            },
+                                                            {
+                                                                label: 'No',
                                                             }
-                                                        },
-                                                        {
-                                                            label: 'No',
-                                                        }
-                                                        ]
-                                                    });
-                                                    }}
-                                                /></div>
-                                            </div>       
+                                                            ]
+                                                        });
+                                                        }}
+                                                    /></div>
+                                                </div>     
+                                            </div>  
                                             // </li>   
-                                        )}        
+                                        )}   
                                         
                                         <button className="btn btn-primary" type="submit" style={{marginTop:'10px', marginLeft:'3%'}} onClick={ ()=> addClick()}>{ values.length > 0 ?'Add more':'Add Content'}</button>
                                     </div>
