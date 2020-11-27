@@ -41,6 +41,8 @@ from './Actions/ActionType';
 import GetApiCall from '../GetApi'
 import {Edit3,Trash2,Monitor} from 'react-feather';
 import PostApiCall from '../Api';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 var arr = []
 var arr2 = [];
@@ -391,45 +393,51 @@ class FoodVariant extends Component {
                     }))
 
 
-            var login=localStorage.getItem('LoginDetail');
-            var details=JSON.parse(login)
-    
-            PostApiCall.postRequest({
-      
-                staffid : details[0].fld_staffid,
+                    var login=localStorage.getItem('LoginDetail');
+                    var details=JSON.parse(login)
             
-              },"GetUserSubMenuAccessRights").then((resultssub) => 
+                    PostApiCall.postRequest({
               
-                // const objs = JSON.parse(result._bodyText)
-                resultssub.json().then(objsub => {  
-                if(resultssub.status == 200 || resultssub.status==201){
-    
-               var filteredRights = objsub.data;
-                    // console.log(filteredRights)
+                        staffid : details[0].fld_staffid,
+                    
+                      },"GetUserSubMenuAccessRights").then((resultssub) => 
+                      
+                        // const objs = JSON.parse(result._bodyText)
+                        resultssub.json().then(objsub => {  
+                        if(resultssub.status == 200 || resultssub.status==201){
             
-                    var con = 0
-                    for(var i = 0 ; i< filteredRights.length ;i++){
-       
-                        if(filteredRights[i].fld_menuname == 'Add Food'){
+                       var filteredRights = objsub.data;
+                            // console.log(filteredRights)
+                    
+                            var con = 0
+                            for(var i = 0 ; i< filteredRights.length ;i++){
+               
+                                if(filteredRights[i].fld_menuname == 'Edit Covid & Health Essentials'){
+                    
+                                  if(filteredRights[i].fld_access == 1){
+                                   this.setState({
+                                     EditAccessGranted : true
+                                   })
+                                  }
+                                }else if(filteredRights[i].fld_menuname == 'Approve Covid & Health Essentials'){
+                    
+                                    if(filteredRights[i].fld_access == 1){
+                                     this.setState({
+                                       ApproveAccessGranted : true
+                                     })
+                                    }
+                                }
+                               
+                              con = con + 1
+                              if(con == filteredRights.length){
+                                  Notiflix.Loading.Remove();
+                              }
+                            }
+                    
             
-                          if(filteredRights[i].fld_access == 1){
-                  
-                           this.setState({
-                             AddAccess : true
-                           })
-                          }
                         }
-                       
-                      con = con + 1
-                      if(con == filteredRights.length){
-                          Notiflix.Loading.Remove();
-                      }
-                    }
             
-    
-                }
-    
-            }))
+                    }))
 
 
     }
@@ -1337,6 +1345,64 @@ OnAddVendorPricing(){
 }
 
 
+
+ApproveFootwear(){
+    if(this.state.ApproveAccessGranted){
+
+        confirmAlert({
+            title: 'Confirm to Approve',
+            message: 'Are you sure you want to approve covid variant.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                    Notiflix.Loading.Dots('');
+
+                    var login=localStorage.getItem('LoginDetail');
+                    var details=JSON.parse(login)
+
+
+        PostApiCall.postRequest({
+      
+            id : this.state.VariantId,
+             approved : 'Yes',
+             updatedby : details[0].fld_staffid,
+             updatedon : moment().format('lll'),
+
+      
+          },"UpdateCovidVariantApprovalStatus").then((results) => 
+          
+            // const objs = JSON.parse(result._bodyText)
+            results.json().then(obj => {
+
+            if(results.status == 200 || results.status==201){
+
+                Notiflix.Loading.Remove()
+            
+                Notiflix.Notify.Success('Covid variant successfully approved.')
+                window.location.href = '/covidvariantlist'
+
+            }else
+            {
+                Notiflix.Loading.Remove()
+                Notiflix.Notify.Failure('Something went wrong, try again later.')
+            }
+        }))
+                }
+              },
+              {
+                label: 'No',
+                // onClick: () => alert('Click No')
+              }
+            ]
+          });
+        }else{
+            Notiflix.Notify.Failure('You are not authorised to continue.'); 
+           }
+}
+
+
+
     render() {
         return (
             <div className="App">
@@ -1357,6 +1423,46 @@ OnAddVendorPricing(){
                                         <h4 class="mb-1 mt-0">View Covid Variant</h4>
                                     </div>
                                 </div>
+
+
+
+
+                                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center col-lg-6" style={{float : 'right'}}>
+                                       <div class="col text-right row " >
+
+                                        <div style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}>
+                                     <button 
+                                       style={{marginRight : '10px'}}
+                                      onClick={this.ApproveFootwear.bind(this)}
+                                        class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
+          class="uil-check mr-1"></i>Approve Covid Variant</button>
+                                                 </div>
+
+                                        <div>
+                                        <button  
+                                      onClick={()=>{
+                                          this.setState({IsVisible : true})
+                                      
+                                      }}
+                                        class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
+                                                class="uil-edit mr-1"></i>Edit Covid Variant Details</button>
+                                                </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
+                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                
+                </div>
+
+
 
                                 <div className="row">
                                     <div className="col-lg-12">
@@ -1469,6 +1575,7 @@ OnAddVendorPricing(){
                                                                         <div class="form-group mb-3">
                                                                             <label for="validationCustom01">Variant Name (160 Character)<span className="mandatory">*</span></label>
                                                                             <input type="text" class="form-control"  
+                                                                             disabled={!this.state.IsVisible}
                                                                             value={this.props.foodcredential.VarientName}
                                                                             onChange={this.onChangeVarient.bind(this)}/>
                                                                         </div>
@@ -1479,6 +1586,7 @@ OnAddVendorPricing(){
                                                                             <label for="validationCustom01">Size<span className="mandatory">*</span></label>
                                                                             <select class="form-control custom-select"
                                                                           value={this.state.Size} 
+                                                                          disabled={!this.state.IsVisible}
                                                                           onChange={this.onChangeSize.bind(this)} >
                                                                               {this.state.SizeData.map(brand => (
                            
@@ -1497,6 +1605,7 @@ OnAddVendorPricing(){
                                                                 <label for="validationCustom01">Color<span className="mandatory">*</span></label>
                                                                 <select class="form-control custom-select"
                                                                 value={this.state.Color}
+                                                                disabled={!this.state.IsVisible}
                                                                 onChange={(text)=>{
                                                                     this.setState({
                                                                         Color:text.target.value
@@ -1518,6 +1627,7 @@ OnAddVendorPricing(){
                                                             <label for="validationCustom01">Packaging Type<span className="mandatory">*</span></label>
                                                             <select class="form-control custom-select"
                                                             value={this.props.foodcredential.PackagingType}
+                                                            disabled={!this.state.IsVisible}
                                                             onChange={this.onChangePack.bind(this)}>
                                                               {this.state.PackagingTypeData.map(brand => (
                        
@@ -1573,6 +1683,7 @@ OnAddVendorPricing(){
                                                                         <label for="validationCustom01">Length<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control" 
                                                                         value={this.props.foodcredential.Packlength}
+                                                                        disabled={!this.state.IsVisible}
                                                                         onChange={this.onChangeLength.bind(this)}
                                                                         />
                                                                     
@@ -1583,6 +1694,7 @@ OnAddVendorPricing(){
                                                                         <label for="validationCustom01">Breadth<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control"
                                                                         value={this.props.foodcredential.Packbreadth}
+                                                                        disabled={!this.state.IsVisible}
                                                                         onChange={this.onChangebreadth.bind(this)} />
                                                                     </div>
                                                                 </div>
@@ -1591,6 +1703,7 @@ OnAddVendorPricing(){
                                                                         <label for="validationCustom01">Height<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control"  
                                                                         value={this.props.foodcredential.Packheight}
+                                                                        disabled={!this.state.IsVisible}
                                                                         onChange={this.onChangeHeight.bind(this)}
                                                                         />
                                                                     </div>
@@ -1600,6 +1713,7 @@ OnAddVendorPricing(){
                                                                     <label for="validationCustom01">Units Of Measurement<span className="mandatory">*</span></label>
                                                                     <select type="text" class="form-control" 
                                                                     value={this.props.foodcredential.Packunit}
+                                                                    disabled={!this.state.IsVisible}
                                                                     onChange={this.onChangePackunit.bind(this)} >
                                                                     {this.state.PackageMeasureUnitData.map(unitmeasure => (
                            
@@ -1638,6 +1752,7 @@ OnAddVendorPricing(){
                                                                     <label for="validationCustom01">Weight<span className="mandatory">*</span></label>
                                                                     <input type="text" class="form-control"  
                                                                     value={this.props.foodcredential.PackageWeight}
+                                                                    disabled={!this.state.IsVisible}
                                                                     onChange={this.onChangepackweight.bind(this)}
                                                                     />
                                                                 
@@ -1649,6 +1764,7 @@ OnAddVendorPricing(){
                                                                 <label for="validationCustom01">Units Of Measurement<span className="mandatory">*</span></label>
                                                                 <select type="text" class="form-control"  
                                                                 value={this.props.foodcredential.PackWeightUnit}
+                                                                disabled={!this.state.IsVisible}
                                                                 onChange={this.onChangeWeightmeasure.bind(this)}>
                                                                 {this.state.PackageMeasuretData.map(unitmeasure => (
                            
@@ -1679,6 +1795,7 @@ OnAddVendorPricing(){
                                                                 <label for="validationCustom01">Net Content Weight<span className="mandatory">*</span></label>
                                                                 <input type="text" class="form-control"  
                                                                 value={this.props.foodcredential.Weight}
+                                                                disabled={!this.state.IsVisible}
                                                                 onChange={this.onChangeWeight.bind(this)}
                                                                 />
                                                             
@@ -1690,6 +1807,7 @@ OnAddVendorPricing(){
                                                             <label for="validationCustom01">Units Of Measurement<span className="mandatory">*</span></label>
                                                             <select type="text" class="form-control" 
                                                             value={this.props.foodcredential.WeightUnit}
+                                                            disabled={!this.state.IsVisible}
                                                             onChange={this.onChangeWeightUnits.bind(this)}>
                                                             {this.state.WeightData.map(unitmeasure => (
                            
@@ -1751,7 +1869,7 @@ OnAddVendorPricing(){
                                                                      <div class="form-group mb-3">
                                                                          <label for="validationCustom01">Price MRP (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                          <input type="text" class="form-control" 
-                                                                        //   disabled={!this.state.IsVisible}
+                                                                          disabled={!this.state.IsVisible}
                                                                          value={this.props.foodcredential.Price}
                                                                          onChange={this.onChangeprice.bind(this)}/>
                                                                      
@@ -1762,7 +1880,7 @@ OnAddVendorPricing(){
                                                                         <div class="form-group mb-3">
                                                                             <label for="validationCustom01">Select Vendor<span className="mandatory">*</span></label>
                                                                             <select type="text" class="form-control" 
-                                                                            //  disabled={!this.state.IsVisible} 
+                                                                             disabled={!this.state.IsVisible} 
                                                                            value={this.state.Name} 
                                                                            onChange={(text)=>{
                                                                                this.setState({
@@ -1797,7 +1915,7 @@ OnAddVendorPricing(){
                                                                     <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Vendor Item SKU<span className="mandatory">*</span></label>
                                                                          <input type="text" class="form-control" 
-                                                                        //   disabled={!this.state.IsVisible}
+                                                                          disabled={!this.state.IsVisible}
                                                                           value={this.state.Sku} 
                                                                           onChange={(text)=>{
                                                                             //   if(this.state.AlphaNumericRegex.test(text.target.value)){
@@ -1813,7 +1931,7 @@ OnAddVendorPricing(){
                                                                         <div class="form-group mb-3">
                                                                             <label for="validationCustom01">Select BMS Margin On<span className="mandatory">*</span></label>
                                                                             <select type="text" class="form-control"  
-                                                                            //  disabled={!this.state.IsVisible}
+                                                                             disabled={!this.state.IsVisible}
                                                                            value={this.state.MarginOn} 
                                                                            onChange={(text)=>{
                                                                                this.setState({
@@ -1849,7 +1967,7 @@ OnAddVendorPricing(){
                                                                     <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Vendor Selling Price (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control" 
-                                                                        //  disabled={!this.state.IsVisible}
+                                                                         disabled={!this.state.IsVisible}
                                                                        value={this.state.VendorSellingPrice} 
                                                                        onChange={(text)=>{
                                                                         if(this.state.DecimalRegex.test(text.target.value)){
@@ -1890,7 +2008,7 @@ OnAddVendorPricing(){
                                                                      <div class="form-group mb-3">
                                                                          <label for="validationCustom01">Discounted Price (<span>&#8377;</span>)<span className="mandatory"></span></label>
                                                                          <input type="text" class="form-control"  
-                                                                        //   disabled={!this.state.IsVisible}
+                                                                          disabled={!this.state.IsVisible}
                                                                          value={this.props.foodcredential.DiscountPrice}
                                                                          onChange={this.onChangediscprice.bind(this)} />
                                                                      </div>
@@ -1899,7 +2017,7 @@ OnAddVendorPricing(){
                                                                      <div class="form-group mb-3">
                                                                          <label for="validationCustom01">Discount Percent(%)<span className="mandatory">*</span></label>
                                                                          <input type="text" class="form-control" value={this.props.foodcredential.DiscountPer} 
-                                                                        //   disabled={!this.state.IsVisible}
+                                                                          disabled={!this.state.IsVisible}
                                                                          onChange={this.onChangeDiscount.bind(this)}/>
                                                                      </div>
                                                                  </div>
@@ -1947,7 +2065,7 @@ OnAddVendorPricing(){
                                                                     <div class="form-group mb-3">
                                                                         <label for="validationCustom01">BMS Margin (%)<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control" 
-                                                                        //  disabled={!this.state.IsVisible}
+                                                                         disabled={!this.state.IsVisible}
                                                                         value={this.state.MarginPercent} 
                                                                         onChange={(text)=>{
                                                                             if(this.state.DecimalRegex.test(text.target.value)){
@@ -1987,7 +2105,7 @@ OnAddVendorPricing(){
                                                                     <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Margin Amount (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control" 
-                                                                        //  disabled={!this.state.IsVisible}
+                                                                         disabled={!this.state.IsVisible}
                                                                        value={this.state.Margin} 
                                                                        onChange={(text)=>{
                                                                         if(this.state.DecimalRegex.test(text.target.value)){
@@ -2219,6 +2337,7 @@ OnAddVendorPricing(){
                                                                                 <label for="validationCustom01">Title Bar (60 Characters)<span className="mandatory">*</span></label>
                                                                                 <input type="text" class="form-control" 
                                                                                 value={this.props.foodcredential.Title} 
+                                                                                disabled={!this.state.IsVisible}
                                                                                 onChange={this.onChangeTitle.bind(this)}/>
                                                                             </div>
                                                                         </div>
@@ -2228,6 +2347,7 @@ OnAddVendorPricing(){
                                                                            
                                                                             <textarea class="form-control" rows="2" cols="10"
                                                                             value={this.props.foodcredential.MetaDescription} 
+                                                                            disabled={!this.state.IsVisible}
                                                                             onChange={this.onChangemeta.bind(this)}>
                                                                               </textarea>
                                                                         </div>
@@ -2238,6 +2358,7 @@ OnAddVendorPricing(){
                                                                           
                                                                          <textarea class="form-control" rows="3" cols="15"
                                                                           value={this.props.foodcredential.Keyword}
+                                                                          disabled={!this.state.IsVisible}
                                                                          onChange={this.onChangeKey.bind(this)}></textarea>
                                                                         </div>
                                                                     </div>
@@ -2290,6 +2411,7 @@ OnAddVendorPricing(){
                                                                             <label for="validationCustom01">Select Vendor<span className="mandatory">*</span></label>
                                                                             <select type="text" class="form-control"  
                                                                            value={this.state.Name} 
+                                                                           disabled={!this.state.IsVisible}
                                                                            onChange={(text)=>{
                                                                                this.setState({
                                                                                    Name : text.target.value
@@ -2322,6 +2444,7 @@ OnAddVendorPricing(){
                                                                         <label for="validationCustom01">Vendor Item SKU<span className="mandatory">*</span></label>
                                                                          <input type="text" class="form-control" 
                                                                           value={this.state.Sku} 
+                                                                          disabled={!this.state.IsVisible}
                                                                           onChange={(text)=>{
                                                                             //   if(this.state.AlphaNumericRegex.test(text.target.value)){
                                                                               this.setState({
@@ -2337,6 +2460,7 @@ OnAddVendorPricing(){
                                                                             <label for="validationCustom01">Select BMS Margin On<span className="mandatory">*</span></label>
                                                                             <select type="text" class="form-control"  
                                                                            value={this.state.MarginOn} 
+                                                                           disabled={!this.state.IsVisible}
                                                                            onChange={(text)=>{
                                                                                this.setState({
                                                                                    MarginOn : text.target.value
@@ -2372,6 +2496,7 @@ OnAddVendorPricing(){
                                                                         <label for="validationCustom01">Vendor Selling Price (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control" 
                                                                        value={this.state.VendorSellingPrice} 
+                                                                       disabled={!this.state.IsVisible}
                                                                        onChange={(text)=>{
                                                                         if(this.state.DecimalRegex.test(text.target.value)){
                                                                            this.setState({
@@ -2399,6 +2524,7 @@ OnAddVendorPricing(){
                                                                         <label for="validationCustom01">BMS Margin (%)<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control" 
                                                                         value={this.state.MarginPercent} 
+                                                                        disabled={!this.state.IsVisible}
                                                                         onChange={(text)=>{
                                                                             if(this.state.DecimalRegex.test(text.target.value)){
                                                                             this.setState({
@@ -2431,6 +2557,7 @@ OnAddVendorPricing(){
                                                                         <label for="validationCustom01">Margin Amount (<span>&#8377;</span>)<span className="mandatory">*</span></label>
                                                                         <input type="text" class="form-control" 
                                                                        value={this.state.Margin} 
+                                                                       disabled={!this.state.IsVisible}
                                                                        onChange={(text)=>{
                                                                         if(this.state.DecimalRegex.test(text.target.value)){
                                                                            this.setState({
@@ -2681,6 +2808,7 @@ OnAddVendorPricing(){
                                                                      
                                                                         <select type="text" class="form-control" 
                                                                         value={this.state.Availability}
+                                                                        disabled={!this.state.IsVisible}
                                                                         onChange={(text)=>{
                                                                             this.setState({
                                                                                 Availability : text.target.value
@@ -2700,6 +2828,7 @@ OnAddVendorPricing(){
                                                                 <label for="sw-arrows-first-name" >Show On Website<span className="mandatory">*</span></label><br/>
                                                                 <label class="radio-inline">
                                                                 <input type="radio" name="optradio"
+                                                                 disabled={!this.state.IsVisible}
                                                                    checked={this.state.Status == 'Yes' ? true : false}
                                                                     onChange={()=>{
                                                                         this.setState({
@@ -2738,7 +2867,10 @@ OnAddVendorPricing(){
                                                                                     })
                                                                                 }}
                                                                             >Previous</button>
-                                                                            <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                            <button 
+                                                                            
+                                                                            disabled={!this.state.IsVisible}
+                                                                            className="btn btn-secondary sw-btn-next  btn-radius-left" 
                                                                             // onClick={()=>{
                                                        
                                                                             //     this.setState({

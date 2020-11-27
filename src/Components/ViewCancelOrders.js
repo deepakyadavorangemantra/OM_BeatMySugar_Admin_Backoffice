@@ -56,6 +56,11 @@ class ViewCancelOrders extends React.Component
            
           });
 
+          const script = document.createElement("script");
+        script.src = "assets/js/app.min.js";
+        script.async = true;
+        document.body.appendChild(script);
+
       
 
     var ordermain = JSON.parse(localStorage.getItem('OrderToBeCancelledData'))

@@ -2,6 +2,7 @@ import React from 'react';
 import { Bell,LogOut,Menu,X } from 'react-feather';
 
 class Header extends React.Component {
+    
     componentDidMount(){
         const script = document.createElement("script");
         script.src = "assets/js/app.min.js";
@@ -18,7 +19,7 @@ class Header extends React.Component {
             <div class="navbar navbar-expand flex-column flex-md-row navbar-custom">
                 <div class="container-fluid">
                     
-                    <a href="index.html" class="navbar-brand mr-0 mr-md-2 logo">
+                    <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
                         <span class="logo-lg">
                             <img src="assets/images/bmslogo1.png" alt="" height="60" />
                         

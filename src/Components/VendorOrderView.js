@@ -52,11 +52,17 @@ class VendorOrderView extends React.Component
            
           });
 
+
+       const script = document.createElement("script");
+        script.src = "assets/js/app.min.js";
+        script.async = true;
+        document.body.appendChild(script);
+
       
 
     var ordermain = JSON.parse(localStorage.getItem('VendorOrderDetailsData'))
    
-    console.log(ordermain)
+    // console.log(ordermain)
 
     this.setState({
         MainOrder : ordermain

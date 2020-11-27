@@ -57,6 +57,7 @@ export default class AddBanner extends Component {
             {value: 'Food & Supplements', label:'Food & Supplements'},
             {value: 'Footwear', label:'Footwear'},
             {value: 'Socks', label:'Socks'},
+            {value: 'Accessories', label:'Accessories'},
             {value: 'Festive Offer', label:'Festive Offer'},
             {value: 'Insurance', label:'Insurance'},
             {value: 'Doctor', label:'Doctors'},
@@ -87,15 +88,28 @@ export default class AddBanner extends Component {
         imagePreviewUrlCover: '/assets/images/Cover-logo.png',
         imagePreviewUrlCover1: '/assets/images/Cover-logo.png',
 
+        OrderNum : 1,
+        OrderNumData : [],
+
         ImageApiUrl : 'https://images.beatmysugar.com/api/Image/SaveImage',
       
    
     
     }
 
+    }
 
+    componentDidMount(){
 
+        var dt = []
 
+        for(var i =0 ;i<20 ; i++){
+
+            dt.push({label:i+1,value:i+1})
+        }
+        this.setState({
+            OrderNumData : dt
+        })
     }
    
     photoUploadCover = e => {
@@ -195,6 +209,7 @@ SaveFinal(){
                verticle :this.state.Vertical,
                type:this.state.Type,
                url :this.state.Url,
+               order : this.state.OrderNum,
                showonwebsite :this.state.ShowOnWebsite,
                updatedby :details[0].fld_staffid,
                updatedon :moment().format('lll')
@@ -413,6 +428,32 @@ SaveFinal(){
                                                                                  </div>
                                                                             </div>
 
+                                                                            <div  class="col-md-6" style={{display : this.state.Vertical == 'Home' ? '' : 'none'}}>
+                                                                                <div class="form-group" >
+                                                                                <label>Banner Order<span className="mandatory">*</span></label>
+                                                                                <select type="text" class="form-control" 
+                                                                                     value={this.state.OrderNum}
+                                                                                     onChange={(text)=>{
+
+                                                                                     
+                                                                                        this.setState({
+                                                                                            OrderNum : text.target.value
+                                                                                        })
+    
+                                                                                    }}
+                                                                                >
+                                                                        
+                                                                                {this.state.OrderNumData.map(title => (
+                            
+                                                                                     <option key={title.value} value={title.value}>
+                                                                                         {title.label}
+                                                                                     </option>
+                                                                                     ))}
+                                                                                 </select>
+                                                                                </div>
+                                                                            </div>                                                                               
+                                                                             
+
                                                                             <div  class="col-md-6" style={{display : this.state.IsType ? '' : 'none'}}>
                                                                                 <div class="form-group" >
                                                                                 <label>Type<span className="mandatory">*</span></label>
@@ -463,6 +504,7 @@ SaveFinal(){
                                                                                  </select>
                                                                                 </div>
                                                                             </div>                                                                               
+                                                                             
                                                                                 </div>                                                                            
                                                                             </div>                                                                             
                                                                         </div>

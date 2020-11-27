@@ -57,6 +57,7 @@ export default class AddBanner extends Component {
             {value: 'Food & Supplements', label:'Food & Supplements'},
             {value: 'Footwear', label:'Footwear'},
             {value: 'Socks', label:'Socks'},
+            {value: 'Accessories', label:'Accessories'},
             {value: 'Festive Offer', label:'Festive Offer'},
             {value: 'Insurance', label:'Insurance'},
             {value: 'Doctor', label:'Doctors'},
@@ -85,6 +86,9 @@ export default class AddBanner extends Component {
         ImageDataCover:[],
         ImageDataCover1:[],
 
+        OrderNum : 1,
+        OrderNumData : [],
+
         imagePreviewUrlCover: '/assets/images/Cover-logo.png',
         imagePreviewUrlCover1: '/assets/images/Cover-logo.png',
 
@@ -109,6 +113,16 @@ export default class AddBanner extends Component {
        
           Notiflix.Loading.Dots('');
 
+          var dt = []
+
+          for(var i =0 ;i<20 ; i++){
+  
+              dt.push({label:i+1,value:i+1})
+          }
+          this.setState({
+              OrderNumData : dt
+          })
+
           var bnr = JSON.parse(localStorage.getItem('BannerDetails'))
 
           this.setState({
@@ -118,7 +132,9 @@ export default class AddBanner extends Component {
               Type : bnr.fld_type,
               imagePreviewUrlCover : bnr.fld_image,
               imagePreviewUrlCover1 : bnr.fld_mobileimage,
-              ShowOnWebsite : bnr.fld_showonwebsite
+              ShowOnWebsite : bnr.fld_showonwebsite,
+              OrderNum : bnr.fld_order
+
           })
 
 
@@ -298,7 +314,8 @@ SaveFinal(){
            url :this.state.Url,
            showonwebsite :this.state.ShowOnWebsite,
            updatedby :details[0].fld_staffid,
-           updatedon :moment().format('lll')
+           updatedon :moment().format('lll'),
+           order : this.state.OrderNum
          },"UpdateAdBannerMaster").then((result) =>
          
            result.json().then(obj1 =>{
@@ -524,6 +541,33 @@ PostApiCall.postRequest({
                                                                                 </select>
                                                                                  </div>
                                                                             </div>
+
+
+                                                                            <div  class="col-md-6" style={{display : this.state.Vertical == 'Home' ? '' : 'none'}}>
+                                                                                <div class="form-group" >
+                                                                                <label>Banner Order<span className="mandatory">*</span></label>
+                                                                                <select type="text" class="form-control" 
+                                                                                     value={this.state.OrderNum}
+                                                                                     onChange={(text)=>{
+
+                                                                                     
+                                                                                        this.setState({
+                                                                                            OrderNum : text.target.value
+                                                                                        })
+    
+                                                                                    }}
+                                                                                >
+                                                                        
+                                                                                {this.state.OrderNumData.map(title => (
+                            
+                                                                                     <option key={title.value} value={title.value}>
+                                                                                         {title.label}
+                                                                                     </option>
+                                                                                     ))}
+                                                                                 </select>
+                                                                                </div>
+                                                                            </div>                                                                               
+                                                                          
 
                                                                             <div  class="col-md-6" style={{display : this.state.IsType ? '' : 'none'}}>
                                                                                 <div class="form-group" >

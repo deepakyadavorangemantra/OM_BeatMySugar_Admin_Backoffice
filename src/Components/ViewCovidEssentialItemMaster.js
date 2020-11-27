@@ -21,6 +21,8 @@ import{
 
 }
 from './Actions/ActionType';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class covidEssential extends Component {
 
@@ -218,6 +220,54 @@ class covidEssential extends Component {
 
                                           
 
+                                        }))
+
+
+
+                                        var login=localStorage.getItem('LoginDetail');
+                                        var details=JSON.parse(login)
+                                
+                                        PostApiCall.postRequest({
+                                  
+                                            staffid : details[0].fld_staffid,
+                                        
+                                          },"GetUserSubMenuAccessRights").then((resultssub) => 
+                                          
+                                            // const objs = JSON.parse(result._bodyText)
+                                            resultssub.json().then(objsub => {  
+                                            if(resultssub.status == 200 || resultssub.status==201){
+                                
+                                           var filteredRights = objsub.data;
+                                                // console.log(filteredRights)
+                                        
+                                                var con = 0
+                                                for(var i = 0 ; i< filteredRights.length ;i++){
+                                   
+                                                    if(filteredRights[i].fld_menuname == 'Edit Covid & Health Essentials'){
+                                        
+                                                      if(filteredRights[i].fld_access == 1){
+                                                       this.setState({
+                                                         EditAccessGranted : true
+                                                       })
+                                                      }
+                                                    }else if(filteredRights[i].fld_menuname == 'Approve Covid & Health Essentials'){
+                                        
+                                                        if(filteredRights[i].fld_access == 1){
+                                                         this.setState({
+                                                           ApproveAccessGranted : true
+                                                         })
+                                                        }
+                                                    }
+                                                   
+                                                  con = con + 1
+                                                  if(con == filteredRights.length){
+                                                      Notiflix.Loading.Remove();
+                                                  }
+                                                }
+                                        
+                                
+                                            }
+                                
                                         }))
 
 
@@ -457,6 +507,58 @@ SaveProduct(){
 
 
 
+ApproveFood(){
+    if(this.state.ApproveAccessGranted){
+
+        confirmAlert({
+            title: 'Confirm to Approve',
+            message: 'Are you sure you want to approve covid item.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                    Notiflix.Loading.Dots('');
+
+                    var login=localStorage.getItem('LoginDetail');
+                    var details=JSON.parse(login)
+
+
+        PostApiCall.postRequest({
+      
+            id: this.state.CovidId,
+             approved : 'Yes',
+             updatedby : details[0].fld_staffid,
+             updatedon : moment().format('lll'),
+
+      
+          },"UpdateCovidItemMasterApprovalStatus").then((results) => 
+          
+            // const objs = JSON.parse(result._bodyText)
+            results.json().then(obj => {
+
+            if(results.status == 200 || results.status==201){
+
+                Notiflix.Loading.Remove()
+                Notiflix.Notify.Success('Covid item master successfully updated.')
+                                      window.location.href = '/covidessentialsmasterlist'
+            }else
+            {
+                Notiflix.Loading.Remove()
+                Notiflix.Notify.Failure('Something went wrong, try again later.')
+            }
+        }))
+                }
+              },
+              {
+                label: 'No',
+                // onClick: () => alert('Click No')
+              }
+            ]
+          });
+        }else{
+            Notiflix.Notify.Failure('You are not authorised to continue.'); 
+           }
+}
 
 
     render() {
@@ -478,6 +580,43 @@ SaveProduct(){
                                         <h4 class="mb-1 mt-0">Update Covid & Health Essentials Item</h4>
                                     </div>
                                 </div>
+
+
+                                <div class="row" style={{display : this.state.EditAccessGranted ||  this.state.ApproveAccessGranted ? '' : 'none'}}>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center col-lg-5" style={{float : 'right'}}>
+                                       <div class="text-right row " >
+
+                                        <div style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}>
+                                       <button 
+                                       style={{marginRight : '10px'}}
+                                      onClick={this.ApproveFood.bind(this)}
+                                        class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
+                                                class="uil-check mr-1"></i>Approve Covid Item </button>
+                                                </div>
+
+                                        <div style={{display : this.state.EditAccessGranted ? '' : 'none'}}>
+                                        <button  
+                                      onClick={()=>{
+                                          this.setState({IsVisible : true})
+                                      
+                                      }}
+                                        class="btn btn-primary" id="btn-new-event" data-toggle="modal"><i
+                                                class="uil-edit mr-1"></i>Edit Covid Item Details</button>
+                                                </div>
+                                    {/* </div>
+                                    <div class="col text-right" style={{display : this.state.ApproveAccessGranted ? '' : 'none'}}> */}
+                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                
+                </div>
+
 
                                 <div className="row">
                                     <div className="col-lg-12">
@@ -550,6 +689,7 @@ SaveProduct(){
                                                                                     <label for="validationCustom05">Item Name (160 Character)<span className="mandatory">*</span></label>
                                                                                     <input type="text" class="form-control" id="validationCustom05"
                                                                                     value={this.props.covidcredential.ItemName}
+                                                                                    disabled={!this.state.IsVisible}
                                                                                     onChange={this.onChangeitem.bind(this)} />
                                                                                     
                                                                                 </div>
@@ -560,6 +700,7 @@ SaveProduct(){
                                                                             
                                                                             <select class="form-control custom-select" 
                                                                                 value={this.props.covidcredential.Brand}
+                                                                                disabled={!this.state.IsVisible}
                                                                                 onChange={this.onChangeBrand.bind(this)}>
                                                                                 {this.state.Branddata.map(brand => (
                            
@@ -578,6 +719,7 @@ SaveProduct(){
                                                                             
                                                                             <select class="form-control custom-select" 
                                                                             value={this.props.covidcredential.CompanyName}
+                                                                            disabled={!this.state.IsVisible}
                                                                             onChange={this.onChangeCompany.bind(this)}>
                                                                             <option></option>
                                                                             {this.state.Companydata.map(company =>(
@@ -595,6 +737,7 @@ SaveProduct(){
                                                                             
                                                                             <select class="form-control custom-select" 
                                                                             value={this.props.covidcredential.ManufactureName}
+                                                                            disabled={!this.state.IsVisible}
                                                                             onChange={this.onChangeManufact.bind(this)}>
                                                                             <option></option>
                                                                             {this.state.ManufactureData.map(manufacture =>(
@@ -611,6 +754,7 @@ SaveProduct(){
                                                                             
                                                                             <select class="form-control custom-select"
                                                                             value={this.props.covidcredential.MarketerName}
+                                                                            disabled={!this.state.IsVisible}
                                                                             onChange={this.onchangemark.bind(this)}>
                                                                             <option></option>
                                                                             {this.state.MarketerData.map(marketername =>(
@@ -628,6 +772,7 @@ SaveProduct(){
                                                                             
                                                                             <select class="form-control custom-select" 
                                                                             value={this.props.covidcredential.Category}
+                                                                            disabled={!this.state.IsVisible}
                                                                              onChange={this.onChangeCat.bind(this)}>
                                                                                {this.state.Categorydata.map(category =>(
                                                                                 <option key={category.value} value={category.value}>
@@ -645,6 +790,7 @@ SaveProduct(){
                                                                             <label for="sw-arrows-first-name" >Country of Origin <span className="mandatory">*</span></label>
                                                                             
                                                                             <select class="form-control custom-select"
+                                                                             disabled={!this.state.IsVisible}
                                                                              disabled={!this.state.IsVisible}
                                                                             value={this.state.CountryOfOrigin}
                                                                             onChange={(text)=>{
@@ -670,6 +816,7 @@ SaveProduct(){
                                                                             
                                                                             <Select 
                                                                             options={this.state.Filterdata}
+                                                                            disabled={!this.state.IsVisible}
                                                                                 value={this.state.Filter}
                                                                                 onChange={this.onChangeFilter.bind(this)}
                                                                                 isMulti
@@ -726,6 +873,7 @@ SaveProduct(){
                                                                     config={{
                                                                         extraPlugins: "justify,font,colorbutton",
                                                                      }}
+                                                                     readOnly={!this.state.IsVisible}
                                                                         data={this.state.Description}
                                                                         onChange={this.onChangeDescription.bind(this)}
                                                                           />
@@ -790,6 +938,7 @@ SaveProduct(){
                                                                     config={{
                                                                         extraPlugins: "justify,font,colorbutton",
                                                                      }}
+                                                                     readOnly={!this.state.IsVisible}
                                                                     data={this.state.keyIngridents}
                                                                     onChange={this.onChangekey.bind(this)}
                                                                           />
@@ -851,6 +1000,7 @@ SaveProduct(){
                                                                 
                                                                 <select class="form-control custom-select" 
                                                                 value={this.props.covidcredential.Returnable}
+                                                                disabled={!this.state.IsVisible}
                                                                 onChange={this.onchangeReturn.bind(this)}>
                                                                 {this.state.Returnable.map(returnable => (
                            
@@ -868,6 +1018,7 @@ SaveProduct(){
                                                                 
                                                                 <select class="form-control custom-select"
                                                                 value={this.props.covidcredential.ReturnableDays}
+                                                                disabled={!this.state.IsVisible}
                                                                 onChange={this.onChangeReturnday.bind(this)}>
                                                                 {this.state.ReturnableDays.map(returnabledays => (
                            
@@ -884,6 +1035,7 @@ SaveProduct(){
                                                                     <label for="validationCustom05">HSN Code<span className="mandatory">*</span></label>
                                                                     <input type="text" class="form-control" id="validationCustom05"
                                                                      value={this.props.covidcredential.HSNCode}
+                                                                     disabled={!this.state.IsVisible}
                                                                      onChange={this.onChangeHSN.bind(this)} />
                                                                     
                                                                 </div>
@@ -893,6 +1045,7 @@ SaveProduct(){
                                                                 <label for="validationCustom05">GST Rate(%)<span className="mandatory">*</span></label>
                                                               <select class="form-control custom-select"
                                                                value={this.props.covidcredential.GstRate}
+                                                               disabled={!this.state.IsVisible}
                                                                onChange={this.onChangeGst.bind(this)}>
                                                                {this.state.GSTData.map(GST =>(
                                                                 <option key={GST.value} value={GST.value}>
@@ -925,7 +1078,9 @@ SaveProduct(){
                                                                                     })
                                                                                 }}
                                                                             >Previous</button>
-                                                                            <button className="btn btn-secondary sw-btn-next  btn-radius-left"
+                                                                            <button 
+                                                                             disabled={!this.state.IsVisible}
+                                                                            className="btn btn-secondary sw-btn-next  btn-radius-left"
                                                                             //  onClick={()=>{
                                                        
                                                                             //     this.setState({
