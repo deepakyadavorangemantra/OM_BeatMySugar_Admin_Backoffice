@@ -3,7 +3,7 @@
 const express = require('express');
 // const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 3006;
+const port = process.env.PORT || 8086;
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios')
