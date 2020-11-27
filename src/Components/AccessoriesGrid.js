@@ -1,0 +1,225 @@
+import React, { Component } from 'react';
+import Helmet from 'react-helmet'
+import {Edit3,Eye,Trash2} from 'react-feather';
+import Notiflix from "notiflix";
+import GetApiCall from '../GetApi';
+import PostApiCall from '../Api'
+import moment from 'moment';
+
+
+
+class AccessoriesGrid extends Component {
+    constructor(props){
+        super(props)
+        
+        this.state={
+            AccessoriesData:[],
+            AddAccess : false
+        }
+       }
+
+    componentDidMount(){
+        Notiflix.Loading.Init({
+            svgColor : '#507dc0'
+           
+          });
+       
+          Notiflix.Loading.Dots('');
+
+          GetApiCall.getRequest("Get_AccessoriesItemMaster").then(resultdes =>
+              resultdes.json().then(obj => {
+             
+            //   console.log(obj.data)
+              
+                this.setState({
+                  AccessoriesData : obj.data
+                })
+               Notiflix.Loading.Remove();
+              }))
+
+
+              var login=localStorage.getItem('LoginDetail');
+                  var details=JSON.parse(login)
+          
+                  PostApiCall.postRequest({
+            
+                      staffid : details[0].fld_staffid,
+                  
+                    },"GetUserSubMenuAccessRights").then((resultssub) => 
+                    
+                      // const objs = JSON.parse(result._bodyText)
+                      resultssub.json().then(objsub => {  
+                      if(resultssub.status == 200 || resultssub.status==201){
+          
+                     var filteredRights = objsub.data;
+                          // console.log(filteredRights)
+                  
+                          var con = 0
+                          for(var i = 0 ; i< filteredRights.length ;i++){
+             
+                              if(filteredRights[i].fld_menuname == 'Add Accessories'){
+                  
+                                if(filteredRights[i].fld_access == 1){
+                        
+                                 this.setState({
+                                   AddAccess : true
+                                 })
+                                }
+                              }
+                             
+                            con = con + 1
+                            if(con == filteredRights.length){
+                                Notiflix.Loading.Remove();
+                            }
+                          }
+                  
+          
+                      }
+          
+                  }))
+
+
+            }
+ 
+    render(){
+        return(
+           <div>
+          
+                     
+            <div class="content-page">
+            
+            <div class="content">
+              <div class="container-fluid">
+                    <div class="row page-title">
+                    <div class="col-md-12">
+                    <nav aria-label="breadcrumb" class="float-right mt-1">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Product Management</a></li>
+                            
+                            <li class="breadcrumb-item active" aria-current="page">Accessories List
+                            </li>
+                        </ol>
+                    </nav>
+                    <h4 class="mb-1 mt-0">Accessories List
+                    </h4>
+                </div>
+                    </div> 
+
+                    <div class="row" style={{display : this.state.AddAccess ? '' : 'none'}}>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                <div class="col-md-6">
+                                
+                               
+                           </div>
+                                   <div class="col-md-6 text-right" >
+                                       <a href='/addaccessoriesitemmaster'>
+                                       <button 
+                                       
+                                       class="btn btn-primary" id="btn-new-event"><i
+                                               class="uil-plus mr-1"></i>Add New Accessories Item</button>
+                                  
+                                       </a>
+                                                                       </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                
+                </div>
+                    
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="table-responsive">
+                               
+                                <table id="basic-datatable" class="table dt-responsive nowrap">
+                                <thead>
+                                    <tr>
+                                    <th>Item Code</th>
+                                        <th>Item Name</th>
+                                        <th>Brand</th>
+                                        <th>Comapny</th>
+                                        <th>HSN Code</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                       
+                                        
+                                    </tr>
+                                </thead>
+                                
+                                 <tbody>
+                                 {this.state.AccessoriesData.length == 0 ? 
+                                 <tr><td colSpan={7} style={{textAlign:'center'}}>No Accessories Item Master Available</td></tr> : 
+                                 ''} 
+                                 {this.state.AccessoriesData.map((data,index)=>(
+                                            
+                                            
+                                        
+                                     <tr key={index}>
+                                                  { index == 0 ?
+                                           <Helmet>
+                                       
+                                 <script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
+                                 <script src="/assets/js/pages/datatables.init.js"></script>
+                                 <script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
+                            
+                                 </Helmet> : ''}
+                                 <td>{data.fld_code}</td>
+                                      <td>{data.fld_name} 
+                                       <br/><a class="variant-list"
+                                       onClick={()=>{
+                                        
+                                         localStorage.setItem('AccessoriesParentIdDetails',JSON.stringify(data))
+                                         window.location.href = "/accessoriesvariantlist"
+                                     }}
+                                 >{data.VariantCount} Variant{data.VariantCount == 1 ? '' : 's'} Available ( <span style={{color:'red'}}>{data.NotApproved} Pending</span>, <span style={{color:'green'}}>{data.Approved} Approved</span> )</a>
+                                      </td>
+                                     <td>{data.fld_brand}</td>
+                                     <td>{data.fld_company}</td>
+                                     <td>{data.fld_hsncode}</td>
+                                     <td style={{color:data.fld_approved == 'Yes' ? 'green' : 'red'}}><b>{data.fld_approved== 'Yes' ? 'Approved' : 'Pending'}</b></td>
+                                     <td> <div class="align-self-center tableact" style={{ textAlign: 'center'}}
+                                     onClick={()=>{
+                                        
+                                         localStorage.setItem('AccessoriesItemMasterDetails',JSON.stringify(data))
+                                         window.location.href = '/viewaccessoriesitemmaster'
+                                     }}
+                                     >
+                                 <span  >
+                                 <Edit3/>
+                                     </span>
+                                     {/* &nbsp;&nbsp;<Trash2/> */}
+                                     </div> &nbsp;&nbsp;
+                                      </td>
+                                   
+                                     </tr>
+                     
+                               
+                             ))} 
+                                     
+                                    
+                                     </tbody>
+                                   
+                                    </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                 </div>
+            </div>
+         </div>  
+
+           </div>
+        )
+    }
+}
+export default AccessoriesGrid;
