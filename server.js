@@ -7,7 +7,7 @@ const port = process.env.PORT || 3006;
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios')
-// const Parser = require('html-react-parser')
+const Parser = require('html-react-parser')
 
 
 const urlString = "https://api.beatmysugar.com/BackofficeApi/";
