@@ -57,6 +57,7 @@ export default class AddBanner extends Component {
             {value: 'Food & Supplements', label:'Food & Supplements'},
             {value: 'Footwear', label:'Footwear'},
             {value: 'Socks', label:'Socks'},
+            {value: 'Covid Essentials', label:'Covid Essentials'},
             {value: 'Accessories', label:'Accessories'},
             {value: 'Festive Offer', label:'Festive Offer'},
             {value: 'Insurance', label:'Insurance'},
