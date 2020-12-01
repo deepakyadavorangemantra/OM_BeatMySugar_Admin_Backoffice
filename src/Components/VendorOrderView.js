@@ -139,7 +139,8 @@ class VendorOrderView extends React.Component
            }
         }))
 
-        }if(obj1.data[i].fld_category == 'Socks'){
+        }
+        if(obj1.data[i].fld_category == 'Socks'){
 
 
             PostApiCall.postRequest({
@@ -166,6 +167,61 @@ class VendorOrderView extends React.Component
 
         }
  
+
+        if(obj1.data[i].fld_category == 'Accessories'){
+
+
+          PostApiCall.postRequest({
+
+              orderid : ordermain.fld_ordervendorid,
+              productid : obj1.data[i].fld_productid
+       
+       },"GetVendorAccessoriesOrderDetail").then((results2) => 
+       
+         // const objs = JSON.parse(result._bodyText)
+         results2.json().then(obj2 => {
+      
+       
+         if(results2.status == 200 || results2.status==201){
+
+          // console.log(obj2.data)
+          dt.push(obj2.data[0])
+            this.setState({
+      CartData : dt
+  })
+  
+         }
+      }))
+
+      }
+
+
+      if(obj1.data[i].fld_category == 'Covid'){
+
+
+        PostApiCall.postRequest({
+
+            orderid : ordermain.fld_ordervendorid,
+            productid : obj1.data[i].fld_productid
+     
+     },"GetVendorCovidOrderDetail").then((results2) => 
+     
+       // const objs = JSON.parse(result._bodyText)
+       results2.json().then(obj2 => {
+    
+     
+       if(results2.status == 200 || results2.status==201){
+
+        // console.log(obj2.data)
+        dt.push(obj2.data[0])
+          this.setState({
+    CartData : dt
+})
+
+       }
+    }))
+
+    }
 
     }
 

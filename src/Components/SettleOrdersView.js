@@ -185,7 +185,57 @@ class SettleOrdersView extends React.Component
            }
         }))
 
-        }
+        }       else if(obj1.data[i].fld_category == 'Accessories'){
+
+
+          PostApiCall.postRequest({
+
+              orderid : ordermain.fld_orderid,
+              productid : obj1.data[i].fld_productid
+       
+       },"GetAccessoriesOrderDetail").then((results2) => 
+       
+         // const objs = JSON.parse(result._bodyText)
+         results2.json().then(obj2 => {
+      
+       
+         if(results2.status == 200 || results2.status==201){
+
+    
+          dt.push(obj2.data[0])
+            this.setState({
+      CartData : dt
+  })
+  
+         }
+      }))
+
+      }else if(obj1.data[i].fld_category == 'Covid'){
+
+
+        PostApiCall.postRequest({
+
+            orderid : ordermain.fld_orderid,
+            productid : obj1.data[i].fld_productid
+     
+     },"GetCovidOrderDetail").then((results2) => 
+     
+       // const objs = JSON.parse(result._bodyText)
+       results2.json().then(obj2 => {
+    
+     
+       if(results2.status == 200 || results2.status==201){
+
+     
+        dt.push(obj2.data[0])
+          this.setState({
+    CartData : dt
+})
+
+       }
+    }))
+
+    }
  
 
     }
@@ -300,7 +350,8 @@ if(results1.status == 200 || results1.status==201){
                }
             }))
     
-            }else if(obj2.data[j].fld_category == 'Socks'){
+            }
+            else if(obj2.data[j].fld_category == 'Socks'){
     
     
                 PostApiCall.postRequest({
@@ -332,6 +383,72 @@ if(results1.status == 200 || results1.status==201){
             }))
     
             }
+
+            else if(obj2.data[j].fld_category == 'Covid'){
+    
+    
+              PostApiCall.postRequest({
+  
+                  ordervendordetailid : obj2.data[j].fld_ordervendordetailid,
+                  productid : obj2.data[j].fld_productid
+           
+           },"Get_CovidProductByOrderVendorDetailID_NewBackoffice").then((results3) => 
+           
+             // const objs = JSON.parse(result._bodyText)
+             results3.json().then(obj3 => {
+          
+           
+             if(results3.status == 200 || results3.status==201){
+  
+           
+              for(var k=0;k<Object.keys(obj1.data).length;k++){
+                  if(obj1.data[k].fld_verdorid == obj3.data[0].fld_vendorid){
+
+                    detOrder[k].VenDet.push(obj3.data[0])
+                  this.setState({
+                    VendorOrders : detOrder
+        })
+        
+                  }
+              }
+      
+             }
+          }))
+  
+          }
+
+          else if(obj2.data[j].fld_category == 'Accessories'){
+    
+    
+            PostApiCall.postRequest({
+
+                ordervendordetailid : obj2.data[j].fld_ordervendordetailid,
+                productid : obj2.data[j].fld_productid
+         
+         },"Get_AccessoriesProductByOrderVendorDetailID_NewBackoffice").then((results3) => 
+         
+           // const objs = JSON.parse(result._bodyText)
+           results3.json().then(obj3 => {
+        
+         
+           if(results3.status == 200 || results3.status==201){
+
+         
+            for(var k=0;k<Object.keys(obj1.data).length;k++){
+                if(obj1.data[k].fld_verdorid == obj3.data[0].fld_vendorid){
+
+                  detOrder[k].VenDet.push(obj3.data[0])
+                this.setState({
+                  VendorOrders : detOrder
+      })
+      
+                }
+            }
+    
+           }
+        }))
+
+        }
         }
     }))
 

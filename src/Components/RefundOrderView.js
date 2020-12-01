@@ -155,7 +155,8 @@ this.getSplitData(obj2.data[0],dt)
        }
     }))
 
-    }else if(dt.fld_category == 'Socks'){
+    }
+    else if(dt.fld_category == 'Socks'){
 
 
         PostApiCall.postRequest({
@@ -182,6 +183,60 @@ this.getSplitData(obj2.data[0],dt)
     }))
 
     }
+
+    else if(dt.fld_category == 'Accessories'){
+
+
+        PostApiCall.postRequest({
+
+            orderid : dt.fld_orderid,
+            productid : dt.fld_productid
+     
+     },"GetAccessoriesOrderDetail").then((results2) => 
+     
+       // const objs = JSON.parse(result._bodyText)
+       results2.json().then(obj2 => {
+    
+     
+        if(results2.status == 200 || results2.status==201){
+
+
+            this.setState({
+                ProductName : obj2.data[0].fld_prodname,
+                ProdData : obj2.data[0]
+            })
+            this.getSplitData(obj2.data[0],dt)
+    
+           }
+    }))
+
+    }    else if(dt.fld_category == 'Covid'){
+
+
+        PostApiCall.postRequest({
+
+            orderid : dt.fld_orderid,
+            productid : dt.fld_productid
+   
+   },"GetCovidOrderDetail").then((results2) => 
+   
+     // const objs = JSON.parse(result._bodyText)
+     results2.json().then(obj2 => {
+  
+   
+        if(results2.status == 200 || results2.status==201){
+
+
+            this.setState({
+                ProductName : obj2.data[0].fld_prodname,
+                ProdData : obj2.data[0]
+            })
+            this.getSplitData(obj2.data[0],dt)
+    
+           }
+  }))
+
+  }
 
     }
 

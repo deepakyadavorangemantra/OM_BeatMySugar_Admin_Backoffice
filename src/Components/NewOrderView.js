@@ -192,6 +192,71 @@ class NewOrderView extends React.Component
         }))
 
         }
+        else if(obj1.data[i].fld_category == 'Accessories'){
+
+
+          PostApiCall.postRequest({
+
+              orderid : ordermain.fld_orderid,
+              productid : obj1.data[i].fld_productid
+       
+       },"GetAccessoriesOrderDetail").then((results2) => 
+       
+         // const objs = JSON.parse(result._bodyText)
+         results2.json().then(obj2 => {
+      
+       
+         if(results2.status == 200 || results2.status==201){
+
+          // console.log(obj2.data)
+          if(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null && obj2.data[0].fld_shipvendorid != 0){
+
+            this.setState({
+              IsAlreadyShipAssigned : this.state.IsAlreadyShipAssigned + 1
+            })
+
+          }
+          dt.push(obj2.data[0])
+            this.setState({
+      CartData : dt
+  })
+  
+         }
+      }))
+
+      }else if(obj1.data[i].fld_category == 'Covid'){
+
+
+        PostApiCall.postRequest({
+
+            orderid : ordermain.fld_orderid,
+            productid : obj1.data[i].fld_productid
+     
+     },"GetCovidOrderDetail").then((results2) => 
+     
+       // const objs = JSON.parse(result._bodyText)
+       results2.json().then(obj2 => {
+    
+     
+       if(results2.status == 200 || results2.status==201){
+
+        // console.log(obj2.data)
+        if(obj2.data[0].fld_shipvendorid != '' && obj2.data[0].fld_shipvendorid != null && obj2.data[0].fld_shipvendorid != 0){
+
+          this.setState({
+            IsAlreadyShipAssigned : this.state.IsAlreadyShipAssigned + 1
+          })
+
+        }
+        dt.push(obj2.data[0])
+          this.setState({
+    CartData : dt
+})
+
+       }
+    }))
+
+    }
  
 
     }
@@ -599,7 +664,8 @@ else
          }
         }))
 
-          }else if(this.state.SelectedProduct[i].fld_category == 'Socks'){
+          }
+          else if(this.state.SelectedProduct[i].fld_category == 'Socks'){
 
 
             PostApiCall.postRequest({
@@ -647,6 +713,101 @@ else
 
           }
 
+          else if(this.state.SelectedProduct[i].fld_category == 'Accessories'){
+
+
+            PostApiCall.postRequest({
+
+              productid : this.state.SelectedProduct[i].fld_productid
+       
+       },"GetAccessoriesVendorDataAssign").then((results2) => 
+       
+         // const objs = JSON.parse(result._bodyText)
+         results2.json().then(obj2 => {
+      
+       
+         if(results2.status == 200 || results2.status==201){
+
+
+          vendorData.push(obj2.data[0])
+
+          this.setState({
+            VendorData : vendorData
+          })
+
+          cn = cn +1
+
+          if(cn == this.state.SelectedProduct.length){
+
+            var resArr = [];
+            this.state.VendorData.forEach(function(item){
+            var i = resArr.findIndex(x => x.value == item.value);
+            if(i <= -1){
+              resArr.push(item);
+            }
+          });
+          resArr.push({label : 'Rx Health Management India Pvt Ltd',value : 32})
+          this.setState({
+            VendorData :resArr
+          })
+
+            Notiflix.Loading.Remove()
+            this.setState({
+             open : true
+           })
+       }
+         }
+        }))
+
+          }
+
+          else if(this.state.SelectedProduct[i].fld_category == 'Covid'){
+
+
+            PostApiCall.postRequest({
+
+              productid : this.state.SelectedProduct[i].fld_productid
+       
+       },"GetCovidVendorDataAssign").then((results2) => 
+       
+         // const objs = JSON.parse(result._bodyText)
+         results2.json().then(obj2 => {
+      
+       
+         if(results2.status == 200 || results2.status==201){
+
+
+          vendorData.push(obj2.data[0])
+
+          this.setState({
+            VendorData : vendorData
+          })
+
+          cn = cn +1
+
+          if(cn == this.state.SelectedProduct.length){
+
+            var resArr = [];
+            this.state.VendorData.forEach(function(item){
+            var i = resArr.findIndex(x => x.value == item.value);
+            if(i <= -1){
+              resArr.push(item);
+            }
+          });
+          resArr.push({label : 'Rx Health Management India Pvt Ltd',value : 32})
+          this.setState({
+            VendorData :resArr
+          })
+
+            Notiflix.Loading.Remove()
+            this.setState({
+             open : true
+           })
+       }
+         }
+        }))
+
+          }
        
         }
 
