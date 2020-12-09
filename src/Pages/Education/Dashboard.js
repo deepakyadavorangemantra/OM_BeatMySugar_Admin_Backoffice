@@ -27,7 +27,7 @@ class EduDashboard extends Component {
                 if(obj){
                     Notiflix.Loading.Dots('Please wait...');
                    
-                    this.setState({ dashboardData : obj })
+                    this.setState({ dashboardData : obj.data })
                     
                    
                 }else{
