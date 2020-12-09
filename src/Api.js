@@ -5,7 +5,8 @@
   // var urlString = "http://192.168.29.146:7000/BackofficeApi/";
 //  var urlString = "http://13.126.17.107:8085/BackofficeApi/";
 //  var urlString = "http://localhost:8080/BackofficeApi/";
-var urlString = "https://65.0.39.41:8080/BackofficeApi/";
+// var urlString = "https://65.0.39.41:8080/BackofficeApi/";
+var urlString = "http://13.126.17.107:8085/";
 
 const PostApiCall = {
   postRequest(userData,url) {
