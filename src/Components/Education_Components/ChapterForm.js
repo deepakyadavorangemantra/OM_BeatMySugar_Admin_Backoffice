@@ -31,6 +31,7 @@ const ChapterForm =(props)=>{
 
     useEffect( ()=>{
         if(props.chapterEditData !== ''){
+            debugger;
             SetChapterPageTitle('Update Chapter');
             SetButtonText('Update');
             SetChapterid( props.chapterEditData ? props.chapterEditData.fld_chapterid : '');
@@ -147,10 +148,10 @@ const ChapterForm =(props)=>{
                                 <div className="form-group mb-3">
                                     <label for="validationCustom01">Status<span className="mandatory">*</span></label><br/>
                                     <label className="radio-inline">
-                                    <input type="radio" name="optradio" checked = {isActive == 'Yes' ? true : false} onChange= {()=>{ SetIsActive('Yes'); }}  /> Active
+                                    <input type="radio"  checked = {isActive == 'Yes' ? true : false} onChange= {()=>{ SetIsActive('Yes'); }}  /> Active
                                 </label>
                                 <label className="radio-inline" style={{marginLeft:'10px'}}>
-                                    <input type="radio" name="optradio" checked = {isActive == 'No' ? true : false} onChange= {()=>{SetIsActive('No'); }} /> Inactive
+                                    <input type="radio" checked = {isActive == 'No' ? true : false} onChange= {()=>{SetIsActive('No'); }} /> Inactive
                                 </label> 
                                 </div>
                             </div>

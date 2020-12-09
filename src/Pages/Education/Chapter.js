@@ -63,9 +63,6 @@ class EduChapter extends Component {
           })
            Notiflix.Loading.Remove()
         }))
-
-
-        
   }
 
 
