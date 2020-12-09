@@ -9,6 +9,7 @@ import TopicForm from '../../Components/Education_Components/TopicEditorNew';
 import QuestionListView from '../../Components/Education_Components/QuestionListDrag';
 import QuestionForm from '../../Components/Education_Components/QuestionForm';
 import OptionForm from '../../Components/Education_Components/OptionForm';
+// import TopicReactQuillTextEditor from '../../Components/Education_Components/TopicQuillTextEditor';
 
 class ChapterInfoDetails extends Component {
 
@@ -18,7 +19,7 @@ class ChapterInfoDetails extends Component {
             ImageApiUrl : 'https://images.beatmysugar.com/api/Image/SaveImage',
             chapterEditData : this.props.location.state ? this.props.location.state.chapterEditData ? this.props.location.state.chapterEditData : '':'',
             TopicsList : [],
-            show_add_topic : true,
+            show_add_topic : false,
             topicEditData : '',
             QuestionList : [],
             show_add_question : false,
@@ -82,6 +83,12 @@ class ChapterInfoDetails extends Component {
             
             fetch(this.state.ImageApiUrl, {
             method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Headers' : '*',
+                'Content-Type': 'application/json',
+              },
             body: form
             }).then((image) => {
             
@@ -217,6 +224,7 @@ class ChapterInfoDetails extends Component {
                 type :'',
                 status : topicData.status,
                 topicid : topicData.id,
+                contents : topicData.contents,
                 updatedby : details[0].fld_staffid,
                 updatedon : moment().format('lll')
             },"UpdateTopic").then((resultTopic) =>
@@ -224,8 +232,10 @@ class ChapterInfoDetails extends Component {
                 if(resultTopic.status == 200 || resultTopic.status == 201){
 
                     let TopicsList = this.state.TopicsList;
-                    let findIndex = this.state.TopicsList.findIndex(item => item.fld_id == objArticleSub.data[0].fld_id);
-                    TopicsList[findIndex] = objArticleSub.data[0];
+                    let findIndex = this.state.TopicsList.findIndex(item => item.fld_id == objArticleSub.data.topic.fld_id);
+                    let topicData = objArticleSub.data.topic;
+                    topicData.contents = objArticleSub.data.contents
+                    TopicsList[findIndex] = topicData;
                     this.setState( { TopicsList : TopicsList, topicEditData: '', show_add_topic: false } );
                     Notiflix.Loading.Remove();
                     Notiflix.Notify.Success('Topic successfully updated.')
@@ -242,8 +252,7 @@ class ChapterInfoDetails extends Component {
     saveTopicData=( topicData)=>{
         Notiflix.Loading.Dots('Please wait...');
             var login=localStorage.getItem('LoginDetail');
-            var details=JSON.parse(login)
-            debugger;
+            var details=JSON.parse(login);
             PostApiCall.postRequest ({
                 chapterid : topicData.chapterid,
                 title : topicData.title,
@@ -262,10 +271,12 @@ class ChapterInfoDetails extends Component {
                     Notiflix.Loading.Remove();
                     Notiflix.Notify.Success('Topic successfully added.')
                     let TopicsList = this.state.TopicsList;
-                    TopicsList.push( objArticleSub.data[0]);
-                    // let findIndex = this.state.TopicsList.findIndex(item => item.fld_id == questionEditData.fld_id);
-                    // TopicsList[findIndex] = questionEditData;
-                    this.setState( { TopicsList : TopicsList, show_add_topic : false } );
+                    let topicData = objArticleSub.data.topic;
+                    topicData.contents = objArticleSub.data.contents
+                    TopicsList.push(topicData);
+                    this.setState( { TopicsList : TopicsList, topicEditData: '', show_add_topic: false } );
+                    Notiflix.Loading.Remove();
+                    Notiflix.Notify.Success('Topic successfully updated.')
                     
                 }else
                 {
@@ -469,6 +480,14 @@ class ChapterInfoDetails extends Component {
         )
     }
 
+    updateTpoicListContent =(topicEditData)=>{
+
+        let TopicsList = this.state.TopicsList;
+        let findIndex = this.state.TopicsList.findIndex(item => item.fld_id == topicEditData.fld_id);
+        TopicsList[findIndex] = topicEditData;
+        this.setState( { TopicsList : TopicsList } );
+    }
+
     render(){
         return(
             <div className="content-page">
@@ -514,7 +533,7 @@ class ChapterInfoDetails extends Component {
                                             cancleTopicBlock = {()=>{ this.setState({ show_add_topic : false, topicEditData: '' })}}
                                             updateTopicData={this.updateTopicData}
                                             saveTopicData={this.saveTopicData}
-                                            
+                                            updateTpoicListContent={this.updateTpoicListContent}
                                             /><br/>
                                     </div>
                                     
