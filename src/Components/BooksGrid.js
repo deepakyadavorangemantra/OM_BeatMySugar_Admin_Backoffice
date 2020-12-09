@@ -179,7 +179,7 @@ class BooksGrid extends Component {
                                         localStorage.setItem('BookParentIdDetails',JSON.stringify(data))
                                         window.location.href = "/bookvariantlist"
                                     }}
-                                >{data.VariantCount} Variant{data.VariantCount == 1 ? '' : 's'} Available</a>
+                                >{data.VariantCount} Variant{data.VariantCount == 1 ? '' : 's'} Available ( <span style={{color:'red'}}>{data.NotApproved} Pending</span>, <span style={{color:'green'}}>{data.Approved} Approved</span> )</a>
                                     </td>
                                     
                                     <td>{data.fld_authorname}</td>

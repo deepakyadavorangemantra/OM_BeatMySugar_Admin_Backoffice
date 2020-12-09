@@ -55,7 +55,7 @@ const ImgUploadCover =({
    
       <input id="photo-upload" type="file" onChange={onChange}/> 
 
-      <XSquare className='product-img'
+      <XSquare class='product-img'
        onClick={onCancel}
        ></XSquare>
     </label>
@@ -123,6 +123,7 @@ class Books extends Component {
 
         MasterId : '',
         VolumetricWeight : 0,
+        MasterData : [],
 
 
         VendorPricing : [],
@@ -145,7 +146,16 @@ class Books extends Component {
         TypeData: [],
 
 
-        AddAccess : false,
+        AddAccess : true,
+
+
+        CustomerBasePrice: 0,
+        InvoiceGstAmount : 0,
+        MasterData : [],
+        TcsValue : 0,
+        TdsValue : 0,
+        VendorBasePrice : 0,
+        BMSDiscount : 0,
 
 
         ImageApiUrl : 'https://images.beatmysugar.com/api/Image/SaveImage',
@@ -172,8 +182,12 @@ class Books extends Component {
         var det = localStorage.getItem('BookParentIdDetails')
         var MasterData = JSON.parse(det)
 
+
+        // console.log(MasterData)
+
         this.setState({
-            MasterId : MasterData.fld_id
+            MasterId : MasterData.fld_id,
+            MasterData : MasterData
         })
 
         GetApiCall.getRequest("GetBookLanguageData").then(resultdes =>
@@ -286,9 +300,9 @@ class Books extends Component {
 
      
       onChangeSKU(itemsku){
-        if(this.state.AlphaNumericRegex.test(itemsku.target.value)){
+        // if(this.state.AlphaNumericRegex.test(itemsku.target.value)){
         this.props.setbooksku(itemsku.target.value)
-        }
+        // }
     }
     onChangeType(booktype){
         this.props.setbooktype(booktype.target.value)
@@ -440,34 +454,124 @@ class Books extends Component {
       
 
      
-    onChangePrice(price){
+      onChangeprice(price){
         if((this.state.DecimalRegex.test(price.target.value))){
             this.props.setbookprice(price.target.value)
-            var amt=parseFloat(price.target.value-(this.props.bookcredential.DiscountPer*price.target.value)/100).toFixed(2)
-   
+
+            var amt = 0
+
+            if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
+             amt=parseFloat(price.target.value-(this.props.bookcredential.DiscountPer*price.target.value)/100).toFixed(2)
+      
+            }else
+            {
+             amt=parseFloat(this.state.VendorSellingPrice-(this.props.bookcredential.DiscountPer*this.state.VendorSellingPrice)/100).toFixed(2)
+
+            }
+            this.props.setbookdiscountprice(amt)
+
+
+            var cusbasepr = parseFloat(amt/(1+(this.state.MasterData.fld_gstpercent/100))).toFixed(2)
+
+            var invoiceamt = parseFloat(cusbasepr*(this.state.MasterData.fld_gstpercent/100)).toFixed(2)
+
+            this.setState({
+                CustomerBasePrice : cusbasepr,
+                InvoiceGstAmount : invoiceamt,
+                TcsValue : parseFloat(cusbasepr*(this.state.MasterData.TcsPercent/100)).toFixed(2),
+                
+            })
+
+          }
+        }
+
+      
+    onChangeDiscount(discount){
+        if((this.state.DecimalRegex.test(discount.target.value))){
+        this.props.setbookdiscount(discount.target.value)
+
+        var amt = 0
+
+        if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
+            amt=parseFloat(this.props.bookcredential.Price-(discount.target.value*this.props.bookcredential.Price)/100).toFixed(2)
+
+        }else
+        {
+            amt=parseFloat(this.state.VendorSellingPrice-(discount.target.value*this.state.VendorSellingPrice)/100).toFixed(2)
+
+        }
         this.props.setbookdiscountprice(amt)
-        
+
+
+        var cusbasepr = parseFloat(amt/(1+(this.state.MasterData.fld_gstpercent/100))).toFixed(2)
+
+        var invoiceamt = parseFloat(cusbasepr*(this.state.MasterData.fld_gstpercent/100)).toFixed(2)
+
+        this.setState({
+            CustomerBasePrice : cusbasepr,
+            InvoiceGstAmount : invoiceamt,
+            TcsValue : parseFloat(cusbasepr*(this.state.MasterData.TcsPercent/100)).toFixed(2),
+          
+        })
+
+        if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
+
+            this.setState({
+                BMSDiscount : parseFloat(this.props.bookcredential.Price - amt).toFixed(2)
+            })
+
+        }else
+        {
+            this.setState({
+                BMSDiscount : parseFloat(this.state.VendorSellingPrice - amt).toFixed(2)
+            })
+
+        }
+
     }
 }
-    onChangeDisc(discountpercent){
-        if((this.state.DecimalRegex.test(discountpercent.target.value))){
-   
-        this.props.setbookdiscount(discountpercent.target.value)
-        var amt=parseFloat(this.props.bookcredential.Price-(discountpercent.target.value*this.props.bookcredential.Price)/100).toFixed(2)
-        this.props.setbookdiscountprice(amt)
-    }
-}
-    onChangeDpice(discountprice){
+    onChangediscprice(discountprice){
         if((this.props.setbookdiscount(discountprice.target.value))){
-        
         this.props.setbookdiscountprice(discountprice.target.value)
+
+        if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
         this.props.setbookdiscount(parseFloat(((this.props.bookcredential.Price-discountprice.target.value)/this.props.bookcredential.Price)*100).toFixed(2))
+        }else
+        {
+        this.props.setbookdiscount(parseFloat(((this.state.VendorSellingPrice-discountprice.target.value)/this.state.VendorSellingPrice)*100).toFixed(2))
+
+        }
+
+        var cusbasepr = parseFloat(discountprice.target.value/(1+(this.state.MasterData.fld_gstpercent/100))).toFixed(2)
+
+        var invoiceamt = parseFloat(cusbasepr*(this.state.MasterData.fld_gstpercent/100)).toFixed(2)
+
+        // console.log(parseFloat(cusbasepr*(this.state.MasterData.TcsPercent/100)).toFixed(2))
+        this.setState({
+            CustomerBasePrice : cusbasepr,
+            InvoiceGstAmount : invoiceamt,
+            TcsValue : parseFloat(cusbasepr*(this.state.MasterData.TcsPercent/100)).toFixed(2),
+           
+        })
+
+        if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
+
+            this.setState({
+                BMSDiscount : parseFloat(this.props.bookcredential.Price - discountprice.target.value).toFixed(2)
+            })
+
+        }else
+        {
+            this.setState({
+                BMSDiscount : parseFloat(this.state.VendorSellingPrice - discountprice.target.value).toFixed(2)
+            })
+
+        }
+        
 
 
     }
-    
 }
-
    
     nextlabel3(){
         if(this.props.bookcredential.Price!=''){
@@ -738,6 +842,7 @@ onChangeMeta(metadescription){
 
 
 
+
     OnSaveVendorPricing(obj){
 
 
@@ -746,19 +851,20 @@ onChangeMeta(metadescription){
   var login=localStorage.getItem('LoginDetail');
   var details=JSON.parse(login)
 
-  for(var j =0 ; j<this.state.VendorPricing.length;j++){
+//   for(var j =0 ; j<this.state.VendorPricing.length;j++){
 
     PostApiCall.postRequest({
 
-     bookvariantid : (JSON.parse(JSON.stringify(obj.data[0]))).VariantId,
-     vendorid : this.state.VendorPricing[j].Name,
-     sku : this.state.VendorPricing[j].Sku,
-     marginon : this.state.VendorPricing[j].MarginOn,
-     vendorselling : this.state.VendorPricing[j].VendorSellingPrice,
-     margin :  this.state.VendorPricing[j].Margin,
-     marginpercent : this.state.VendorPricing[j].MarginPercent,
-      updatedon : moment().format('lll'),
-      updatedby : details[0].fld_staffid
+        bookvariantid : (JSON.parse(JSON.stringify(obj.data[0]))).VariantId,
+        vendorid : this.state.Name,
+        sku : this.state.Sku,
+        marginon : this.state.MarginOn,
+        vendorselling : this.state.VendorSellingPrice,
+        margin :  this.state.Margin,
+        marginpercent : this.state.MarginPercent,
+         updatedon : moment().format('lll'),
+         updatedby : details[0].fld_staffid,
+         costprice : this.state.CostPrice
 
 
    },"AddBookVariantVendorPricing").then((results3) => 
@@ -769,19 +875,19 @@ onChangeMeta(metadescription){
    
      if(results3.status == 200 || results3.status==201){
 
-      count1 = count1 + 1;
+    //   count1 = count1 + 1;
 
-      if(count1 == this.state.VendorPricing.length){
+    //   if(count1 == this.state.VendorPricing.length){
     
         Notiflix.Loading.Remove()
         this.props.setclearbookitem()
         Notiflix.Notify.Success('Book variant added successfully.')
         window.location.href = '/bookvariantlist'
-      }
+    //   }
      }
   
     }))
-    }
+    // }
 
     }
 
@@ -804,6 +910,7 @@ onChangeMeta(metadescription){
                     PostApiCall.postRequest({
     
                          bookid : this.state.MasterId,
+                         title : this.props.bookcredential.BookSKU,
                          typeid : this.props.bookcredential.BookType,
                          languageid : this.props.bookcredential.BookLanguage,
                          length : this.props.bookcredential.Packlength,
@@ -937,21 +1044,21 @@ onChangeMeta(metadescription){
             <div className="App">
                 <div id="wrapper">
                     <div className="content-page">
-                        <div className="content">
+                        <div class="content">
                             <div className="container-fluid">
                                 <div className="row page-title">
                                     <div className="col-md-12">
-                                        <nav aria-label="breadcrumb" className="float-right mt-1">
-                                            <ol className="breadcrumb">
-                                                <li className="breadcrumb-item"><a href="#">Product Management</a></li>
-                                                <li className="breadcrumb-item"><a href="/bookitemmasterlist">Books List</a></li>
-                                                <li className="breadcrumb-item"><a href="/bookvariantlist">Books Variant</a></li>
+                                        <nav aria-label="breadcrumb" class="float-right mt-1">
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item"><a href="#">Product Management</a></li>
+                                                <li class="breadcrumb-item"><a href="/bookitemmasterlist">Books List</a></li>
+                                                <li class="breadcrumb-item"><a href="/bookvariantlist">Books Variant</a></li>
                                                
                                                
-                                                <li className="breadcrumb-item active" aria-current="page">Add New Book Variant</li>
+                                                <li class="breadcrumb-item active" aria-current="page">Add New Book Variant</li>
                                             </ol>
                                         </nav>
-                                        <h4 className="mb-1 mt-0">Add New Book Variant</h4>
+                                        <h4 class="mb-1 mt-0">Add New Book Variant</h4>
                                     </div>
                                 </div>
 
@@ -966,7 +1073,7 @@ onChangeMeta(metadescription){
                                                                 PageTitle: '1',
                                                                 Page1: 'Done'
                                                             })
-                                                        }} className="wizardlist nav-link">Book Item Variants</a></li>
+                                                        }} class="wizardlist nav-link">Book Item Variants</a></li>
 
                                                         <li className={this.state.PageTitle == '2' ? 'active nav-item' : this.state.Page2 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
@@ -978,7 +1085,7 @@ onChangeMeta(metadescription){
                                                                 })
                                                             }
                                                         }}
-                                                            className="wizardlist nav-link">Packaging Size & Weight</a></li>
+                                                            class="wizardlist nav-link">Packaging Size & Weight</a></li>
                                                       <li className={this.state.PageTitle == '3' ? 'active nav-item' : this.state.Page3 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
                                                                 if (this.state.Page3 == 'Done') {
@@ -989,7 +1096,7 @@ onChangeMeta(metadescription){
                                                                     })
                                                                 }
                                                             }}
-                                                   className="wizardlist nav-link">Pricing</a></li>
+                                                   class="wizardlist nav-link">Pricing</a></li>
                                                    <li className={this.state.PageTitle == '4' ? 'active nav-item' : this.state.Page4 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
                                                     if (this.state.Page4 == 'Done') {
@@ -1000,7 +1107,7 @@ onChangeMeta(metadescription){
                                                         })
                                                     }
                                                 }}
-                                                className="wizardlist nav-link">Product Image</a></li>
+                                                class="wizardlist nav-link">Product Image</a></li>
                                                  <li className={this.state.PageTitle == '5' ? 'active nav-item' : this.state.Page5 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
                                                                 if (this.state.Page5 == 'Done') {
@@ -1011,30 +1118,20 @@ onChangeMeta(metadescription){
                                                                     })
                                                                 }
                                                             }}
-                                                            className="wizardlist nav-link">SEO Details</a></li>
-                                                 <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
-
-                                                                if (this.state.Page6 == 'Done') {
-                                                                    this.setState({
-                                                                        PageTitle: '6',
-                                                                        Page6: 'Done',
-    
-                                                                    })
-                                                                }
-                                                            }}
-                                                                className="wizardlist nav-link">Vendor Pricing</a></li>
+                                                            class="wizardlist nav-link">SEO Details</a></li>
+                                     
                                                         
-                                                                <li className={this.state.PageTitle == '7' ? 'active nav-item' : this.state.Page7 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
+                                                                <li className={this.state.PageTitle == '6' ? 'active nav-item' : this.state.Page6 == 'Done' ? 'done nav-item' : ''}><a onClick={() => {
 
-                                                                    if (this.state.Page4 == 'Done') {
+                                                                    if (this.state.Page6 == 'Done') {
                                                                         this.setState({
-                                                                            PageTitle: '7',
-                                                                            Page7: 'Done',
+                                                                            PageTitle: '6',
+                                                                            Page6: 'Done',
         
                                                                         })
                                                                     }
                                                                 }}
-                                                                    className="wizardlist nav-link">Status</a></li>
+                                                                    class="wizardlist nav-link">Status</a></li>
                                                 
                                                     </ul>
                                                     <div className="p-3" style={{ minHeight: '0px' }}>
@@ -1047,24 +1144,24 @@ onChangeMeta(metadescription){
                                                             }}>
                                                             <div className="toast fade show" role="alert" aria-live="assertive"
                                                             aria-atomic="true" data-toggle="toast">
-                                                            <div className="toast-header">
-                                                                <strong className="mr-auto">Book Item Variants</strong>
+                                                            <div class="toast-header">
+                                                                <strong class="mr-auto">Book Item Variants</strong>
                                                             </div>
-                                                            <div className="toast-body">
-                                                                <div className="row">
+                                                            <div class="toast-body">
+                                                                <div class="row">
                                                                    
-                                                                   {/* <div className="col-md-6">
-                                                                        <div className="form-group mb-3">
-                                                                            <label for="validationCustom01">Item SKU[BMS]<span className="mandatory">*</span></label>
-                                                                            <input type="text" className="form-control"
+                                                                   <div class="col-md-12">
+                                                                        <div class="form-group mb-3">
+                                                                            <label for="validationCustom01">Book Title<span className="mandatory">*</span></label>
+                                                                            <input type="text" class="form-control"
                                                                             value={this.props.bookcredential.BookSKU}
                                                                             onChange={this.onChangeSKU.bind(this)}  />
                                                                         </div>
-                                                                    </div> */}
-                                                                    <div className="col-md-6">
-                                                                        <div className="form-group mb-3">
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group mb-3">
                                                                             <label for="validationCustom01">Book Type<span className="mandatory">*</span></label>
-                                                                            <select className="form-control custom-select"
+                                                                            <select class="form-control custom-select"
                                                                             value={this.props.bookcredential.BookType}
                                                                             onChange={this.onChangeType.bind(this)}>
                                                                             {this.state.TypeData.map(brand => (
@@ -1078,10 +1175,10 @@ onChangeMeta(metadescription){
                                                                         </select>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="col-md-6">
-                                                                    <div className="form-group mb-3">
+                                                                    <div class="col-md-6">
+                                                                    <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Language<span className="mandatory">*</span></label>
-                                                                        <select className="form-control custom-select"
+                                                                        <select class="form-control custom-select"
                                                                         value={this.props.bookcredential.BookLanguage}
                                                                         onChange={this.onChangelang.bind(this)}>
                                                                          {this.state.LanguageData.map(brand => (
@@ -1124,42 +1221,42 @@ onChangeMeta(metadescription){
      
                                                         <div className="toast fade show" role="alert" aria-live="assertive"
                                                         aria-atomic="true" data-toggle="toast">
-                                                        <div className="toast-header">
-                                                        <strong className="mr-auto">Packaging Size & Weight</strong>
+                                                        <div class="toast-header">
+                                                        <strong class="mr-auto">Packaging Size & Weight</strong>
                                                     </div>
-                                                        <div className="toast-body">
-                                                            <div className="row">
-                                                                <div className="col-md-6">
-                                                                    <div className="form-group mb-3">
+                                                        <div class="toast-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Length<span className="mandatory">*</span></label>
-                                                                        <input type="text" className="form-control" 
+                                                                        <input type="text" class="form-control" 
                                                                         value={this.props.bookcredential.Packlength}
                                                                         onChange={this.onChangeLength.bind(this)}
                                                                         />
                                                                     
                                                                     </div>
                                                                 </div>
-                                                               <div className="col-md-6">
-                                                                    <div className="form-group mb-3">
+                                                               <div class="col-md-6">
+                                                                    <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Breadth<span className="mandatory">*</span></label>
-                                                                        <input type="text" className="form-control"
+                                                                        <input type="text" class="form-control"
                                                                         value={this.props.bookcredential.Packbreadth}
                                                                         onChange={this.onChangebreadth.bind(this)} />
                                                                     </div>
                                                                 </div>
-                                                                <div className="col-md-6">
-                                                                    <div className="form-group mb-3">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Height<span className="mandatory">*</span></label>
-                                                                        <input type="text" className="form-control"  
+                                                                        <input type="text" class="form-control"  
                                                                         value={this.props.bookcredential.Packheight}
                                                                         onChange={this.onChangeHeight.bind(this)}
                                                                         />
                                                                     </div>
                                                                 </div>
-                                                                <div className="col-md-6">
-                                                                <div className="form-group mb-3">
+                                                                <div class="col-md-6">
+                                                                <div class="form-group mb-3">
                                                                     <label for="validationCustom01">Units Of Measurement<span className="mandatory">*</span></label>
-                                                                    <select type="text" className="form-control" 
+                                                                    <select type="text" class="form-control" 
                                                                     value={this.props.bookcredential.Packunit}
                                                                     onChange={this.onChangePackunit.bind(this)} >
                                                                     {this.state.PackageMeasureUnitData.map(unitmeasure => (
@@ -1172,10 +1269,10 @@ onChangeMeta(metadescription){
                                                                 </select>
                                                                 </div>
                                                             </div>
-                                                            <div className="col-md-6">
-                                                            <div className="form-group mb-3">
+                                                            <div class="col-md-6">
+                                                            <div class="form-group mb-3">
                                                                 <label for="validationCustom01">Volumetric Weight (in gms.)<span className="mandatory">*</span></label>
-                                                                <input type="text" className="form-control"  
+                                                                <input type="text" class="form-control"  
                                                                   disabled="true"
                                                                   value={this.state.VolumetricWeight}
                                                                   onChange={this.onChangeVolume.bind(this)}
@@ -1190,25 +1287,25 @@ onChangeMeta(metadescription){
                                                     </div>
                                                     <div className="toast fade show" role="alert" aria-live="assertive"
                                                     aria-atomic="true" data-toggle="toast">
-                                                    <div className="toast-header">
-                                                    <strong className="mr-auto">Package Weight</strong>
+                                                    <div class="toast-header">
+                                                    <strong class="mr-auto">Package Weight</strong>
                                                 </div>
-                                                    <div className="toast-body">
-                                                        <div className="row">
-                                                            <div className="col-md-6">
-                                                                <div className="form-group mb-3">
+                                                    <div class="toast-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group mb-3">
                                                                     <label for="validationCustom01">Weight<span className="mandatory">*</span></label>
-                                                                    <input type="text" className="form-control"  
+                                                                    <input type="text" class="form-control"  
                                                                     value={this.props.bookcredential.BookWeight}
                                                                     onChange={this.onChangeWeight.bind(this)}/>
                                                                 
                                                                 </div>
                                                             </div>
                                                           
-                                                            <div className="col-md-6">
-                                                            <div className="form-group mb-3">
+                                                            <div class="col-md-6">
+                                                            <div class="form-group mb-3">
                                                                 <label for="validationCustom01">Units Of Measurement<span className="mandatory">*</span></label>
-                                                                <select type="text" className="form-control"  
+                                                                <select type="text" class="form-control"  
                                                                 value={this.props.bookcredential.PackWeightUnit}
                                                                 onChange={this.onChangeWeightmeasure.bind(this)}>
                                                                 {this.state.WeightData.map(unitmeasure => (
@@ -1259,106 +1356,388 @@ onChangeMeta(metadescription){
                                                          </div>  {/* Sw-arrow 2*/}
 
                                             
+                                                     
                                                          <div id="sw-arrows-step-3"
-                                                            className="tab-pane step-content"
-                                                            style={{ display: this.state.PageTitle == '3' ? 'block' : 'none' }}>
-                                                            <div className="toast-header">
-                                                            <strong className="mr-auto">Pricing</strong>
-                                                        </div>   
-                                                        <div className="toast fade show" role="alert" aria-live="assertive"
-                                                        aria-atomic="true" data-toggle="toast">
-                                                       
-                                                        <div className="toast-body">
-                                                        <div className="row">
-                                                            <div className="col-md-4">
-                                                                <div className="form-group mb-3">
-                                                                    <label for="validationCustom01">Price MRP (<span>&#8377;</span>)<span className="mandatory">*</span></label>
-                                                                    <input type="text" className="form-control" 
-                                                                    value={this.props.bookcredential.Price}
-                                                                    onChange={this.onChangePrice.bind(this)}/>
-                                                                
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-4">
-                                                                <div className="form-group mb-3">
-                                                                    <label for="validationCustom01">Discounted Price (<span>&#8377;</span>)<span className="mandatory">*</span></label>
-                                                                    <input type="text" className="form-control"
-                                                                    value={this.props.bookcredential.DiscountPrice}
-                                                                    onChange={this.onChangeDpice.bind(this)}/>
-                                                                </div>
-                                                            </div>
-                                                           <div className="col-md-4">
-                                                                <div className="form-group mb-3">
-                                                                    <label for="validationCustom01">Discount Percent(%)<span className="mandatory">*</span></label>
-                                                                    <input type="text" className="form-control" 
-                                                                    value={this.props.bookcredential.DiscountPer}
-                                                                    onChange={this.onChangeDisc.bind(this)} />
-                                                                </div>
-                                                            </div>
-                                                           
-                                                 
-
-                                                        </div>
+                                                         className="tab-pane step-content"
+                                                         style={{ display: this.state.PageTitle == '3' ? 'block' : 'none' }}>
+                                                         <div className="toast fade show" role="alert" aria-live="assertive"
+                                                         aria-atomic="true" data-toggle="toast">
                                                         
-                                                    </div>
-                                                    </div>  
+                                                         <div class="toast-body">
+                                                             <div class="row">
+                                                                 <div class="col-md-4">
+                                                                     <div class="form-group mb-3">
+                                                                         <label for="validationCustom01">Price MRP (<span>&#8377;</span>)<span className="mandatory">*</span></label>
+                                                                         <input type="text" class="form-control" 
+                                                                        //   disabled={!this.state.IsVisible}
+                                                                         value={this.props.bookcredential.Price}
+                                                                         onChange={this.onChangeprice.bind(this)}/>
+                                                                     
+                                                                     </div>
+                                                                 </div>
 
-                                                            <div className="toast fade show" role="alert" aria-live="assertive"
-                                                                aria-atomic="true" data-toggle="toast">
-                                                                <div className='row'>
-                                                                   
-                                                                    <div className="col-md-12">
-                                                                        <div className="btn-toolbar sw-toolbar sw-toolbar-top justify-content-right" style={{ float: 'right' }}>
+                                                                 <div class="col-md-4">
+                                                                        <div class="form-group mb-3">
+                                                                            <label for="validationCustom01">Select Vendor<span className="mandatory">*</span></label>
+                                                                            <select type="text" class="form-control" 
+                                                                            //  disabled={!this.state.IsVisible} 
+                                                                           value={this.state.Name} 
+                                                                           onChange={(text)=>{
+                                                                               this.setState({
+                                                                                   Name : text.target.value
+                                                                               })
 
-                                                                            <button className="btn btn-secondary sw-btn-prev btn-radius-right"
-                                                                                onClick={() => {
-
+                                                                               for(var i =0 ;i<this.state.VendorData.length;i++){
+                                                                                   if(this.state.VendorData[i].value == text.target.value){
                                                                                     this.setState({
-                                                                                        PageTitle: '2',
-                                                                                        Page2: 'Done'
-                                                                                    })
-                                                                                }}
-                                                                            >Previous</button>
-                                                                            <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
-                                                                            // onClick={()=>{
-                                                       
-                                                                            //     this.setState({
-                                                                            //         PageTitle : '4',
-                                                                            //         Page3 : 'Done'
-                                                                            //     })
-                                                                            //   }}
-                                                                              onClick={this.nextlabel3.bind(this)}>Next</button>
+                                                                                        VenName: this.state.VendorData[i].label,
+                                                                                        VenId : this.state.VendorData[i].value
+                                                                                    })  
+                                                                                   }
+
+                                                                               }
+
+                                                                           }} >
+                                                                                <option></option>
+                                                                                {this.state.VendorData.map(unitmeasure => (
+                                    
+                                                                                    <option key={unitmeasure.value} value={unitmeasure.value}>
+                                                                                    {unitmeasure.label}
+                                                                                </option>
+                                                                                ))}
+                                                                               
+                                                                            </select>
                                                                         </div>
                                                                     </div>
+
+                                                                    <div class="col-md-4">
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="validationCustom01">Vendor Item SKU<span className="mandatory">*</span></label>
+                                                                         <input type="text" class="form-control" 
+                                                                        //   disabled={!this.state.IsVisible}
+                                                                          value={this.state.Sku} 
+                                                                          onChange={(text)=>{
+                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
+                                                                              this.setState({
+                                                                                  Sku : text.target.value
+                                                                              })
+                                                                            // }
+
+                                                                          }}></input>
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group mb-3">
+                                                                            <label for="validationCustom01">Select BMS Margin On<span className="mandatory">*</span></label>
+                                                                            <select type="text" class="form-control"  
+                                                                            //  disabled={!this.state.IsVisible}
+                                                                           value={this.state.MarginOn} 
+                                                                           onChange={(text)=>{
+                                                                               this.setState({
+                                                                                   MarginOn : text.target.value
+                                                                               })
+                                                                               if(text.target.value == 'Maximum Retail Price (MRP)'){
+                                                                                this.setState({
+                                                                                    isVendorSellingVisible : false,
+                                                                                    VendorSellingPrice : undefined
+                                                                                })
+                                                                               }else
+                                                                               {
+                                                                                this.setState({
+                                                                                    isVendorSellingVisible : true,
+                                                                                    VendorSellingPrice : 0
+                                                                                })
+                                                                               }
+                                                                            
+                                                                           }} >
+                                                                                <option></option>
+                                                                                {this.state.MarginOnData.map(unitmeasure => (
+                                    
+                                                                                    <option key={unitmeasure.value} value={unitmeasure.value}>
+                                                                                    {unitmeasure.label}
+                                                                                </option>
+                                                                                ))}
+                                                                               
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-4" style={{display : this.state.isVendorSellingVisible ? '' : 'none'}}>
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="validationCustom01">Vendor Selling Price (<span>&#8377;</span>)<span className="mandatory">*</span></label>
+                                                                        <input type="text" class="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
+                                                                       value={this.state.VendorSellingPrice} 
+                                                                       onChange={(text)=>{
+                                                                        if(this.state.DecimalRegex.test(text.target.value)){
+                                                                           this.setState({
+                                                                               VendorSellingPrice : text.target.value,
+                                                                               VendorBasePrice : parseFloat(text.target.value/(1+(this.state.MasterData.fld_gstpercent/100))).toFixed(2)
+                                                                                         })
+
+                                                                                         var marginpercent = text.target.value != 0 ? parseFloat((this.state.Margin/text.target.value)*100).toFixed(2) : 0
+                                                                                         var margin = text.target.value != 0 ? parseFloat((marginpercent) - (text.target.value*(this.props.bookcredential.DiscountPer/100))).toFixed(2) : 0
+                                                                                         this.setState({
+                                                                                            Margin : text.target.value != 0 ? parseFloat(text.target.value - parseFloat(marginpercent)).toFixed(2) : 0,
+                                                                                            MarginPercent : marginpercent,
+                                                                                            CostPrice : parseFloat(this.props.bookcredential.DiscountPrice - (margin)).toFixed(2),
+                                                                                            BMSSplitAmount : (parseFloat(this.state.TdsValue) + parseFloat(this.state.TcsValue) + parseFloat(margin)).toFixed(2),
+                                                                                            VendorSplitAmount : ((this.props.bookcredential.DiscountPrice - (margin)) - parseFloat(this.state.TcsValue)- parseFloat(this.state.TdsValue)).toFixed(2)
+                                                                                        
+                                                                                            
+                                                                                        })
+                                                                                        
+                                                                        }
+
+                                                                       }}/>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
+
+                                                                <div class="col-md-4" style={{display : this.state.isVendorSellingVisible ? '' : 'none'}}>
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="validationCustom01">Vendor Selling Base Price (<span>&#8377;</span>)</label>
+                                                                        <input type="text" class="form-control" 
+                                                                         disabled={true}
+                                                                       value={this.state.VendorBasePrice} 
+                                                                      />
+                                                                    </div>
+                                                                </div>
+
+                                                                 <div class="col-md-4">
+                                                                     <div class="form-group mb-3">
+                                                                         <label for="validationCustom01">Discounted Price (<span>&#8377;</span>)<span className="mandatory"></span></label>
+                                                                         <input type="text" class="form-control"  
+                                                                        //   disabled={!this.state.IsVisible}
+                                                                         value={this.props.bookcredential.DiscountPrice}
+                                                                         onChange={this.onChangediscprice.bind(this)} />
+                                                                     </div>
+                                                                 </div>
+                                                                <div class="col-md-4">
+                                                                     <div class="form-group mb-3">
+                                                                         <label for="validationCustom01">Discount Percent(%)<span className="mandatory">*</span></label>
+                                                                         <input type="text" class="form-control" value={this.props.bookcredential.DiscountPer} 
+                                                                        //   disabled={!this.state.IsVisible}
+                                                                         onChange={this.onChangeDiscount.bind(this)}/>
+                                                                     </div>
+                                                                 </div>
+                                                               
+                                                                 <div class="col-md-4">
+                                                                     <div class="form-group mb-3">
+                                                                         <label for="validationCustom01">Customer Base Price</label>
+                                                                         <input type="text" class="form-control" 
+                                                                         value={this.state.CustomerBasePrice} 
+                                                                          disabled={true}
+                                                                         />
+                                                                     </div>
+                                                                 </div>
+
+                                                                 <div class="col-md-4">
+                                                                     <div class="form-group mb-3">
+                                                                         <label for="validationCustom01">Invoice GST Amount</label>
+                                                                         <input type="text" class="form-control" 
+                                                                         value={this.state.InvoiceGstAmount} 
+                                                                          disabled={true}
+                                                                     />
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-md-4">
+                                                                     <div class="form-group mb-3">
+                                                                         <label for="validationCustom01">TCS</label>
+                                                                         <input type="text" class="form-control" 
+                                                                         value={this.state.TcsValue} 
+                                                                          disabled={true}
+                                                                     />
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-md-4">
+                                                                     <div class="form-group mb-3">
+                                                                         <label for="validationCustom01">TDS</label>
+                                                                         <input type="text" class="form-control" 
+                                                                         value={this.state.TdsValue} 
+                                                                          disabled={true}
+                                                                     />
+                                                                     </div>
+                                                                 </div>
+
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="validationCustom01">BMS Margin (%)<span className="mandatory">*</span></label>
+                                                                        <input type="text" class="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
+                                                                        value={this.state.MarginPercent} 
+                                                                        onChange={(text)=>{
+                                                                            if(this.state.DecimalRegex.test(text.target.value)){
+                                                                            this.setState({
+                                                                                MarginPercent : text.target.value,
+                                                                               
+                                                                                
+                                                                            })
+                                                                            if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
+                                                                                var margin = parseFloat((this.props.bookcredential.Price*(text.target.value/100)) - (this.props.bookcredential.Price*(this.props.bookcredential.DiscountPer/100))).toFixed(2)
+                                                                                
+                                                                                this.setState({
+                                                                                    Margin : parseFloat((this.props.bookcredential.Price*(text.target.value/100))).toFixed(2),
+                                                                                    CostPrice : parseFloat(this.props.bookcredential.DiscountPrice - margin).toFixed(2),
+                                                                                    BMSSplitAmount :parseFloat(parseFloat(this.state.TdsValue) + parseFloat(this.state.TcsValue) + parseFloat(margin)).toFixed(2),
+                                                                                    VendorSplitAmount : parseFloat((this.props.bookcredential.DiscountPrice - (margin)) - parseFloat(this.state.TcsValue) - parseFloat(this.state.TdsValue)).toFixed(2)
+                                                                                })
+                                                                            }else
+                                                                            {
+
+                                                                                var margin2 = parseFloat(((text.target.value/100)*this.state.VendorSellingPrice) - (this.state.VendorSellingPrice*(this.props.bookcredential.DiscountPer/100))).toFixed(2)
+                                                                               
+
+                                                                                this.setState({
+                                                                                    Margin : parseFloat((this.state.VendorSellingPrice)*(text.target.value/100)).toFixed(2),
+                                                                                    CostPrice : parseFloat(this.props.bookcredential.DiscountPrice - parseFloat(margin2)).toFixed(2),
+                                                                                    BMSSplitAmount : parseFloat(parseFloat(this.state.TdsValue) + parseFloat(this.state.TcsValue) + parseFloat(margin2)).toFixed(2),
+                                                                                    VendorSplitAmount : parseFloat((this.props.bookcredential.DiscountPrice - parseFloat(margin2)) - parseFloat(this.state.TcsValue) - parseFloat(this.state.TdsValue)).toFixed(2)
+                                                                                    
+                                                                                })
+                                                                            }
+                                                                        }
+                                                                        }}/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="validationCustom01">Margin Amount (<span>&#8377;</span>)<span className="mandatory">*</span></label>
+                                                                        <input type="text" class="form-control" 
+                                                                        //  disabled={!this.state.IsVisible}
+                                                                       value={this.state.Margin} 
+                                                                       onChange={(text)=>{
+                                                                        if(this.state.DecimalRegex.test(text.target.value)){
+                                                                           this.setState({
+                                                                               Margin : text.target.value,
+                                                                               CostPrice : parseFloat(this.props.bookcredential.DiscountPrice - text.target.value).toFixed(2),
+                                                                               BMSSplitAmount : parseFloat(parseFloat(this.state.TdsValue) + parseFloat(this.state.TcsValue) + parseFloat(text.target.value)).toFixed(2),
+                                                                               VendorSplitAmount : parseFloat((this.props.bookcredential.DiscountPrice - text.target.value) - parseFloat(this.state.TcsValue) - parseFloat(this.state.TdsValue)).toFixed(2)
+
+                                                                              
+                                                                           })
+
+                                                                           if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
+                                                                               this.setState({
+                                                                                MarginPercent :  (parseFloat(text.target.value)+parseFloat(this.props.bookcredential.Price*(this.props.bookcredential.DiscountPer/100))).toFixed(2)
+                                                                               })
+                                                                           }
+                                                                           else
+                                                                           {
+                                                                            this.setState({
+                                                                                MarginPercent :  (parseFloat(text.target.value)+parseFloat(this.state.VendorSellingPrice*(this.props.bookcredential.DiscountPer/100))).toFixed(2)
+                                                                               })
+                                                                           }
+                                                                        }
+
+                                                                       }}/>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4">
+                                                                     <div class="form-group mb-3">
+                                                                         <label for="validationCustom01">BMS Discount</label>
+                                                                         <input type="text" class="form-control" 
+                                                                         value={this.state.BMSDiscount} 
+                                                                          disabled={true}
+                                                                     />
+                                                                     </div>
+                                                                 </div>
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="validationCustom01">Cost Price (<span>&#8377;</span>)</label>
+                                                                        <input type="text" class="form-control" 
+                                                                         disabled={true}
+                                                                       value={this.state.CostPrice} 
+                                                                      />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="validationCustom01">BMS Split Amount (<span>&#8377;</span>)</label>
+                                                                        <input type="text" class="form-control" 
+                                                                         disabled={true}
+                                                                       value={this.state.BMSSplitAmount} 
+                                                                      />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="validationCustom01">Vendor Split Amount (<span>&#8377;</span>)</label>
+                                                                        <input type="text" class="form-control" 
+                                                                         disabled={true}
+                                                                       value={this.state.VendorSplitAmount} 
+                                                                      />
+                                                                    </div>
+                                                                </div>
+
+                                                      
+ 
+                                                             </div>
+                                                             
+                                                         </div>
+                                                     </div>
+                                                         <div className="toast fade show" role="alert" aria-live="assertive"
+                                                             aria-atomic="true" data-toggle="toast">
+                                                             <div className='row'>
+                                                                
+                                                                 <div className="col-md-12">
+                                                                     <div className="btn-toolbar sw-toolbar sw-toolbar-top justify-content-right" style={{ float: 'right' }}>
+
+                                                                         <button className="btn btn-secondary sw-btn-prev btn-radius-right"
+                                                                             onClick={() => {
+
+                                                                                 this.setState({
+                                                                                     PageTitle: '2',
+                                                                                     Page3: 'Done'
+                                                                                 })
+                                                                             }}
+                                                                         >Previous</button>
+                                                                         <button className="btn btn-secondary sw-btn-next  btn-radius-left" 
+                                                                         // onClick={()=>{
+                                                    
+                                                                         //     this.setState({
+                                                                         //         PageTitle : '4',
+                                                                         //         Page3 : 'Done'
+                                                                         //     })
+                                                                         //   }}
+                                                                           onClick={this.nextlabel3.bind(this)}>Next</button>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                   
+
                                                         <div id="sw-arrows-step-4"
                                                             className="tab-pane step-content"
                                                             style={{ display: this.state.PageTitle == '4' ? 'block' : 'none' }}>
                                                             <div className="toast fade show" role="alert" aria-live="assertive"
                                                             aria-atomic="true" data-toggle="toast">
-                                                            <div className="toast-header">
-                                                            <strong className="mr-auto">Product Image</strong>
+                                                            <div class="toast-header">
+                                                            <strong class="mr-auto">Product Image</strong>
                                                         </div>
-                                                            <div className="toast-body">
+                                                            <div class="toast-body">
                                                                
-                                                                <div className="row">
-                                                                <div className="col-md-3">
+                                                                <div class="row">
+                                                                <div class="col-md-3">
                                                         <label for="sw-arrows-first-name">Cover Image<span className="mandatory">*</span></label>
                                                        
-                                                        <div className="form-group">
-                                                        <div className="div1">
+                                                        <div class="form-group">
+                                                        <div class="div1">
                                                         <ImgUploadCover onChange={this.photoUpload} src={this.state.imagePreviewUrlCover}/>
                                                                  </div>
                                                          </div>
                                                         </div>  
                                                                   
-                                                        <div className="col-md-9 ">
+                                                        <div class="col-md-9 ">
                                                         <label for="sw-arrows-first-name" >Product Image<span className="mandatory">*</span></label>
         
-                                                        {/* <div className="form-group"> */}
-                                                         <div className="div1" className='row'>
+                                                        {/* <div class="form-group"> */}
+                                                         <div class="div1" class='row'>
                                                          {this.state.Photos.map((photo,index)=>(  
                                                               <div style={{    marginLeft: '1%',    marginRight: '2%'}}>   
                                                                <label  className="custom-file-upload fas">
@@ -1366,7 +1745,7 @@ onChangeMeta(metadescription){
                                                                           <img for="photo-upload" src={photo.image} style={{width : '100%',height:'100%',  borderRadius: '5%'}}/>
                                                                         
                                                                         </div>
-                                                                        <XSquare className='product-img'
+                                                                        <XSquare class='product-img'
                                                                         onClick={()=>{
                                                                           var arr2 = [...this.state.Photos]
                                                                           arr2[index].image =  'https://www.adcproductdesign.com/wp-content/uploads/2018/02/Realize-Icon-Blue.png'
@@ -1458,31 +1837,31 @@ onChangeMeta(metadescription){
                                                             style={{ display: this.state.PageTitle == '5' ? 'block' : 'none' }}>
                                                             <div className="toast fade show" role="alert" aria-live="assertive"
                                                                 aria-atomic="true" data-toggle="toast">
-                                                                <div className="toast-header">
-                                                                    <strong className="mr-auto">SEO Details</strong>
+                                                                <div class="toast-header">
+                                                                    <strong class="mr-auto">SEO Details</strong>
                                                                 </div>
-                                                                <div className="toast-body">
-                                                                <div className="row">
-                                                                    <div className="col-md-12">
-                                                                        <div className="form-group mb-3">
+                                                                <div class="toast-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group mb-3">
                                                                             <label for="validationCustom01">Title Bar(60 Characters)<span className="mandatory">*</span></label>
-                                                                            <input type="text" className="form-control"
+                                                                            <input type="text" class="form-control"
                                                                             value={this.props.bookcredential.Title} 
                                                                             onChange={this.onChangeTitle.bind(this)} />
                                                                         </div>
                                                                     </div>
-                                                                    <div className="col-md-12">
-                                                                    <div className="form-group mb-3">
+                                                                    <div class="col-md-12">
+                                                                    <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Meta Description(160 Characters)</label>
-                                                                        <textarea className="form-control" rows="2" cols="10"
+                                                                        <textarea class="form-control" rows="2" cols="10"
                                                                         value={this.props.bookcredential.MetaDescription} 
                                                                         onChange={this.onChangeMeta.bind(this)} />
                                                                     </div>
                                                                 </div>
-                                                                    <div className="col-md-12">
-                                                                    <div className="form-group mb-3">
+                                                                    <div class="col-md-12">
+                                                                    <div class="form-group mb-3">
                                                                         <label for="validationCustom01">Keywords(250 Characters)<span className="mandatory">*</span></label>
-                                                                        <textarea className="form-control" rows="3" cols="14"
+                                                                        <textarea class="form-control" rows="3" cols="14"
                                                                          value={this.props.bookcredential.Keyword} 
                                                                          onChange={this.onChangeKey.bind(this)} />
                                                                     </div>
@@ -1526,344 +1905,21 @@ onChangeMeta(metadescription){
                                                             </div>
                                                         </div>
 
-                                                        <div id="sw-arrows-step-6"
-                                                            className="tab-pane step-content"
-                                                            style={{ display: this.state.PageTitle == '6' ? 'block' : 'none' }}>
-                                                            
-                                                            <div className="toast fade show" role="alert" aria-live="assertive"
-                                                                aria-atomic="true" data-toggle="toast">
-                                                                <div className="toast-header">
-                                                                    <strong className="mr-auto">Vendor Pricing</strong>
-                                                                </div>
-                                                                <div className="toast-body">
-                                                                    <div className="row">
-                                                                       
-                                                                        <div className="col-md-4">
-                                                                        <div className="form-group mb-3">
-                                                                            <label for="validationCustom01">Select Vendor<span className="mandatory">*</span></label>
-                                                                            <select type="text" className="form-control"  
-                                                                           value={this.state.Name} 
-                                                                           onChange={(text)=>{
-                                                                               this.setState({
-                                                                                   Name : text.target.value
-                                                                               })
-
-                                                                               for(var i =0 ;i<this.state.VendorData.length;i++){
-                                                                                   if(this.state.VendorData[i].value == text.target.value){
-                                                                                    this.setState({
-                                                                                        VenName: this.state.VendorData[i].label
-                                                                                    })  
-                                                                                   }
-
-                                                                               }
-
-                                                                           }} >
-                                                                                <option></option>
-                                                                                {this.state.VendorData.map(unitmeasure => (
-                                    
-                                                                                    <option key={unitmeasure.value} value={unitmeasure.value}>
-                                                                                    {unitmeasure.label}
-                                                                                </option>
-                                                                                ))}
-                                                                               
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                   
-                                                                <div className="col-md-4">
-                                                                    <div className="form-group mb-3">
-                                                                        <label for="validationCustom01">Vendor Item SKU<span className="mandatory">*</span></label>
-                                                                         <input type="text" className="form-control" 
-                                                                          value={this.state.Sku} 
-                                                                          onChange={(text)=>{
-                                                                            //   if(this.state.AlphaNumericRegex.test(text.target.value)){
-                                                                              this.setState({
-                                                                                  Sku : text.target.value
-                                                                              })
-                                                                            // }
-
-                                                                          }}></input>
-                                                                    </div>
-                                                                    </div>
-                                                                    <div className="col-md-4">
-                                                                        <div className="form-group mb-3">
-                                                                            <label for="validationCustom01">Select BMS Margin On<span className="mandatory">*</span></label>
-                                                                            <select type="text" className="form-control"  
-                                                                           value={this.state.MarginOn} 
-                                                                           onChange={(text)=>{
-                                                                               this.setState({
-                                                                                   MarginOn : text.target.value
-                                                                               })
-                                                                               if(text.target.value == 'Maximum Retail Price (MRP)'){
-                                                                                this.setState({
-                                                                                    isVendorSellingVisible : false,
-                                                                                    VendorSellingPrice : undefined
-                                                                                })
-                                                                               }else
-                                                                               {
-                                                                                this.setState({
-                                                                                    isVendorSellingVisible : true,
-                                                                                    VendorSellingPrice : 0
-                                                                                })
-                                                                               }
-                                                                            
-                                                                           }} >
-                                                                                <option></option>
-                                                                                {this.state.MarginOnData.map(unitmeasure => (
-                                    
-                                                                                    <option key={unitmeasure.value} value={unitmeasure.value}>
-                                                                                    {unitmeasure.label}
-                                                                                </option>
-                                                                                ))}
-                                                                               
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                              
-                                                                <div className="col-md-4" style={{display : this.state.isVendorSellingVisible ? '' : 'none'}}>
-                                                                    <div className="form-group mb-3">
-                                                                        <label for="validationCustom01">Vendor Selling Price (<span>&#8377;</span>)<span className="mandatory">*</span></label>
-                                                                        <input type="text" className="form-control" 
-                                                                       value={this.state.VendorSellingPrice} 
-                                                                       onChange={(text)=>{
-                                                                        if(this.state.DecimalRegex.test(text.target.value)){
-                                                                           this.setState({
-                                                                               VendorSellingPrice : text.target.value,
-                                                                                         })
-
-                                                                                         this.setState({
-                                                                                            Margin : text.target.value != 0 ? parseFloat((this.state.MarginPercent/100)*text.target.value).toFixed(2) : 0,
-                                                                                             MarginPercent : text.target.value != 0 ? parseFloat((this.state.Margin/text.target.value)*100).toFixed(2) : 0
-                                                                                            })
-                                                                                        
-                                                                        }
-
-                                                                       }}/>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-md-4">
-                                                                    <div className="form-group mb-3">
-                                                                        <label for="validationCustom01">BMS Margin (%)<span className="mandatory">*</span></label>
-                                                                        <input type="text" className="form-control" 
-                                                                        value={this.state.MarginPercent} 
-                                                                        onChange={(text)=>{
-                                                                            if(this.state.DecimalRegex.test(text.target.value)){
-                                                                            this.setState({
-                                                                                MarginPercent : text.target.value,
-                                                                               
-                                                                                
-                                                                            })
-                                                                            if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
-                                                                                this.setState({
-                                                                                    Margin : parseFloat((text.target.value/100)*this.props.bookcredential.Price).toFixed(2)
-                                                                                })
-                                                                            }else
-                                                                            {
-                                                                                this.setState({
-                                                                                    Margin : parseFloat((text.target.value/100)*this.state.VendorSellingPrice).toFixed(2)
-                                                                                })
-                                                                            }
-                                                                        }
-                                                                        }}/>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-md-4">
-                                                                    <div className="form-group mb-3">
-                                                                        <label for="validationCustom01">Margin Amount (<span>&#8377;</span>)<span className="mandatory">*</span></label>
-                                                                        <input type="text" className="form-control" 
-                                                                       value={this.state.Margin} 
-                                                                       onChange={(text)=>{
-                                                                        if(this.state.DecimalRegex.test(text.target.value)){
-                                                                           this.setState({
-                                                                               Margin : text.target.value,
-                                                                              
-                                                                           })
-
-                                                                           if(this.state.MarginOn == 'Maximum Retail Price (MRP)'){
-                                                                               this.setState({
-                                                                                MarginPercent :  parseFloat((text.target.value/this.props.bookcredential.Price)*100).toFixed(2)
-                                                                               })
-                                                                           }
-                                                                           else
-                                                                           {
-                                                                            this.setState({
-                                                                                MarginPercent :  parseFloat((text.target.value/this.state.VendorSellingPrice)*100).toFixed(2)
-                                                                               })
-                                                                           }
-                                                                        }
-
-                                                                       }}/>
-                                                                    </div>
-                                                                </div>
-                                                             
- 
-                                                                    </div>
-                                                                    
-                                                                    <div>
-                                                    <button className="btn btn-primary" style={{float: 'right',marginBottom: '9px'}}
-                                              onClick={this.OnAddVendorPricing.bind(this)}
-                                                    > Add Vendor Pricing</button>
-                                                </div>
-                                                                </div>
-                                                      
-                                                            </div>  
-
-                                                            <div className="toast fade show" role="alert" aria-live="assertive"
-                                                    aria-atomic="true" data-toggle="toast">
-
-                               <div className="row">
-                            <div className="col-12">
-                                <div className="card">
-                                    <div className="card-body">
-                                    <div className="table-responsive">    
-                                    <table id="selection-datatable" className="table table-striped dt-responsive nowrap">
-                                            <thead style={{
-                                                  background: '#2e4a9a',
-                                                  color: '#fff'
-                                            }}>
-                                                <tr>
-                                                    <th style={{borderRight : '1px solid #fff'}}>Vendor Name</th>
-                                                    <th style={{borderRight : '1px solid #fff'}}>Vendor Item SKu</th>
-                                                    <th style={{borderRight : '1px solid #fff'}}>BMS Margin On</th>
-                                                    <th style={{borderRight : '1px solid #fff'}}>Vendor Selling Price</th>
-                                                    <th style={{borderRight : '1px solid #fff'}}>BMS Margin (%)</th>
-                                                    <th style={{borderRight : '1px solid #fff'}}>Margin Amount</th>
-                                                   
-                                                    <th>Action</th>
-                                                   
-                                                </tr>
-                                            </thead>
-                                        
-                                     
-                                           
-                                           
-                                    <tbody >
-                                 
-                                 {this.state.VendorPricing.length == 0 ? 
-                                 <tr><td colSpan={7} style={{textAlign:'center'}}>No Pricing Available</td></tr> : 
-                                 ''}
-                                        
-                                         {this.state.VendorPricing.map((data,index)=>(
-                                           
-                                           
-                                       
-                                                <tr key={index}>
-                                                      
-                                                <td>{data.VenName}</td>
-                                                <td>{data.Sku}</td>
-                                                <td>{data.MarginOn}</td>
-                                                <td>{data.VendorSellingPrice}</td>
-                                                <td>{data.MarginPercent}</td>
-                                                <td>{data.Margin}</td>
-                                             
-                                                <td> <div className="align-self-center" style={{    textAlign: 'center'}}>
-                                            <span  >
-                                            <Edit3 style={{marginRight : '10px'}}
-                                            onClick={()=>{
-                                              var data = [...this.state.VendorPricing]
-
-                                              this.setState({
-                                                Name : data[index].Name,
-                                                VenName : data[index].VenName,
-                                                Sku : data[index].Sku,
-                                                Margin : data[index].Margin,
-                                                MarginPercent : data[index].MarginPercent,
-                                                MarginOn : data[index].MarginOn,
-                                                VendorSellingPrice : data[index].VendorSellingPrice,
-                                                isVendorSellingVisible : data[index].VendorSellingPrice == undefined ? false : true
-
-                                               
-                                              },()=>{
-                                                data.splice(index,1)
-                                                arr.splice(index,1)
-                                                this.setState({
-                                                  VendorPricing : data
-                                                })
-                                              })
-                                             
-                                            }}
-                                            ></Edit3>
-                                              <Trash2
-                                               onClick={()=>{
-                                                var data = [...this.state.VendorPricing ]
-                                                data.splice(index,1)
-                                                arr.splice(index,1)
-                                                this.setState({
-                                                    VendorPricing  : data
-                                                })
-                                              }}
-                                              ></Trash2>
-                                            </span>
-                                        </div></td>
-                                              
-                                              
-                                                </tr>
-                                
-                                          
-                                        ))} 
-       
-                                            
-       
-                                              </tbody>   
-                                     
-                                        </table>
-                                        </div> 
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        
-                        </div>
-        
-                                                        </div>
-
-
-
-                                                            <div className="toast fade show" role="alert" aria-live="assertive"
-                                                                aria-atomic="true" data-toggle="toast">
-                                                                <div className='row'>
-                                                                   
-                                                                    <div className="col-md-12">
-                                                                        <div className="btn-toolbar sw-toolbar sw-toolbar-top justify-content-right" style={{ float: 'right' }}>
-
-                                                                            <button className="btn btn-secondary sw-btn-prev btn-radius-right"
-                                                                                onClick={() => {
-
-                                                                                    this.setState({
-                                                                                        PageTitle: '5',
-                                                                                        Page5: 'Done'
-                                                                                    })
-                                                                                }}
-                                                                            >Previous</button>
-                                                                            <button className="btn btn-secondary sw-btn-next  btn-radius-left"
-                                                                            //  onClick={()=>{
-                                                       
-                                                                            //     this.setState({
-                                                                            //         PageTitle : '5',
-                                                                            //         Page4 : 'Done'
-                                                                            //     })
-                                                                            //   }}
-                                                                             onClick={this.nextlabel6.bind(this)} >Next</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>{/*---end 4 row-- */}
-                                                        <div id="sw-arrows-step-7"
+                                                     <div id="sw-arrows-step-6"
                                                         className="tab-pane step-content"
-                                                        style={{ display: this.state.PageTitle == '7' ? 'block' : 'none' }}>
+                                                        style={{ display: this.state.PageTitle == '6' ? 'block' : 'none' }}>
                                                         <div className="toast fade show" role="alert" aria-live="assertive"
                                                             aria-atomic="true" data-toggle="toast">
-                                                            <div className="toast-header">
-                                                                <strong className="mr-auto">Status</strong>
+                                                            <div class="toast-header">
+                                                                <strong class="mr-auto">Status</strong>
                                                             </div>
-                                                            <div className="toast-body">
-                                                            <div className="row">
-                                                            <div className="col-md-6">
-                                                            <div className="form-group mb-3">
+                                                            <div class="toast-body">
+                                                            <div class="row">
+                                                            <div class="col-md-6">
+                                                            <div class="form-group mb-3">
                                                                 <label for="validationCustom01">Availability<span className="mandatory">*</span></label><br/>
                                                              
-                                                                <select type="text" className="form-control" 
+                                                                <select type="text" class="form-control" 
                                                                         value={this.state.Availability}
                                                                         onChange={(text)=>{
                                                                             this.setState({
@@ -1881,7 +1937,7 @@ onChangeMeta(metadescription){
                                                         </div>
                                                         <div className="col-md-6">
                                                         <label for="sw-arrows-first-name" >Show On Website<span className="mandatory">*</span></label><br/>
-                                                        <label className="radio-inline">
+                                                        <label class="radio-inline">
                                                         <input type="radio" name="optradio"
                                                                    checked={this.state.Status == 'Yes' ? true : false}
                                                                     onChange={()=>{
@@ -1890,7 +1946,7 @@ onChangeMeta(metadescription){
                                                                         })
                                                                     }}/> Yes
                                                                  </label>
-                                                                <label className="radio-inline" style={{marginLeft:'10px'}}>
+                                                                <label class="radio-inline" style={{marginLeft:'10px'}}>
                                                                     <input type="radio" name="optradio" 
                                                                     checked={this.state.Status == 'No' ? true : false}
                                                                     onChange={()=>{
@@ -1900,10 +1956,10 @@ onChangeMeta(metadescription){
                                                                     }}/> No
                                                             </label> 
                                                         </div>
-                                                      {/* <div className="col-md-12">
-                                                            <div className="form-group mb-3">
+                                                      {/* <div class="col-md-12">
+                                                            <div class="form-group mb-3">
                                                                 <label for="validationCustom01">Approval<span className="mandatory">*</span></label>
-                                                                <select type="text" className="form-control" 
+                                                                <select type="text" class="form-control" 
                                                                 value={this.props.bookcredential.Approval}
                                                                 onChange={this.onChangeApprove.bind(this)}>
                                                                 <option>Yes</option>
@@ -1929,8 +1985,8 @@ onChangeMeta(metadescription){
                                                                             onClick={() => {
 
                                                                                 this.setState({
-                                                                                    PageTitle: '6',
-                                                                                    Page6: 'Done'
+                                                                                    PageTitle: '5',
+                                                                                    Page5: 'Done'
                                                                                 })
                                                                             }}
                                                                         >Previous</button>

@@ -78,7 +78,10 @@ class Books extends Component {
               AboutAuthor:'',
               isReturnable : true,
 
-              AddAccess : false
+              AddAccess : true,
+              CountryOfOrigin : 'India',
+              CountryOrigindata : []
+             
          
         }
     }
@@ -114,6 +117,18 @@ class Books extends Component {
                     })
                     // Notiflix.Loading.Remove()
                 }))
+
+                GetApiCall.getRequest("GetCountry").then(resultdes =>
+                    resultdes.json().then(obj => {
+          
+                          this.setState({
+                            CountryOrigindata : obj.data ,
+                            
+                          })
+
+                          
+
+                        }))
 
 
                 var login=localStorage.getItem('LoginDetail');
@@ -287,7 +302,9 @@ class Books extends Component {
                             gstpercent : this.props.bookcredential.GstRate,
                             approved : 'No',
                             updatedon : moment().format('lll'),
-                            updatedby : details[0].fld_staffid
+                            updatedby : details[0].fld_staffid,
+                            countryoforigin:this.state.CountryOfOrigin
+                      
                      
                          },"AddBookItemMaster").then((results) => 
                              
@@ -405,7 +422,7 @@ class Books extends Component {
                                                                             <div class="col-md-12">
                                                                                 <div class="row">
                                                                                    
-                                                                                <div class="col-md-6">
+                                                                                <div class="col-md-12">
                                                                                 <div class="form-group mb-2">
                                                                                     <label for="validationCustom05">Book Title<span className="mandatory">*</span></label>
                                                                                     <input type="text" class="form-control" id="validationCustom05"
@@ -452,6 +469,31 @@ class Books extends Component {
                                                                                   
                                                                                  
                                                                             </select>
+                                                                        </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                            <label for="sw-arrows-first-name" >Country of Origin<span className="mandatory">*</span></label>
+                                                                            
+                                                                            <select class="form-control custom-select"
+                                                                            disabled={!this.state.IsVisible}
+                                                                           value={this.state.CountryOfOrigin}
+                                                                           onChange={(text)=>{
+
+                                                                               this.setState({
+                                                                                   CountryOfOrigin : text.target.value
+                                                                               })
+
+                                                                           }}>
+                                                                                    
+                                                                           {this.state.CountryOrigindata.map(country =>(
+                                                                               <option key={country.label} value={country.label}>
+                                                                               {country.label}
+                                                                          </option>
+                                                                              ))}
+                                                                           </select>
+                     
                                                                         </div>
                                                                             </div>
                                                                              

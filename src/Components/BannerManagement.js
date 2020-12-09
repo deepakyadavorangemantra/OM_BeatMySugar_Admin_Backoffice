@@ -101,9 +101,11 @@ class BannerManagement extends Component {
                                     <tr>
                                     <th>Web Banner</th>
                                     <th>Mobile Banner</th>
+                                    <th>Mobile App Banner</th>
                                     <th>Vertical</th>
                                         <th>Type</th>
                                         <th>Url</th>
+                                        <th>Order</th>
                                         <th>Show on website</th>
                                        
                                         <th>Action</th>
@@ -114,7 +116,7 @@ class BannerManagement extends Component {
                                 <tbody>
 
                                 {this.state.ApiData.length == 0 ? 
-                                <tr><td colSpan={7} style={{textAlign:'center'}}>No Banners Available</td></tr> : 
+                                <tr><td colSpan={8} style={{textAlign:'center'}}>No Banners Available</td></tr> : 
                                 ''} 
 
                                    {this.state.ApiData.map((data,index)=>{
@@ -130,9 +132,12 @@ class BannerManagement extends Component {
                                 </Helmet> : ''}
                                         <td><img src={data.fld_image} style={{ width:'10rem'}}/></td>
                                         <td><img src={data.fld_mobileimage} style={{ width:'4rem'}}/></td>
+                                        <td><img src={data.fld_mobileappimage} style={{ width:'4rem'}}/></td>
+                                      
                                         <td>{data.fld_verticle}</td>
                                         <td>{data.fld_type}</td>
                                         <td>{data.fld_url}</td>
+                                        <td>{data.fld_order}</td>
                                     <td> <Monitor style={{color : data.fld_showonwebsite == 'Yes' ? 'green' : 'red'}} /></td> 
                                       
                                         <td onClick={()=>{

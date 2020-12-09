@@ -149,7 +149,7 @@ class BookVariant extends Component {
                                 </a>
                                                                 </div>
                                 
-                               <div class="col text-right" style={{display : this.state.AddAccess ? '' : 'none'}}>
+                               <div class="col text-right" style={{display : this.state.AddAccess ? '' : ''}}>
                                        <a href='/addbookvariant'>
                                        <button 
                                        
@@ -237,6 +237,7 @@ class BookVariant extends Component {
                                 <thead>
                                     <tr>
                                     <th>Item SKU</th>
+                                    <th>Book Title</th>
                                         <th>Book Type</th>
                                         <th>Book Language</th>
                                         <th>Price</th>
@@ -271,6 +272,7 @@ class BookVariant extends Component {
                            
                                 </Helmet> : ''}
                                 <td>{data.fld_sku}</td>
+                                <td>{data.fld_title}</td>
                                      <td>{data.fld_type} </td>
                                      <td>{data.fld_language} </td>
                                                  <td><strike><i class="fa fa-inr" aria-hidden="true"></i><span> &#8377; </span>{data.fld_price}</strike> &nbsp;<i class="fa fa-inr" aria-hidden="true"></i><span> &#8377; </span>{data.fld_discountprice} ({data.fld_discountpercent}%)</td>
