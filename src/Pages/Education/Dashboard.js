@@ -23,7 +23,6 @@ class EduDashboard extends Component {
           Notiflix.Loading.Dots('Please wait...');
           GetApiCall.getRequest("EducationDashboard").then(resultdes =>
             resultdes.json().then(obj => {
-                debugger
                 if(obj){
                     Notiflix.Loading.Dots('Please wait...');
                    
